@@ -17,7 +17,7 @@ public class RequestInterceptor implements Interceptor {
         HttpUrl originalHttpUrl = originalRequest.url();
 
         HttpUrl url = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", "")
+                //.addQueryParameter("api_key", "")
                 .build();
 
         Request request = originalRequest.newBuilder().url(url).build();

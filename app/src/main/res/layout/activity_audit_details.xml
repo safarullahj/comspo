@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white2">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing.12dp"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:background="@color/container_detail">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/line.spacing.normal"
+                        android:baselineAligned="false"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_Sync"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing.8dp"
+                            android:layout_margin="@dimen/spacing.4dp"
+                            android:text="SYNC"
+                            android:drawableLeft="@drawable/ic_sync_black_24dp"/>
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_Submit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing.8dp"
+                            android:layout_margin="@dimen/spacing.4dp"
+                            android:text="SUBMIT"
+                            android:drawableLeft="@drawable/ic_file_upload_black_24dp"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/line.spacing.normal"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:gravity="center_horizontal">
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_Record"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing.8dp"
+                            android:layout_margin="@dimen/spacing.4dp"
+                            android:text="RECORD INSPECTION"
+                            android:drawableLeft="@drawable/ic_border_color_black_24dp"/>
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_Result"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing.8dp"
+                            android:layout_margin="@dimen/spacing.4dp"
+                            android:text="RESULT  SHEET"
+                            android:drawableLeft="@drawable/ic_insert_drive_file_black_24dp"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing.12dp"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:gravity="center_horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:background="@color/container_detail">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/line.spacing.normal"
+                            android:text="Basic Details"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/spacing.18dp" />
+
+
+                        <android.support.v7.widget.AppCompatButton
+                            android:id="@+id/btn_edit_details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/spacing.8dp"
+                            android:layout_margin="@dimen/spacing.4dp"
+                            android:text="EDIT"
+                            android:drawableLeft="@drawable/ic_edit_black_24dp"
+                            android:background="@color/dodgerblue"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing.12dp"
+                android:layout_marginLeft="@dimen/spacing.12dp"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="?attr/colorPrimary"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Audit Details"
+                        android:textStyle="bold"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Address"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="12613 Padon Road, \n Needville, \n TX 77461 "
+                        android:textSize="@dimen/spacing.16dp" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Email Address"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="aaaaaaaaaaa@aaa.aa"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Mobile Number"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_mobileNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="0123456789"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Landline Number"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_landLineNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="1234-123456"
+                        android:textSize="@dimen/spacing.16dp" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

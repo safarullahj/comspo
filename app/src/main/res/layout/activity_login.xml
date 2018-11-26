@@ -7,18 +7,19 @@
     android:orientation="vertical"
     android:padding="20dp" >
 
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/email"
+            android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
-            android:hint="@string/prompt_email"
+            android:hint="@string/prompt_username"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:singleLine="true"
@@ -46,6 +47,15 @@
             android:background="@color/btn_login_bg"
             android:text="@string/action_sign_in"
             android:textColor="@color/btn_login" />
+
+        <ProgressBar
+            android:id="@+id/signin_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacing.32dp"
+            android:layout_gravity="top"
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLinkToRegisterScreen"

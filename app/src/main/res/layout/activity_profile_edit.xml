@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white2">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing.12dp"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <com.mspo.comspo.ui.widgets.CircleImageView
+                        android:id="@+id/imageViewProfileImage"
+                        android:layout_width="@dimen/roundPicNormal"
+                        android:layout_height="@dimen/roundPicNormal"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/line.spacing.normal"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@color/mistyrose" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/textView_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="Name"
+                        android:textColor="@color/royalblue"
+                        android:textSize="@dimen/spacing.20dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing.12dp"
+                android:layout_marginLeft="@dimen/spacing.12dp"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="?attr/colorPrimary"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing.8dp">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/editText_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing.12dp"
+                        android:layout_marginRight="@dimen/spacing.12dp"
+                        android:background="@null"
+                        android:gravity="top|start"
+                        android:hint="ADDRESS"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:padding="@dimen/line.spacing.normal" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing.8dp">
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/editText_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing.12dp"
+                            android:layout_marginRight="@dimen/spacing.12dp"
+                            android:drawablePadding="@dimen/spacing.12dp"
+                            android:hint="EMAIL"
+                            android:inputType="textPersonName"
+                            android:paddingBottom="@dimen/spacing.18dp"
+                            android:paddingLeft="@dimen/spacing.12dp"
+                            android:paddingRight="@dimen/spacing.12dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing.8dp">
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/editText_mobileNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing.12dp"
+                            android:layout_marginRight="@dimen/spacing.12dp"
+                            android:drawablePadding="@dimen/spacing.12dp"
+                            android:hint="MOBILE NUMBER"
+                            android:inputType="textPersonName"
+                            android:paddingBottom="@dimen/spacing.18dp"
+                            android:paddingLeft="@dimen/spacing.12dp"
+                            android:paddingRight="@dimen/spacing.12dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing.8dp">
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/editText_landLineNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing.12dp"
+                            android:layout_marginRight="@dimen/spacing.12dp"
+                            android:drawablePadding="@dimen/spacing.12dp"
+                            android:hint="LANDLINE NUMBER"
+                            android:inputType="textPersonName"
+                            android:paddingBottom="@dimen/spacing.18dp"
+                            android:paddingLeft="@dimen/spacing.12dp"
+                            android:paddingRight="@dimen/spacing.12dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

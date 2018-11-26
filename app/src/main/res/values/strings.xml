@@ -17,11 +17,13 @@
     <string name="prompt_phone">Phone number</string>
     <string name="prompt_code">Code</string>
     <string name="btn_register">Sign up</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">MSPO</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="text_edit">EDIT</string>
+    <string name="submit">SUBMIT</string>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackgroundBorderless">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing.12dp"
+            tools:ignore="MissingPrefix">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_audit_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Audit Id: 1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/spacing.20dp"
+                android:textStyle="bold" />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_audit_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Year : 2018"
+                android:textColor="@color/black"
+                android:textSize="@dimen/spacing.20dp"
+                android:paddingRight="@dimen/spacing.12dp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:ellipsize="end"
+                android:text="From 8th july to 19th july 2018"
+                android:textColor="@color/black"
+                android:textSize="@dimen/spacing.20dp"
+                android:paddingRight="@dimen/spacing.12dp"/>
+
+
+
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

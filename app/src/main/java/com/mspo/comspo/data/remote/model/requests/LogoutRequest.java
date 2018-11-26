@@ -9,6 +9,10 @@ public class LogoutRequest {
     @Expose
     private Integer userId;
 
+    public LogoutRequest(Integer userId){
+        this.userId = userId;
+    }
+
     public Integer getUserId() {
         return userId;
     }

@@ -33,6 +33,22 @@ public class SmallHolderSignUpRequest {
     @Expose
     private String isGroupFarm;
 
+    public SmallHolderSignUpRequest(String name, String username, String address, String phone,
+                                    String email, Integer cbId, String password,
+                                    String countryCode, String isGroupFarm){
+
+        this.name = name;
+        this.username = username;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.cbId = cbId;
+        this.password = password;
+        this.countryCode = countryCode;
+        this.isGroupFarm = isGroupFarm;
+
+    }
+
     public String getName() {
         return name;
     }
