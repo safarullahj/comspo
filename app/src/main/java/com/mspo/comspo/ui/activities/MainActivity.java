@@ -30,6 +30,7 @@ import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LogoutService;
 import com.mspo.comspo.ui.activities.login.LoginActivity;
+import com.mspo.comspo.ui.activities.profile.AuditorProfileActivity;
 import com.mspo.comspo.ui.activities.profile.ProfileActivity;
 import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
@@ -168,7 +169,11 @@ public class MainActivity extends AppCompatActivity
             bottomNavigation.setSelectedItemId(R.id.bottom_nav_external);
             updateMainFragment(Pages.PAGE_0.getPagePosition());
         } else if (id == R.id.nav_profile) {
-            startActivity(ProfileActivity.getIntent(MainActivity.this));
+            if(PrefManager.getUserType(MainActivity.this).equals("admin")) {
+                startActivity(AuditorProfileActivity.getIntent(MainActivity.this));
+            }else {
+                startActivity(ProfileActivity.getIntent(MainActivity.this));
+            }
 
         }else if(id == R.id.nav_settings){
             startActivity(SettingsActivity.getIntent(MainActivity.this));

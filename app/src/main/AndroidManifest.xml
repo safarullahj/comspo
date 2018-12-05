@@ -36,6 +36,7 @@
         <activity android:name=".ui.activities.profile.ProfileActivity" />
         <activity android:name=".ui.activities.profile.ProfileEditActivity" />
         <activity android:name=".ui.activities.settings.SettingsActivity" />
+        <activity android:name=".ui.activities.profile.AuditorProfileActivity" />
     </application>
 
 </manifest>

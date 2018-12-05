@@ -133,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     ;
                                     district.setText(checkText(response.body().getDistrict()));
                                     landCondetion.setText(checkText(response.body().getLandCondition()));
-                                    ;
+
 
                                     if (response.body().getExternalAuditStatus() != null && response.body().getExternalAuditStatus().size() > 0) {
                                         ext_approved.setText(String.valueOf(response.body().getExternalAuditStatus().get(0).getApprovedCount()));
