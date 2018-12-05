@@ -35,6 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activities.profile.ProfileActivity" />
         <activity android:name=".ui.activities.profile.ProfileEditActivity" />
+        <activity android:name=".ui.activities.settings.SettingsActivity" />
     </application>
 
 </manifest>

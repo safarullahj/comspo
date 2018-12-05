@@ -16,6 +16,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing.20dp"
+                android:layout_gravity="top"
+                android:indeterminate="true"
+                android:visibility="gone"/>
+
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -43,7 +52,7 @@
 
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/textView_user_name"
+                        android:id="@+id/txt_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -81,16 +90,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/line.spacing.normal"
-                        android:text="Address"
+                        android:text="Home Address"
                         android:textColor="@color/dodgerblue"
                         android:textSize="@dimen/spacing.18dp" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/text_address"
+                        android:id="@+id/txt_home_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="12613 Padon Road, \n Needville, \n TX 77461 "
+                        android:text="- - - "
                         android:textSize="@dimen/spacing.16dp" />
 
 
@@ -107,44 +116,494 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="aaaaaaaaaaa@aaa.aa"
+                        android:text="- - -"
                         android:textSize="@dimen/spacing.16dp" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/line.spacing.normal"
-                        android:text="Mobile Number"
+                        android:text="Phone"
                         android:textColor="@color/dodgerblue"
                         android:textSize="@dimen/spacing.18dp" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/text_mobileNumber"
+                        android:id="@+id/txt_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="0123456789"
+                        android:text="- - -"
                         android:textSize="@dimen/spacing.16dp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Landline Number"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/text_landLineNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="1234-123456"
-                        android:textSize="@dimen/spacing.16dp" />
-
 
                 </LinearLayout>
 
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing.12dp"
+                android:layout_marginLeft="@dimen/spacing.12dp"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="?attr/colorPrimary"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Farm Name"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_farm_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Farm Address"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_fatm_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - - "
+                        android:textSize="@dimen/spacing.16dp" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="District"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_district"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Land Condetion"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_landCondetion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing.12dp"
+                android:layout_marginLeft="@dimen/spacing.12dp"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="?attr/colorPrimary"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="External Audits"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:ellipsize="end"
+                            android:text="Approved :"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/spacing.20dp"
+                            android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/txt_ext_approved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:ellipsize="end"
+                            android:text="0"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/spacing.20dp"
+                            android:layout_marginLeft="@dimen/spacing.12dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Completed :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_ext_completed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Pending :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_ext_pending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Ongoing :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_ext_ongoing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Newly Assigned :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_ext_newlyAssigned"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing.12dp"
+                android:layout_marginLeft="@dimen/spacing.12dp"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="?attr/colorPrimary"
+                android:foreground="?selectableItemBackgroundBorderless">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/spacing.12dp"
+                    tools:ignore="MissingPrefix">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Internal Audits"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:ellipsize="end"
+                            android:text="Approved :"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/spacing.20dp"
+                            android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/txt_int_approved"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:ellipsize="end"
+                            android:text="0"
+                            android:textColor="@color/gray"
+                            android:textSize="@dimen/spacing.20dp"
+                            android:layout_marginLeft="@dimen/spacing.12dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Completed :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_int_completed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Pending :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_int_pending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Ongoing :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_int_ongoing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="Newly Assigned :"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/txt_int_newlyAssigned"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left|bottom"
+                                android:ellipsize="end"
+                                android:text="0"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/spacing.20dp"
+                                android:layout_marginLeft="@dimen/spacing.12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>

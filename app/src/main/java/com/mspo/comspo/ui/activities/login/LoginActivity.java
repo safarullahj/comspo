@@ -93,6 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             PrefManager.saveLoginToken(LoginActivity.this, response.body().getUserType(),
                                                     response.body().getUserId(),
                                                     response.body().getAccessToken());
+
+                                            PrefManager.setUserLanguage(LoginActivity.this , response.body().getLanguageChosen());
                                             if (PrefManager.getLoginStatus(LoginActivity.this)) {
                                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                                 finish();

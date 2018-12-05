@@ -12,6 +12,7 @@ public class PrefManager {
     private static final String LOGIN_ACCESSTOCKEN = "LoginAccessToken";
     private static final String LOGIN_USERID = "LoginUserId";
     private static final String LOGIN_USER_TYPE = "LoginUserTYpe";
+    private static final String LOGIN_USER_LANGUAGE = "LoginUserLLanguage";
 
     private Context context;
     private SharedPreferences pref;
@@ -71,4 +72,15 @@ public class PrefManager {
         return sharedpreferences.getString(LOGIN_ACCESSTOCKEN, "");
     }
 
+
+    public static void setUserLanguage(Context mContext, String mLanguage) {
+        SharedPreferences.Editor mEditor = mContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
+        mEditor.putString(LOGIN_USER_LANGUAGE, mLanguage);
+        mEditor.apply();
+    }
+
+    public static String getUserLanguage(Context ctx) {
+        SharedPreferences sharedpreferences = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sharedpreferences.getString(LOGIN_USER_LANGUAGE, "malay");
+    }
 }

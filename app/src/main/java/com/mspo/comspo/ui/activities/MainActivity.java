@@ -31,6 +31,7 @@ import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LogoutService;
 import com.mspo.comspo.ui.activities.login.LoginActivity;
 import com.mspo.comspo.ui.activities.profile.ProfileActivity;
+import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
 import com.mspo.comspo.ui.fragments.home_smallholder.external.HomeFragmentSmallholderExternal;
 import com.mspo.comspo.ui.fragments.home_smallholder.internal.HomeFragmentSmallholderInternal;
@@ -103,8 +104,6 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
     }
 
     @Override
@@ -171,6 +170,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
             startActivity(ProfileActivity.getIntent(MainActivity.this));
 
+        }else if(id == R.id.nav_settings){
+            startActivity(SettingsActivity.getIntent(MainActivity.this));
         } else if (id == R.id.nav_signout) {
 
             if(Connectivity.checkInternetIsActive(MainActivity.this)) {

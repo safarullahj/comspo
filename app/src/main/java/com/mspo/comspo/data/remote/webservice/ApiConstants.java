@@ -7,4 +7,6 @@ public class ApiConstants {
     public static final String ENDPOINT_SIGNUP = "usermanager/farm/signup/";
     public static final String ENDPOINT_LOGOUT = "usermanager/logout/";
     public static final String ENDPOINT_USERNAME_AVAILABILITY = "usermanager/user/username/availability/";
+    public static final String ENDPOINT_LANGUAGE = "usermanager/user/language/update/";
+    public static final String ENDPOINT_PROFILE_VIEW = "usermanager/farm/1122/get/";
 }
