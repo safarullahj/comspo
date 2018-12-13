@@ -8,6 +8,9 @@ public class ApiConstants {
     public static final String ENDPOINT_LOGOUT = "usermanager/logout/";
     public static final String ENDPOINT_USERNAME_AVAILABILITY = "usermanager/user/username/availability/";
     public static final String ENDPOINT_LANGUAGE = "usermanager/user/language/update/";
-    public static final String ENDPOINT_PROFILE_VIEW = "usermanager/farm/1122/get/";
+    public static final String ENDPOINT_PROFILE_VIEW = "usermanager/farm/{farmId}/get/";
     public static final String ENDPOINT_AUDITOR_PROFILE_VIEW = "usermanager/auditor/1/get/";
+    public static final String ENDPOINT_SMALLHOLDER_AUDIT_LIST = "scoringtool/audit/farm/{farmId}/get/";
+    public static final String ENDPOINT_NEW_INTERNAL_AUDIT = "scoringtool/audit/internal/create/";
+    public static final String ENDPOINT_INDIVIDUAL_AUDIT_DETAILS = "scoringtool/audit/single/{auditId}/get/";
 }

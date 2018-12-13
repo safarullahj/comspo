@@ -16,6 +16,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing.20dp"
+                android:layout_gravity="top"
+                android:indeterminate="true"
+                android:visibility="gone"/>
+
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -176,6 +185,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/line.spacing.normal"
+                        android:text="Farm / Group"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_farmGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - - "
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
                         android:text="Address"
                         android:textColor="@color/dodgerblue"
                         android:textSize="@dimen/spacing.18dp" />
@@ -185,25 +210,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="12613 Padon Road, \n Needville, \n TX 77461 "
+                        android:text="- - - "
                         android:textSize="@dimen/spacing.16dp" />
 
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Email Address"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="aaaaaaaaaaa@aaa.aa"
-                        android:textSize="@dimen/spacing.16dp" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
@@ -218,23 +227,71 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="0123456789"
+                        android:text="- - -"
                         android:textSize="@dimen/spacing.16dp" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/line.spacing.normal"
-                        android:text="Landline Number"
+                        android:text="Year"
                         android:textColor="@color/dodgerblue"
                         android:textSize="@dimen/spacing.18dp" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/text_landLineNumber"
+                        android:id="@+id/text_year"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/spacing.16dp"
-                        android:text="1234-123456"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Audit Type"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_audit_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="Start Date"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_startDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
+                        android:textSize="@dimen/spacing.16dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/line.spacing.normal"
+                        android:text="End Date"
+                        android:textColor="@color/dodgerblue"
+                        android:textSize="@dimen/spacing.18dp" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/text_endDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacing.16dp"
+                        android:text="- - -"
                         android:textSize="@dimen/spacing.16dp" />
 
 

@@ -46,7 +46,7 @@ public class AllAuditFragment extends Fragment {
         recyclerViewAuditList.setLayoutManager(verticalLayoutmanager);
         recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
 
-        externalAuditAdapter = new ExternalAuditAdapter(getContext());
+        externalAuditAdapter = new ExternalAuditAdapter(getContext(),null);
         recyclerViewAuditList.setAdapter(externalAuditAdapter);
 
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

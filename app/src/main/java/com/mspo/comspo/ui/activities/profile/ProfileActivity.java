@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             APIClient.getDrinkClient()
                     .create(ProfileService.class)
-                    .getProfile(PrefManager.getAccessToken(ProfileActivity.this))
+                    .getProfile(PrefManager.getAccessToken(ProfileActivity.this),PrefManager.getFarmId(ProfileActivity.this))
                     .enqueue(new Callback<ProfileViewResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<ProfileViewResponse> call, @NonNull Response<ProfileViewResponse> response) {

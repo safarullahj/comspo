@@ -40,10 +40,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Log.e("loging", "status: "+PrefManager.getLoginStatus(LoginActivity.this));
+        Log.e("loging", "type: "+PrefManager.getUserType(LoginActivity.this));
+        Log.e("loging", "token: "+PrefManager.getAccessToken(LoginActivity.this));
+        Log.e("loging", "ID: "+PrefManager.getUserId(LoginActivity.this));
+
         if (PrefManager.getLoginStatus(LoginActivity.this)) {
+            Log.e("loging", "if ");
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
-        }
+        }Log.e("loging", "else ");
 
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -92,7 +98,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                             PrefManager.saveLoginToken(LoginActivity.this, response.body().getUserType(),
                                                     response.body().getUserId(),
-                                                    response.body().getAccessToken());
+                                                    response.body().getAccessToken(),
+                                                    response.body().getId());
 
                                             PrefManager.setUserLanguage(LoginActivity.this , response.body().getLanguageChosen());
                                             if (PrefManager.getLoginStatus(LoginActivity.this)) {

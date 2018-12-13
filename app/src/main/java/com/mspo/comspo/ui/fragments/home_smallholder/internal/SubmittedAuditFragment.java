@@ -45,7 +45,7 @@ public class SubmittedAuditFragment extends Fragment {
         recyclerViewAuditList.setLayoutManager(verticalLayoutmanager);
         recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
 
-        internalAuditAdapter = new InternalAuditAdapter(getContext());
+        internalAuditAdapter = new InternalAuditAdapter(getContext(), null);
         recyclerViewAuditList.setAdapter(internalAuditAdapter);
 
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

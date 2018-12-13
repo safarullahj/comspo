@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment currentFragment;
 
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity
                     updateMainFragment(Pages.PAGE_0.getPagePosition());
                     return true;
                 case R.id.bottom_nav_internal:
-                    fab.show();
+                   // fab.show();
                     updateMainFragment(Pages.PAGE_1.getPagePosition());
                     return true;
             }
@@ -105,19 +106,29 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if(PrefManager.getUserType(MainActivity.this).equals("admin")){
+            updateMainFragment(Pages.PAGE_2.getPagePosition());
+        }else {
+            if(currentFragment instanceof HomeFragmentSmallholderExternal) {
+                updateMainFragment(Pages.PAGE_0.getPagePosition());
+            }else if(currentFragment instanceof HomeFragmentSmallholderInternal){
+                updateMainFragment(Pages.PAGE_1.getPagePosition());
+            }else {
+                updateMainFragment(Pages.PAGE_0.getPagePosition());
+            }
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("loging", "main : "+PrefManager.getUserType(MainActivity.this));
         if(PrefManager.getUserType(MainActivity.this).equals("admin")){
-            updateMainFragment(Pages.PAGE_2.getPagePosition());
             navigationView.getMenu().findItem(R.id.nav_audits).setVisible(false);
             bottomNavigation.setVisibility(View.GONE);
             fab.hide();
             navigationView.getMenu().getItem(1).setChecked(true);
         }else {
-            updateMainFragment(Pages.PAGE_0.getPagePosition());
             navigationView.getMenu().findItem(R.id.nav_external_audits).setVisible(false);
             bottomNavigation.setVisibility(View.VISIBLE);
             fab.hide();
@@ -131,7 +142,17 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+
+            if(currentFragment instanceof HomeFragmentSmallholderExternal) {
+                finish();
+                super.onBackPressed();
+            }else if(currentFragment instanceof HomeFragmentSmallholderInternal){
+                updateMainFragment(Pages.PAGE_0.getPagePosition());
+            }else if(currentFragment instanceof HomeFragmentExternalAudit){
+                finish();
+                super.onBackPressed();
+            }
+
         }
     }
 
@@ -249,6 +270,8 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Fragment fragment = getFragment(position);
+
+        currentFragment = getFragment(position);
 
         Log.e("TEST","position_:"+position+" , frg_:"+fragment);
         if (fragment != null) {

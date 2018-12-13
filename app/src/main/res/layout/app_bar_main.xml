@@ -58,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="?actionBarSize"
-        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"/>
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>

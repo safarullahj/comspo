@@ -11,6 +11,7 @@ public class PrefManager {
     private static final String LOGIN_CHECK = "LoginCheck";
     private static final String LOGIN_ACCESSTOCKEN = "LoginAccessToken";
     private static final String LOGIN_USERID = "LoginUserId";
+    private static final String LOGIN_FARMID = "LoginFarmId";
     private static final String LOGIN_USER_TYPE = "LoginUserTYpe";
     private static final String LOGIN_USER_LANGUAGE = "LoginUserLLanguage";
 
@@ -36,7 +37,7 @@ public class PrefManager {
         return true;
     }
 
-    public static boolean saveLoginToken(Context ctx, String userType, Integer userId, String accessToken) {
+    public static boolean saveLoginToken(Context ctx, String userType, Integer userId, String accessToken,Integer farmId) {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -44,6 +45,7 @@ public class PrefManager {
                 .putInt(LOGIN_USERID, userId)
                 .putString(LOGIN_ACCESSTOCKEN, accessToken)
                 .putBoolean(LOGIN_CHECK, true)
+                .putInt(LOGIN_FARMID, farmId)
                 .apply();
         return true;
     }
@@ -51,7 +53,7 @@ public class PrefManager {
     public static boolean getLoginStatus(Context ctx) {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
                 Context.MODE_PRIVATE);
-        return sharedpreferences.getBoolean(LOGIN_CHECK, false);
+        return sharedpreferences.getBoolean(LOGIN_CHECK,false);
     }
 
     public static String getUserType(Context ctx) {
@@ -64,6 +66,12 @@ public class PrefManager {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
                 Context.MODE_PRIVATE);
         return sharedpreferences.getInt(LOGIN_USERID, 0);
+    }
+
+    public static Integer getFarmId(Context ctx) {
+        SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
+                Context.MODE_PRIVATE);
+        return sharedpreferences.getInt(LOGIN_FARMID, 0);
     }
 
     public static String getAccessToken(Context ctx) {
