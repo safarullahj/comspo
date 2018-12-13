@@ -27,4 +27,6 @@
     <string name="text_edit">EDIT</string>
     <string name="submit">SUBMIT</string>
     <string name="text_create">CREATE</string>
+    <string name="title_activity_audit_sheet">Audit Sheet</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
