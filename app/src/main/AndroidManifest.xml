@@ -40,7 +40,8 @@
         <activity android:name=".ui.activities.profile.AuditorProfileActivity" />
         <activity
             android:name=".ui.activities.audit_sheet.AuditSheetActivity"
-            android:label="@string/title_activity_audit_sheet"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_audit_sheet"/>
     </application>
 
 </manifest>

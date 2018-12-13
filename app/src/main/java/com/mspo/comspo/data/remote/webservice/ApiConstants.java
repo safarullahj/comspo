@@ -13,4 +13,5 @@ public class ApiConstants {
     public static final String ENDPOINT_SMALLHOLDER_AUDIT_LIST = "scoringtool/audit/farm/{farmId}/get/";
     public static final String ENDPOINT_NEW_INTERNAL_AUDIT = "scoringtool/audit/internal/create/";
     public static final String ENDPOINT_INDIVIDUAL_AUDIT_DETAILS = "scoringtool/audit/single/{auditId}/get/";
+    public static final String ENDPOINT_AUDIT_SHEET = "scoringtool/audit/sheet/{auditId}/get/";
 }

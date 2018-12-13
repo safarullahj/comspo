@@ -12,6 +12,6 @@ public interface IndividualAuditDetailsService {
     @GET(ApiConstants.ENDPOINT_INDIVIDUAL_AUDIT_DETAILS)
     Call<IndividualAuditDetailsResponse> getAuditDetails(@Path("auditId") Integer auditId,
                                                            @Header("access-token") String access_token,
-                                                           @Query(value = "farm_id", encoded = true) String farm_id,
+                                                           @Query(value = "farm_id", encoded = true) Integer farm_id,
                                                            @Query(value = "sub_audit_id", encoded = true) String sub_audit_id);
 }

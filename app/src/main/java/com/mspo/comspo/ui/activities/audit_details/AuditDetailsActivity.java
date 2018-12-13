@@ -15,11 +15,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.mspo.comspo.R;
+import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
+import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.data.remote.webservice.IndividualAuditDetailsService;
+import com.mspo.comspo.ui.activities.audit_sheet.AuditSheetActivity;
 import com.mspo.comspo.ui.activities.record_inspection.RecordInspectionActivity;
 
 import retrofit2.Call;
@@ -99,7 +102,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                     .create(IndividualAuditDetailsService.class)
                     .getAuditDetails(auditId,
                             PrefManager.getAccessToken(AuditDetailsActivity.this),
-                            PrefManager.getAccessToken(AuditDetailsActivity.this),
+                            PrefManager.getFarmId(AuditDetailsActivity.this),
                             "")
                     .enqueue(new Callback<IndividualAuditDetailsResponse>() {
                         @Override
@@ -168,9 +171,59 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
         switch (view.getId()){
             case R.id.btn_Record:
-                startActivity(RecordInspectionActivity.getIntent(AuditDetailsActivity.this));
+                getAuditSheet();
                 break;
         }
+    }
+
+    private void getAuditSheet() {
+
+        if (Connectivity.checkInternetIsActive(AuditDetailsActivity.this)) {
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            APIClient.getDrinkClient()
+                    .create(AuditSheetService.class)
+                    .getAuditSheet(auditId,
+                            PrefManager.getAccessToken(AuditDetailsActivity.this),
+                            PrefManager.getFarmId(AuditDetailsActivity.this),
+                            "")
+                    .enqueue(new Callback<AuditSheetResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<AuditSheetResponse> call, @NonNull Response<AuditSheetResponse> response) {
+
+                            if (response.isSuccessful()) {
+
+                                if (response.body() != null) {
+                                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this,response.body()));
+                                }
+
+
+                            } else {
+
+                                Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+
+
+                            }
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<AuditSheetResponse> call, @NonNull Throwable t) {
+
+                            progressBar.setVisibility(View.GONE);
+                            Snackbar.make(record_inspection, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+
+        } else {
+            progressBar.setVisibility(View.GONE);
+            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null).show();
+        }
+
     }
 }
 
