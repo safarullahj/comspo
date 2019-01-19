@@ -44,16 +44,32 @@
                 android:textSize="@dimen/spacing.20dp"
                 android:paddingRight="@dimen/spacing.12dp"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/spacing.12dp">
+
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView_audit_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:ellipsize="end"
+                android:text="Status : "
+                android:textColor="@color/black"
+                android:textSize="@dimen/spacing.20dp"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_audit_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
                 android:ellipsize="end"
-                android:text="From 8th july to 19th july 2018"
+                android:text="Newly Assigned Audit"
                 android:textColor="@color/black"
-                android:textSize="@dimen/spacing.20dp"
-                android:paddingRight="@dimen/spacing.12dp"/>
+                android:textSize="@dimen/spacing.20dp"/>
+        </LinearLayout>
 
 
 

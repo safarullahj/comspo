@@ -19,6 +19,7 @@ import com.mspo.comspo.data.remote.model.responses.LoginResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
+import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LoginService;
 import com.mspo.comspo.ui.activities.MainActivity;
@@ -39,6 +40,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        PrefManagerFilter managerFilter = new PrefManagerFilter(LoginActivity.this);
+        managerFilter.clearFilter();
 
         Log.e("loging", "status: "+PrefManager.getLoginStatus(LoginActivity.this));
         Log.e("loging", "type: "+PrefManager.getUserType(LoginActivity.this));

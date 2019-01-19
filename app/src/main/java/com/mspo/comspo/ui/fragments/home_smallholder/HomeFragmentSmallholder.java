@@ -1,4 +1,4 @@
-package com.mspo.comspo.ui.fragments.home_smallholder.internal;
+package com.mspo.comspo.ui.fragments.home_smallholder;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,15 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mspo.comspo.R;
+import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
+import com.mspo.comspo.ui.fragments.home_smallholder.internal.SmallholderInternalFragment;
 
 
-public class HomeFragmentSmallholderInternal extends Fragment {
+public class HomeFragmentSmallholder extends Fragment {
 
     private ViewPager mViewPager;
     private AuditsPagerAdapter auditsPagerAdapter;
 
-    public static HomeFragmentSmallholderInternal newInstance() {
-        return new HomeFragmentSmallholderInternal();
+
+    public static HomeFragmentSmallholder newInstance() {
+        return new HomeFragmentSmallholder();
     }
 
     @Override
@@ -33,7 +36,7 @@ public class HomeFragmentSmallholderInternal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_smallholder_internal, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_smallholder, container, false);
 
         auditsPagerAdapter = new AuditsPagerAdapter(getChildFragmentManager());
 
@@ -48,6 +51,7 @@ public class HomeFragmentSmallholderInternal extends Fragment {
         return view;
     }
 
+
     private class AuditsPagerAdapter extends FragmentPagerAdapter {
 
         AuditsPagerAdapter(FragmentManager fm) {
@@ -60,10 +64,10 @@ public class HomeFragmentSmallholderInternal extends Fragment {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = OnGoingAuditFragment.newInstance();
+                    fragment = SmallholderExternalFragment.newInstance();
                     break;
                 case 1:
-                    fragment = SubmittedAuditFragment.newInstance();
+                    fragment = SmallholderInternalFragment.newInstance();
                     break;
 
             }
@@ -79,9 +83,9 @@ public class HomeFragmentSmallholderInternal extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "On Going";
+                    return "External";
                 case 1:
-                    return "Submitted";
+                    return "Internal";
 
             }
             return null;

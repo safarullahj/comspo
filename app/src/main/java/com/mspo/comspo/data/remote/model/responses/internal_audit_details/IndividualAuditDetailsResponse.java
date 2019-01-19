@@ -1,10 +1,11 @@
 package com.mspo.comspo.data.remote.model.responses.internal_audit_details;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IndividualAuditDetailsResponse {
+public class IndividualAuditDetailsResponse implements Serializable {
 
     @SerializedName("comment")
     @Expose
@@ -29,7 +30,7 @@ public class IndividualAuditDetailsResponse {
     private String year;
     @SerializedName("compliance_percentage")
     @Expose
-    private Integer compliancePercentage;
+    private Double compliancePercentage;
     @SerializedName("audit_status")
     @Expose
     private String auditStatus;
@@ -159,11 +160,11 @@ public class IndividualAuditDetailsResponse {
         this.year = year;
     }
 
-    public Integer getCompliancePercentage() {
+    public Double getCompliancePercentage() {
         return compliancePercentage;
     }
 
-    public void setCompliancePercentage(Integer compliancePercentage) {
+    public void setCompliancePercentage(Double compliancePercentage) {
         this.compliancePercentage = compliancePercentage;
     }
 

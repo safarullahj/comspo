@@ -24,7 +24,7 @@ public class Chapter implements Serializable{
     private String graphColor;
     @SerializedName("compliance_percentage")
     @Expose
-    private Integer compliancePercentage;
+    private Double compliancePercentage;
     @SerializedName("accs")
     @Expose
     private List<Acc> accs = null;
@@ -99,11 +99,11 @@ public class Chapter implements Serializable{
         this.graphColor = graphColor;
     }
 
-    public Integer getCompliancePercentage() {
+    public Double getCompliancePercentage() {
         return compliancePercentage;
     }
 
-    public void setCompliancePercentage(Integer compliancePercentage) {
+    public void setCompliancePercentage(Double compliancePercentage) {
         this.compliancePercentage = compliancePercentage;
     }
 

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,11 @@ import com.mspo.comspo.data.remote.listener.EndlessRecyclerViewScrollListener;
 import com.mspo.comspo.data.remote.model.responses.smallholder_home_audit_list.SmallholderAuditListResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.PrefManager;
+import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.SmallholderAuditListService;
+import com.mspo.comspo.ui.activities.FilterInterface;
+import com.mspo.comspo.ui.activities.MainActivity;
 import com.mspo.comspo.ui.adapters.ExternalAuditAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
@@ -28,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class HomeFragmentSmallholderExternal extends Fragment {
+public class SmallholderExternalFragment extends Fragment implements FilterInterface{
 
     private RecyclerView recyclerViewAuditList;
     private SwipeRefreshLayout refreshView;
@@ -37,20 +41,21 @@ public class HomeFragmentSmallholderExternal extends Fragment {
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
 
-    public static HomeFragmentSmallholderExternal newInstance() {
-        return new HomeFragmentSmallholderExternal();
+    public static SmallholderExternalFragment newInstance() {
+        return new SmallholderExternalFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity)getActivity()).setFilterListenerExternal(this);
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_smallholder_external, container, false);
+        View view = inflater.inflate(R.layout.fragment_small_externa_auditl, container, false);
 
         progressBar = view.findViewById(R.id.progress);
         recyclerViewAuditList = view.findViewById(R.id.recycler_view);
@@ -106,6 +111,7 @@ public class HomeFragmentSmallholderExternal extends Fragment {
         if (Connectivity.checkInternetIsActive(getContext())) {
 
             progressBar.setVisibility(View.VISIBLE);
+            PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
 
             APIClient.getDrinkClient()
                     .create(SmallholderAuditListService.class)
@@ -113,9 +119,9 @@ public class HomeFragmentSmallholderExternal extends Fragment {
                             PrefManager.getAccessToken(getActivity()),
                             "15",
                             offset,
+                            managerFilter.getFilterKey(),
                             "",
-                            "",
-                            "",
+                            managerFilter.getFilterStatus(),
                             PrefManager.getFarmId(getActivity()),
                             "",
                             false
@@ -160,5 +166,12 @@ public class HomeFragmentSmallholderExternal extends Fragment {
             Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
+    }
+
+    @Override
+    public void filter() {
+        PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
+        Log.e("Filter_:", "External Fragment "+managerFilter.getFilterStatus() );
+        getAuditList("0");
     }
 }

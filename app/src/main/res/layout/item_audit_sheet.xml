@@ -72,7 +72,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing.116dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:baselineAligned="false"
                 android:gravity="left"
@@ -94,13 +94,20 @@
                         android:layout_height="36dp"
                         android:checked="false"
                         android:text="Complies"
-                        android:textSize="@dimen/spacing.20dp"/>
+                        android:textSize="@dimen/spacing.20dp" />
 
                     <android.support.v7.widget.AppCompatRadioButton
                         android:id="@+id/rad_majorNonComplience"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:text="Major Non Complience"
+                        android:textSize="@dimen/spacing.20dp"/>
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/rad_minorNonComplience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="Minor Non Complience"
                         android:textSize="@dimen/spacing.20dp"/>
 
                     <android.support.v7.widget.AppCompatRadioButton

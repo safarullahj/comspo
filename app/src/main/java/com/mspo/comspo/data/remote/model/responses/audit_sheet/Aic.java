@@ -18,7 +18,7 @@ public class Aic implements Serializable{
     private List<EvidenceToCheck> evidenceToCheck = null;
     @SerializedName("indicator_suggestion")
     @Expose
-    private Object indicatorSuggestion;
+    private String indicatorSuggestion;
     @SerializedName("suggestions")
     @Expose
     private List<Suggestion> suggestions = null;
@@ -27,7 +27,7 @@ public class Aic implements Serializable{
     private List<IssuesToCheck> issuesToCheck = null;
     @SerializedName("compliance_value")
     @Expose
-    private Integer complianceValue;
+    private Double complianceValue;
     @SerializedName("indicator_type")
     @Expose
     private String indicatorType;
@@ -71,11 +71,11 @@ public class Aic implements Serializable{
         this.evidenceToCheck = evidenceToCheck;
     }
 
-    public Object getIndicatorSuggestion() {
+    public String  getIndicatorSuggestion() {
         return indicatorSuggestion;
     }
 
-    public void setIndicatorSuggestion(Object indicatorSuggestion) {
+    public void setIndicatorSuggestion(String indicatorSuggestion) {
         this.indicatorSuggestion = indicatorSuggestion;
     }
 
@@ -95,11 +95,11 @@ public class Aic implements Serializable{
         this.issuesToCheck = issuesToCheck;
     }
 
-    public Integer getComplianceValue() {
+    public Double getComplianceValue() {
         return complianceValue;
     }
 
-    public void setComplianceValue(Integer complianceValue) {
+    public void setComplianceValue(Double complianceValue) {
         this.complianceValue = complianceValue;
     }
 

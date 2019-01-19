@@ -12,14 +12,24 @@
         style="@style/Widget.AppCompat.Toolbar"
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content">
 
         <Spinner
             android:id="@+id/category"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:popupBackground="@color/colorPrimary"/>
 
     </android.support.v7.widget.Toolbar>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing.20dp"
+        android:layout_gravity="top"
+        android:indeterminate="true"
+        android:visibility="visible"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

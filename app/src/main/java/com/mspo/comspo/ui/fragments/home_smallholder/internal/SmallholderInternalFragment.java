@@ -2,8 +2,6 @@ package com.mspo.comspo.ui.fragments.home_smallholder.internal;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +15,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,18 +30,18 @@ import com.mspo.comspo.data.remote.model.responses.NewInternalAuditResponse;
 import com.mspo.comspo.data.remote.model.responses.smallholder_home_audit_list.SmallholderAuditListResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.PrefManager;
+import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.NewInternalAuditService;
 import com.mspo.comspo.data.remote.webservice.SmallholderAuditListService;
+import com.mspo.comspo.ui.activities.FilterInterface;
+import com.mspo.comspo.ui.activities.MainActivity;
 import com.mspo.comspo.ui.adapters.InternalAuditAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -52,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class OnGoingAuditFragment extends Fragment {
+public class SmallholderInternalFragment extends Fragment implements FilterInterface{
 
     private ProgressBar progressBar;
     private RecyclerView recyclerViewAuditList;
@@ -66,23 +63,24 @@ public class OnGoingAuditFragment extends Fragment {
     private AlertDialog b;
     private DatePickerDialog datePickerDialog;
 
-    public OnGoingAuditFragment() {
+    public SmallholderInternalFragment() {
     }
 
-    public static OnGoingAuditFragment newInstance() {
-        return new OnGoingAuditFragment();
+    public static SmallholderInternalFragment newInstance() {
+        return new SmallholderInternalFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((MainActivity)getActivity()).setFilterListenerInternal(this);
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_on_going_audit, container, false);
+        View view = inflater.inflate(R.layout.fragment_small_internal_audit, container, false);
 
         progressBar = view.findViewById(R.id.progress);
         recyclerViewAuditList = view.findViewById(R.id.recycler_view);
@@ -308,15 +306,17 @@ public class OnGoingAuditFragment extends Fragment {
 
             progressBar.setVisibility(View.VISIBLE);
 
+            PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
+
             APIClient.getDrinkClient()
                     .create(SmallholderAuditListService.class)
                     .getAuditList(PrefManager.getFarmId(getActivity()),
                             PrefManager.getAccessToken(getActivity()),
                             "15",
                             offset,
+                            managerFilter.getFilterKey(),
                             "",
-                            "",
-                            "",
+                            managerFilter.getFilterStatus(),
                             PrefManager.getFarmId(getActivity()),
                             "",
                             true
@@ -359,5 +359,13 @@ public class OnGoingAuditFragment extends Fragment {
             Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
+    }
+
+
+    @Override
+    public void filter() {
+        PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
+        Log.e("Filter_:", "internal fragment "+managerFilter.getFilterStatus() );
+        getAuditList("0");
     }
 }

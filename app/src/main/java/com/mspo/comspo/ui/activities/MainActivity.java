@@ -3,12 +3,14 @@ package com.mspo.comspo.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RadioGroup;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.LogoutRequest;
@@ -27,6 +30,7 @@ import com.mspo.comspo.data.remote.model.responses.LogoutResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
+import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LogoutService;
 import com.mspo.comspo.ui.activities.login.LoginActivity;
@@ -34,8 +38,8 @@ import com.mspo.comspo.ui.activities.profile.AuditorProfileActivity;
 import com.mspo.comspo.ui.activities.profile.ProfileActivity;
 import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
-import com.mspo.comspo.ui.fragments.home_smallholder.external.HomeFragmentSmallholderExternal;
-import com.mspo.comspo.ui.fragments.home_smallholder.internal.HomeFragmentSmallholderInternal;
+import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
+import com.mspo.comspo.ui.fragments.home_smallholder.HomeFragmentSmallholder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,15 +52,28 @@ public class MainActivity extends AppCompatActivity
     public static final int FRAGMENT_1 = 1;
     public static final int FRAGMENT_2 = 2;
 
-    private BottomNavigationView bottomNavigation;
+    //private BottomNavigationView bottomNavigation;
     private FloatingActionButton fab;
-    private NavigationView navigationView;
+    private NavigationView navigationView,navigationViewFilter;
     private DrawerLayout drawer;
     private Fragment currentFragment;
+    private RadioGroup statusRadioGroup;
+    private AppCompatEditText search;
+    private AppCompatButton apply;
+    private AppCompatImageView reset;
+
+    private FilterInterface filterInterfaceExternal,filterInterfaceInternal;
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    public void setFilterListenerExternal(FilterInterface anInterface){
+        filterInterfaceExternal = anInterface ;
+    }
+
+    public void setFilterListenerInternal(FilterInterface anInterface){
+        filterInterfaceInternal = anInterface ;
+    }
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -74,7 +91,7 @@ public class MainActivity extends AppCompatActivity
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +100,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        bottomNavigation =  findViewById(R.id.navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //bottomNavigation =  findViewById(R.id.navigation);
+        //bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
         fab =  findViewById(R.id.fab);
@@ -99,23 +115,129 @@ public class MainActivity extends AppCompatActivity
 
         drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                // Do whatever you want here
+
+                Log.e("drawer_:", "close");
+            }
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                // Do whatever you want here
+                if (drawer.isDrawerOpen(GravityCompat.END)) {
+                    Log.e("drawer_:", "open 2");
+
+                    PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
+                    String flt = managerFilter.getFilterStatus();
+
+                    switch(flt){
+
+                        case "":
+                            statusRadioGroup.check(R.id.rad_showAll);
+                            break;
+                        case "newly_assigned":
+                            statusRadioGroup.check(R.id.rad_newlyAssigned);
+                            break;
+                        case "pending":
+                            statusRadioGroup.check(R.id.rad_pending);
+                            break;
+                        case "on_going":
+                            statusRadioGroup.check(R.id.rad_onGoing);
+                            break;
+                        case "completed":
+                            statusRadioGroup.check(R.id.rad_notApproved);
+                            break;
+                        case "approved":
+                            statusRadioGroup.check(R.id.rad_approved);
+                            break;
+
+                    }
+
+                    search.setText(managerFilter.getFilterKey());
+
+
+                }else {
+                    Log.e("drawer_:", "open 1");
+                }
+
+            }
+        };
+
+
+
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationViewFilter = findViewById(R.id.nav_view_filter);
+        View headerView = navigationViewFilter.getHeaderView(0);
+        statusRadioGroup = headerView.findViewById(R.id.statusRadio);
+        search = headerView.findViewById(R.id.edt_search);
+
+        apply = headerView.findViewById(R.id.btnApply);
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
+
+                int id = statusRadioGroup.getCheckedRadioButtonId();
+                if(id == R.id.rad_showAll) {
+                    Log.e("Filter_:", "status : showAll " );
+                    managerFilter.setFilterStatus("");
+                }else if(id == R.id.rad_newlyAssigned) {
+                    Log.e("Filter_:", "status : newlyAssigned" );
+                    managerFilter.setFilterStatus("newly_assigned");
+                }else if(id == R.id.rad_pending) {
+                    Log.e("Filter_:", "status : pending" );
+                    managerFilter.setFilterStatus("pending");
+                }else if(id == R.id.rad_onGoing) {
+                    Log.e("Filter_:", "status : onGoing" );
+                    managerFilter.setFilterStatus("on_going");
+                }else if(id == R.id.rad_notApproved) {
+                    Log.e("Filter_:", "status : notApproved" );
+                    managerFilter.setFilterStatus("completed");
+                }else if(id == R.id.rad_approved) {
+                    Log.e("Filter_:", "status : approved" );
+                    managerFilter.setFilterStatus("approved");
+                }
+
+                managerFilter.setFilterKey(search.getText().toString());
+
+                filterInterfaceExternal.filter();
+                filterInterfaceInternal.filter();
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+
+        reset = headerView.findViewById(R.id.imgReset);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
+                managerFilter.clearFilter();
+                filterInterfaceExternal.filter();
+                filterInterfaceInternal.filter();
+                drawer.closeDrawer(GravityCompat.END);
+            }
+        });
+
         if(PrefManager.getUserType(MainActivity.this).equals("admin")){
             updateMainFragment(Pages.PAGE_2.getPagePosition());
         }else {
-            if(currentFragment instanceof HomeFragmentSmallholderExternal) {
+            /*if(currentFragment instanceof SmallholderExternalFragment) {
                 updateMainFragment(Pages.PAGE_0.getPagePosition());
-            }else if(currentFragment instanceof HomeFragmentSmallholderInternal){
+            }else if(currentFragment instanceof HomeFragmentSmallholder){
                 updateMainFragment(Pages.PAGE_1.getPagePosition());
-            }else {
-                updateMainFragment(Pages.PAGE_0.getPagePosition());
-            }
+            }else {*/
+                updateMainFragment(Pages.PAGE_1.getPagePosition());
+            //}
         }
     }
 
@@ -125,12 +247,12 @@ public class MainActivity extends AppCompatActivity
         Log.e("loging", "main : "+PrefManager.getUserType(MainActivity.this));
         if(PrefManager.getUserType(MainActivity.this).equals("admin")){
             navigationView.getMenu().findItem(R.id.nav_audits).setVisible(false);
-            bottomNavigation.setVisibility(View.GONE);
+            //bottomNavigation.setVisibility(View.GONE);
             fab.hide();
             navigationView.getMenu().getItem(1).setChecked(true);
         }else {
             navigationView.getMenu().findItem(R.id.nav_external_audits).setVisible(false);
-            bottomNavigation.setVisibility(View.VISIBLE);
+            //bottomNavigation.setVisibility(View.VISIBLE);
             fab.hide();
             navigationView.getMenu().getItem(0).setChecked(true);
         }
@@ -143,12 +265,14 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
 
-            if(currentFragment instanceof HomeFragmentSmallholderExternal) {
+            if(currentFragment instanceof HomeFragmentSmallholder) {
+                PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
+                managerFilter.clearFilter();
                 finish();
                 super.onBackPressed();
-            }else if(currentFragment instanceof HomeFragmentSmallholderInternal){
+            }/*else if(currentFragment instanceof HomeFragmentSmallholder){
                 updateMainFragment(Pages.PAGE_0.getPagePosition());
-            }else if(currentFragment instanceof HomeFragmentExternalAudit){
+            }*/else if(currentFragment instanceof HomeFragmentExternalAudit){
                 finish();
                 super.onBackPressed();
             }
@@ -159,21 +283,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
+        if (id == R.id.action_filter) {
+            drawer.openDrawer(GravityCompat.END);
             return true;
-        }*/
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -185,10 +305,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_audits) {
-            bottomNavigation.setVisibility(View.VISIBLE);
+            //bottomNavigation.setVisibility(View.VISIBLE);
             fab.hide();
-            bottomNavigation.setSelectedItemId(R.id.bottom_nav_external);
-            updateMainFragment(Pages.PAGE_0.getPagePosition());
+            //bottomNavigation.setSelectedItemId(R.id.bottom_nav_external);
+            updateMainFragment(Pages.PAGE_1.getPagePosition());
         } else if (id == R.id.nav_profile) {
             if(PrefManager.getUserType(MainActivity.this).equals("admin")) {
                 startActivity(AuditorProfileActivity.getIntent(MainActivity.this));
@@ -255,12 +375,12 @@ public class MainActivity extends AppCompatActivity
 
 
         }else if(id == R.id.nav_external_audits){
-            bottomNavigation.setVisibility(View.GONE);
+            //bottomNavigation.setVisibility(View.GONE);
             fab.hide();
             updateMainFragment(Pages.PAGE_2.getPagePosition());
         }
 
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        //DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -302,9 +422,10 @@ public class MainActivity extends AppCompatActivity
         return null;
     }
 
+
     private enum Pages {
-        PAGE_0(FRAGMENT_0, HomeFragmentSmallholderExternal.newInstance()),
-        PAGE_1(FRAGMENT_1, HomeFragmentSmallholderInternal.newInstance()),
+        PAGE_0(FRAGMENT_0, SmallholderExternalFragment.newInstance()),
+        PAGE_1(FRAGMENT_1, HomeFragmentSmallholder.newInstance()),
         PAGE_2(FRAGMENT_2, HomeFragmentExternalAudit.newInstance());
 
         int position;

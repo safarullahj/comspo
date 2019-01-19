@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -49,6 +50,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private int auditId;
     private String farmName;
 
+    private IndividualAuditDetailsResponse auditDetailsResponse = null;
+
     public static Intent getIntent(Context context, Integer auditId, String farmName) {
         Intent intent = new Intent(context, AuditDetailsActivity.class);
         intent.putExtra(KEY_AUDIT_ID, auditId);
@@ -83,6 +86,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             auditId = getIntent().getExtras().getInt(KEY_AUDIT_ID,0);
             farmName = getIntent().getExtras().getString(KEY_FARM_NAME,"");
 
+            Log.e("de_data", "frm_name: "+farmName);
+            Log.e("de_data", "audit id: "+auditId);
+
             getSupportActionBar().setTitle(farmName);
 
             getDetails();
@@ -112,6 +118,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                 if (response.body() != null) {
 
+                                    auditDetailsResponse = response.body();
+
                                     farmGroup.setText(checkText(response.body().getFarmName()));
                                     address.setText(checkText(response.body().getAddress()));
                                     mobileNumber.setText(response.body().getCountryCode()+"-"+checkText(response.body().getPhone()));
@@ -138,6 +146,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                             progressBar.setVisibility(View.GONE);
                             Snackbar.make(record_inspection, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
+
+                            Log.e("err_:" , "msg : "+t.getMessage());
                         }
                     });
 
@@ -194,8 +204,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                             if (response.isSuccessful()) {
 
-                                if (response.body() != null) {
-                                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this,response.body()));
+                                if (response.body() != null && auditDetailsResponse != null) {
+                                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this,response.body(),auditDetailsResponse));
                                 }
 
 

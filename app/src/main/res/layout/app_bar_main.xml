@@ -37,7 +37,7 @@
 
 
 
-        <android.support.design.widget.BottomNavigationView
+        <!--<android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:foreground="?attr/selectableItemBackground"
             app:itemIconTint="@android:color/white"
             app:itemTextColor="@android:color/white"
-            app:menu="@menu/bottom_navigation" />
+            app:menu="@menu/bottom_navigation" />-->
 
 
     </LinearLayout>
