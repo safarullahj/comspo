@@ -29,7 +29,6 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/filter_layout"
-        android:paddingTop="?attr/actionBarSize"
-        android:background="@color/bg_login"/>
+        android:paddingTop="?attr/actionBarSize" />
 
 </android.support.v4.widget.DrawerLayout>

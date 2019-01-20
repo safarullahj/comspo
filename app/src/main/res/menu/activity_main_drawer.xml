@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_audits"
-            android:title="My Audits" />
+            android:title="@string/my_audits" />
         <item
             android:id="@+id/nav_external_audits"
-            android:title="External Audits" />
+            android:title="@string/external_audits" />
         <item
             android:id="@+id/nav_profile"
-            android:title="Profile" />
+            android:title="@string/profile" />
         <item
             android:id="@+id/nav_settings"
-            android:title="Settings" />
+            android:title="@string/settings" />
         <item
             android:id="@+id/nav_signout"
-            android:title="Signout" />
+            android:title="@string/signout" />
     </group>
 
 </menu>

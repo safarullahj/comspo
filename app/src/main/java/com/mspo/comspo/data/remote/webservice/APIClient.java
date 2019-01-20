@@ -2,8 +2,6 @@ package com.mspo.comspo.data.remote.webservice;
 
 import android.util.Log;
 
-import com.mspo.comspo.data.remote.RequestInterceptor;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -19,7 +17,7 @@ public class APIClient {
 
     private static String TAG = "MSPO_URL";
 
-    public static Retrofit getDrinkClient() {
+    public static Retrofit getClient() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

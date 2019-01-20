@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 public class PrefManagerFilter {
 
-    private static final String PREF_NAME = "FILTER_SHARED";
+    private static final String PREF_NAME = "FilterShared";
     public static final String FILTER_STATUS = "status";
     private static final String FILTER_YEAR = "year";
     private static final String FILTER_KEY = "key";

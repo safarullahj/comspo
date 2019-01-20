@@ -2,6 +2,7 @@ package com.mspo.comspo.ui.activities.audit_sheet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,12 +21,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.AuditDetail;
@@ -45,7 +42,6 @@ import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.ui.adapters.AuditSheetAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,7 +171,7 @@ public class AuditSheetActivity extends AppCompatActivity {
             LinearLayoutManager verticalLayoutmanager
                     = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             criteria_list.setLayoutManager(verticalLayoutmanager);
-            criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
+            criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
             auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter);
             criteria_list.setAdapter(auditSheetAdapter);
@@ -277,7 +273,7 @@ public class AuditSheetActivity extends AppCompatActivity {
                 Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getComplianceValue());
                 Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getLastEditedTime());
 
-                APIClient.getDrinkClient()
+                APIClient.getClient()
                         .create(AuditSheetService.class)
                         .saveFarmerAuditSheet(auditDetailsResponse.getAuditId(), PrefManager.getAccessToken(AuditSheetActivity.this), auditSheetSaveRequest)
                         .enqueue(new Callback<SmallHolderAuditSheetSaveResponse>() {

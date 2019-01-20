@@ -1,9 +1,9 @@
 package com.mspo.comspo.ui.activities.login;
 
+import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.Editable;
@@ -41,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private AppCompatEditText phone;
     private AppCompatEditText email;
     private AppCompatEditText password;
-    private AppCompatButton sign_up;
+    private MaterialButton sign_up;
 
     private Boolean isAvailable = false;
 
@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         uname_Unavailable.setVisibility(View.GONE);
                         progressBar.setVisibility(View.VISIBLE);
 
-                        APIClient.getDrinkClient()
+                        APIClient.getClient()
                                 .create(UsernameAvailabilityService.class)
                                 .checkAvailability(username.getText().toString())
                                 .enqueue(new Callback<UserAvailabilityResponse>() {
@@ -206,7 +206,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     countryCode.getText().toString(),
                                     "false");
 
-                            APIClient.getDrinkClient()
+                            APIClient.getClient()
                                     .create(SignupService.class)
                                     .doSignup(signUpRequest)
                                     .enqueue(new Callback<SmallHolderSignUpResponse>() {

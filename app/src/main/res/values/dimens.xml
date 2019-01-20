@@ -5,10 +5,15 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="roundPicNormal">@dimen/spacing.72dp</dimen>
+    <dimen name="roundPicNormal">72dp</dimen>
+
+    <dimen name="spacing_tiny">2dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
 
     <!-- Spacing -->
-    <dimen name="spacing.0.2dp">0.2dp</dimen>
+    <!--<dimen name="spacing.0.2dp">0.2dp</dimen>
     <dimen name="spacing.1dp">1dp</dimen>
     <dimen name="spacing.2dp">2dp</dimen>
     <dimen name="spacing.4dp">4dp</dimen>
@@ -29,17 +34,17 @@
     <dimen name="spacing.144dp">144dp</dimen>
     <dimen name="spacing.192dp">192dp</dimen>
     <dimen name="spacing.240dp">240dp</dimen>
-    <dimen name="spacing.320dp">320dp</dimen>
+    <dimen name="spacing.320dp">320dp</dimen>-->
 
     <!--Font Sizes-->
-    <dimen name="font.tiny">10sp</dimen>
+    <!--<dimen name="font.tiny">10sp</dimen>
     <dimen name="font.small">12sp</dimen>
     <dimen name="font.normal">14sp</dimen>
-    <dimen name="font.big">18sp</dimen>
+    <dimen name="font.big">18sp</dimen>-->
 
     <!--Line Spacing-->
-    <dimen name="line.spacing.small">@dimen/spacing.8dp</dimen>
+    <!--<dimen name="line.spacing.small">@dimen/spacing.8dp</dimen>
     <dimen name="line.spacing.normal">@dimen/spacing.12dp</dimen>
-    <dimen name="line.tiny">@dimen/spacing.0.2dp</dimen>
-    <dimen name="view_pager_tab_indicator_size">@dimen/spacing.2dp</dimen>
+    <dimen name="line.tiny">@dimen/spacing.0.2dp</dimen>-->
+    <dimen name="view_pager_tab_indicator_size">2dp</dimen>
 </resources>

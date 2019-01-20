@@ -1,16 +1,14 @@
 package com.mspo.comspo.ui.activities.login;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.LoginRequest;
@@ -32,8 +30,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private AppCompatEditText username;
     private AppCompatEditText password;
-    private AppCompatButton log_in;
-    private AppCompatButton sign_up;
+    private MaterialButton log_in;
+    private MaterialButton sign_up;
     private ProgressBar progressBar;
 
     @Override
@@ -90,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         LoginRequest loginRequest = new LoginRequest(username.getText().toString(), password.getText().toString());
 
-                        APIClient.getDrinkClient()
+                        APIClient.getClient()
                                 .create(LoginService.class)
                                 .doLogin(loginRequest)
                                 .enqueue(new Callback<LoginResponse>() {

@@ -64,7 +64,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
         LinearLayoutManager verticalLayoutmanager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewAuditList.setLayoutManager(verticalLayoutmanager);
-        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
+        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
 
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -113,7 +113,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
             progressBar.setVisibility(View.VISIBLE);
             PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(SmallholderAuditListService.class)
                     .getAuditList(PrefManager.getFarmId(getActivity()),
                             PrefManager.getAccessToken(getActivity()),

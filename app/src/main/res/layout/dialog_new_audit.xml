@@ -1,159 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_normal"
+    tools:ignore="MissingPrefix">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/container"
-        android:layout_width="match_parent"
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/TextAppearance.MSPO.Toolbar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing.8dp"
-        android:background="@color/putty"
-        android:foreground="?selectableItemBackgroundBorderless">
+        android:layout_margin="@dimen/spacing_normal"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="New Audit" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing.12dp"
-            tools:ignore="MissingPrefix">
+            android:text="Start Date :" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:orientation="horizontal"
-                android:padding="@dimen/spacing.12dp">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="NEW AUDIT"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:textStyle="bold" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textView_StartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:text="DD/MM/YYYY" />
 
 
-            </LinearLayout>
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/startCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:padding="@dimen/spacing_normal"
+            android:textStyle="bold"
+            app:srcCompat="@drawable/ic_date_range_black_24dp" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/spacing.12dp"
-                android:gravity="center">
+    </LinearLayout>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:text="Start Date :"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/textView_StartDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:text="DD/MM/YYYY"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:textStyle="bold" />
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Date :" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textView_endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:text="DD/MM/YYYY" />
 
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/startCalender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:src="@drawable/ic_date_range_black_24dp"
-                    android:clickable="true"
-                    android:focusable="true"/>
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/endCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:padding="@dimen/spacing_normal"
+            android:textStyle="bold"
+            app:srcCompat="@drawable/ic_date_range_black_24dp" />
 
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/spacing.12dp"
-                android:gravity="center">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:gravity="left"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:text="End Date :"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:textStyle="bold" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/textView_endDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:text="DD/MM/YYYY"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:textStyle="bold" />
+    </LinearLayout>
 
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/endCalender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:ellipsize="end"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:src="@drawable/ic_date_range_black_24dp"
-                    android:clickable="true"
-                    android:focusable="true"/>
+    <android.support.design.button.MaterialButton
+        android:id="@+id/btnCreate"
+        style="@style/Widget.MSPO.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_normal"
+        android:gravity="center"
+        android:text="@string/text_create" />
 
 
-            </LinearLayout>
-
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:background="@color/btn_login_bg"
-                android:text="@string/text_create"
-                android:textColor="@color/btn_login" />
-
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

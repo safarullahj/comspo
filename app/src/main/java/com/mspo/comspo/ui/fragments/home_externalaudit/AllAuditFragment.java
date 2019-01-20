@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,7 +43,7 @@ public class AllAuditFragment extends Fragment {
         LinearLayoutManager verticalLayoutmanager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewAuditList.setLayoutManager(verticalLayoutmanager);
-        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
+        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
         externalAuditAdapter = new ExternalAuditAdapter(getContext(),null);
         recyclerViewAuditList.setAdapter(externalAuditAdapter);
