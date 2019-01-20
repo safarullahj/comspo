@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 public class PrefManager {
 
-    private static final String PREF_NAME = "MSPO_SHARED";
+    private static final String PREF_NAME = "MspoShared";
     public static final String LOGIN_SHARED = "LoginShared";
     private static final String LOGIN_CHECK = "LoginCheck";
     private static final String LOGIN_ACCESSTOCKEN = "LoginAccessToken";

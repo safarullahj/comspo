@@ -6,21 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <!--<include layout="@layout/content_main" />-->
+    <include layout="@layout/appbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,21 +21,6 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-
-
-        <!--<android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="?android:attr/windowBackground"
-            app:itemBackground="@color/colorAccent"
-            android:foreground="?attr/selectableItemBackground"
-            app:itemIconTint="@android:color/white"
-            app:itemTextColor="@android:color/white"
-            app:menu="@menu/bottom_navigation" />-->
-
-
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -57,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="?actionBarSize"
+        android:layout_margin="@dimen/spacing_normal"
+        app:fabSize="normal"
         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
         android:visibility="gone"/>
 

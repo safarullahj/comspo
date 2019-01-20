@@ -3,11 +3,12 @@
 
     <item
         android:id="@+id/bottom_nav_external"
-        android:title="External Audit" />
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/external_audits" />
 
     <item
         android:id="@+id/bottom_nav_internal"
-        android:title="Internal Audits" />
-
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="@string/internal_audits" />
 
 </menu>

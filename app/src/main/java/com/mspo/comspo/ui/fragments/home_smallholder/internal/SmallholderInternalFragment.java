@@ -39,7 +39,6 @@ import com.mspo.comspo.ui.activities.MainActivity;
 import com.mspo.comspo.ui.adapters.InternalAuditAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +96,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         LinearLayoutManager verticalLayoutmanager
                 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewAuditList.setLayoutManager(verticalLayoutmanager);
-        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.line_spacing_normal));
+        recyclerViewAuditList.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
 
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -187,7 +186,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                         String.valueOf(startTimeStamp),
                         String.valueOf(endTimeStamp));
 
-                APIClient.getDrinkClient()
+                APIClient.getClient()
                         .create(NewInternalAuditService.class)
                         .createAudit(PrefManager.getAccessToken(getActivity()), internalAuditRequest)
                         .enqueue(new Callback<NewInternalAuditResponse>() {
@@ -308,7 +307,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
 
             PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(SmallholderAuditListService.class)
                     .getAuditList(PrefManager.getFarmId(getActivity()),
                             PrefManager.getAccessToken(getActivity()),

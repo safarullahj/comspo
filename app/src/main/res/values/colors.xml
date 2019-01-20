@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <!--<color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -27,5 +27,23 @@
     <color name="yellow">#FBC02D</color>
     <color name="gray">#787878</color>
     <color name="red">#f41717</color>
-    <color name="container_detail">#058089</color>
+    <color name="container_detail">#058089</color>-->
+
+    <!--<color name="colorPrimary">#34454C</color>
+    <color name="colorPrimaryDark">#34454C</color>
+    <color name="colorAccent">#008577</color>-->
+
+    <color name="colorPrimary">#FFFFFF</color>
+    <!--<color name="colorPrimaryDark">#E0E0E0</color>-->
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#a6ed8e</color>
+    <color name="colorOnPrimary">#456173</color>
+    <color name="textColorPrimary">#456173</color>
+    <color name="iconColorEnabled">#456173</color>
+    <color name="activityBackgroundColor">@color/colorPrimary</color>
+    <color name="productGridBackgroundColor">#FFFBFA</color>
+    <color name="colorControlActivated">@color/colorOnPrimary</color>
+
+    <color name="black_overlay">#66000000</color>
+
 </resources>

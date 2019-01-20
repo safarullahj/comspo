@@ -1,200 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/container"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?selectableItemBackgroundBorderless"
-        android:layout_marginTop="@dimen/spacing.8dp"
-        android:background="@color/putty">
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_medium">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing.12dp"
-            tools:ignore="MissingPrefix">
+            android:padding="@dimen/spacing_normal">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextAppearance.MSPO.Toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/audit_id" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_audit_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                tools:text="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_normal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/yellow"
-                android:padding="@dimen/spacing.12dp">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.MSPO.Toolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
                     android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="Audit Id :"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/spacing.20dp"
-                    android:layout_marginLeft="@dimen/spacing.12dp"
-                    android:textStyle="bold" />
+                    android:text="@string/firm_group" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/textView_audit_id"
+                    android:id="@+id/textView_farm_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    tools:text="Farming colors" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.MSPO.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/year" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textView_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    tools:text="2018" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_normal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.MSPO.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/status" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textView_audit_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    tools:text="OnGoing Audit" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.MSPO.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text="@string/category" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/textView_audit_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
                     android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/spacing.26dp"
-                    android:layout_marginLeft="@dimen/spacing.8dp"
-                    android:textStyle="bold" />
+                    tools:text="Single audit" />
+
             </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Firm/Group :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/textView_farm_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Farming colors"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Year :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/textView_year"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="2018"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Status :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/textView_audit_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="OnGoing Audit"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Category :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/textView_audit_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="singleaudit"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-
         </LinearLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
-    </android.support.v7.widget.CardView>
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

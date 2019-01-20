@@ -1,72 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bg_login"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp" >
-
+    android:padding="@dimen/spacing_normal">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/username"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/prompt_username"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@color/btn_login_bg"
-            android:text="@string/action_sign_in"
-            android:textColor="@color/btn_login" />
+        android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/signin_progress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing.32dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:indeterminate="true"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnLinkToRegisterScreen"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/username_text_input"
+            style="@style/Widget.MSPO.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_username">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<android.support.v7.widget.AppCompatEditText
+            android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/prompt_username"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:inputType="textEmailAddress"
+            android:singleLine="true" />-->
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_text_input"
+            style="@style/Widget.MSPO.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_password"
+            app:errorEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<android.support.v7.widget.AppCompatEditText
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:singleLine="true" />-->
+
+        <android.support.design.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/Widget.MSPO.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sign_in" />
+
+        <android.support.design.button.MaterialButton
+            android:id="@+id/btnLinkToRegisterScreen"
+            style="@style/Widget.MSPO.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
-            android:background="@null"
             android:text="@string/btn_link_to_register"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </ScrollView>

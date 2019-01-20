@@ -1,148 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/spacing.8dp"
-    android:background="@color/bg_login">
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
-        android:textColor="@color/white"
-        android:text="STATUS"/>
-
-
-    <RadioGroup
-        android:id="@+id/statusRadio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing.8dp"
-        android:layout_marginLeft="@dimen/spacing.16dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_showAll"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:checked="true"
-            android:textColor="@color/white"
-            android:text="SHOW ALL"
-            android:textSize="@dimen/spacing.20dp" />
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_newlyAssigned"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:textColor="@color/white"
-            android:text="NEWLY ASSIGNED"
-            android:textSize="@dimen/spacing.20dp"/>
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_pending"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:textColor="@color/white"
-            android:text="PENDING"
-            android:textSize="@dimen/spacing.20dp"/>
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_onGoing"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:textColor="@color/white"
-            android:text="ON GOING"
-            android:textSize="@dimen/spacing.20dp"/>
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_notApproved"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:textColor="@color/white"
-            android:text="NOT APPROVED"
-            android:textSize="@dimen/spacing.20dp"/>
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rad_approved"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/spacing.26dp"
-            android:textColor="@color/white"
-            android:text="APPROVED"
-            android:textSize="@dimen/spacing.20dp"/>
-
-    </RadioGroup>
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
-        android:textColor="@color/white"
-        android:text="Year"
-        android:layout_marginTop="@dimen/spacing.12dp"/>
-
-    <Spinner
-        android:id="@+id/category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/spacing.26dp"
-        android:paddingRight="@dimen/spacing.26dp"
-        />
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Title"
-        android:textColor="@color/white"
-        android:text="Search Audit"
-        android:layout_marginTop="@dimen/spacing.12dp"/>
-
-
-    <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/edt_search"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing.8dp"
-        android:layout_marginLeft="@dimen/spacing.16dp"
-        android:layout_marginRight="@dimen/spacing.12dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:hint="Search . . . ."
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/input_login"
-        android:textColorHint="@color/input_login_hint" />
-
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dip"
-        android:gravity="center"
-        android:padding="@dimen/spacing.12dp">
-
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnApply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:background="@color/btn_login_bg"
-        android:text="FILTER"
-        android:textColor="@color/btn_login"
-        android:layout_marginRight="@dimen/spacing.12dp"/>
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/imgReset"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_autorenew_black_24dp"
-            android:layout_marginLeft="@dimen/spacing.12dp"/>
+        <android.support.design.button.MaterialButton
+            android:id="@+id/btnApply"
+            style="@style/Widget.MSPO.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:text="@string/apply" />
+
+        <android.support.design.button.MaterialButton
+            android:id="@+id/reset"
+            style="@style/Widget.MSPO.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:text="@string/reset" />
 
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextAppearance.MSPO.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_normal"
+                android:text="@string/search_audit" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edt_search"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                android:hint="@string/search"
+                android:padding="@dimen/spacing_normal"
+                android:singleLine="true" />
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextAppearance.MSPO.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_normal"
+                android:text="@string/status" />
+
+
+            <RadioGroup
+                android:id="@+id/statusRadio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_normal">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_showAll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/show_all" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_newlyAssigned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/newlyAssigned" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_pending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/hint_pending" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_onGoing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/hint_ongoing" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_notApproved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/not_approved" />
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rad_approved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/hint_approved" />
+
+            </RadioGroup>
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/TextAppearance.MSPO.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_normal"
+                android:text="@string/year" />
+
+            <Spinner
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                android:padding="@dimen/spacing_normal" />
+
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_normal">-->
+
+
+            <!--<android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/spacing.12dp"
+                android:background="@color/btn_login_bg"
+                android:gravity="center"
+                android:text="FILTER" />-->
+
+            <!--<android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgReset"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                app:srcCompat="@drawable/ic_autorenew_black_24dp" />-->
+
+            <!--</LinearLayout>-->
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

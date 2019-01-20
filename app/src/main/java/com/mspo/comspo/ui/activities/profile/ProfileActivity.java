@@ -8,20 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.mspo.comspo.R;
-import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.profile_view.ProfileViewResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
-import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.ProfileService;
@@ -65,8 +61,12 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         progressBar = findViewById(R.id.progress);
         profileImage = findViewById(R.id.imageViewProfileImage);
@@ -104,7 +104,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(ProfileService.class)
                     .getProfile(PrefManager.getAccessToken(ProfileActivity.this),PrefManager.getFarmId(ProfileActivity.this))
                     .enqueue(new Callback<ProfileViewResponse>() {
@@ -130,7 +130,6 @@ public class ProfileActivity extends AppCompatActivity {
                                     phone.setText(checkText(response.body().getPhone()));
                                     farmName.setText(checkText(response.body().getName()));
                                     farmAddress.setText(checkText(response.body().getAddress()));
-                                    ;
                                     district.setText(checkText(response.body().getDistrict()));
                                     landCondetion.setText(checkText(response.body().getLandCondition()));
 

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,8 +59,12 @@ public class AuditorProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auditor_profile);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         progressBar = findViewById(R.id.progress);
         profileImage = findViewById(R.id.imageViewProfileImage);
@@ -97,7 +102,7 @@ public class AuditorProfileActivity extends AppCompatActivity {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(ProfileService.class)
                     .getAuditorProfile(PrefManager.getAccessToken(AuditorProfileActivity.this), "1")
                     .enqueue(new Callback<AuditorProfileViewResponse>() {

@@ -15,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:theme="@style/Theme.MSPO">
         <activity
             android:name=".ui.activities.login.LoginActivity"
             android:label="@string/app_name">
@@ -24,23 +25,30 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.mspo.com"
+                    android:pathPattern="/android"
+                    android:scheme="http" />
+            </intent-filter>
         </activity>
+
         <activity android:name=".ui.activities.login.SignUpActivity" />
         <activity
             android:name=".ui.activities.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_main" />
         <activity android:name=".ui.activities.audit_details.AuditDetailsActivity" />
-        <activity
-            android:name=".ui.activities.record_inspection.RecordInspectionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activities.profile.ProfileActivity" />
         <activity android:name=".ui.activities.profile.ProfileEditActivity" />
         <activity android:name=".ui.activities.settings.SettingsActivity" />
         <activity android:name=".ui.activities.profile.AuditorProfileActivity" />
         <activity
             android:name=".ui.activities.audit_sheet.AuditSheetActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/title_activity_audit_sheet"/>
     </application>
 

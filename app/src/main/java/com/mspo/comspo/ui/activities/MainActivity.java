@@ -3,24 +3,23 @@ package com.mspo.comspo.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageView;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import com.mspo.comspo.R;
@@ -38,8 +37,8 @@ import com.mspo.comspo.ui.activities.profile.AuditorProfileActivity;
 import com.mspo.comspo.ui.activities.profile.ProfileActivity;
 import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
-import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
 import com.mspo.comspo.ui.fragments.home_smallholder.HomeFragmentSmallholder;
+import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,8 +58,8 @@ public class MainActivity extends AppCompatActivity
     private Fragment currentFragment;
     private RadioGroup statusRadioGroup;
     private AppCompatEditText search;
-    private AppCompatButton apply;
-    private AppCompatImageView reset;
+    private MaterialButton apply;
+    private MaterialButton reset;
 
     private FilterInterface filterInterfaceExternal,filterInterfaceInternal;
 
@@ -216,7 +215,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        reset = headerView.findViewById(R.id.imgReset);
+        reset = headerView.findViewById(R.id.reset);
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -327,7 +326,7 @@ public class MainActivity extends AppCompatActivity
                     Log.e("logTest", "user_accessToken : " + PrefManager.getAccessToken(MainActivity.this));
                     LogoutRequest logoutRequest = new LogoutRequest(PrefManager.getUserId(MainActivity.this));
 
-                    APIClient.getDrinkClient()
+                    APIClient.getClient()
                             .create(LogoutService.class)
                             .doLogout(PrefManager.getAccessToken(MainActivity.this),logoutRequest)
                             .enqueue(new Callback<LogoutResponse>() {

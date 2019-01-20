@@ -11,8 +11,7 @@
     <item
         android:id="@+id/action_filter"
         android:orderInCategory="100"
-        android:title="Filter"
-        app:showAsAction="always"
         android:icon="@drawable/ic_filter_list_black_24dp"
-        android:iconTint="@color/white"/>
+        app:showAsAction="always"
+        android:title="@string/filter" />
 </menu>

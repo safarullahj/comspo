@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.data.remote.webservice.IndividualAuditDetailsService;
 import com.mspo.comspo.ui.activities.audit_sheet.AuditSheetActivity;
-import com.mspo.comspo.ui.activities.record_inspection.RecordInspectionActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +36,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private static final String KEY_FARM_NAME = "key.farmName";
 
     private ProgressBar progressBar;
-    private AppCompatButton record_inspection;
+    private MaterialButton record_inspection;
 
     private AppCompatTextView farmGroup;
     private AppCompatTextView address;
@@ -64,8 +63,13 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audit_details);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         progressBar = findViewById(R.id.progress);
@@ -104,7 +108,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
             progressBar.setVisibility(View.VISIBLE);
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(IndividualAuditDetailsService.class)
                     .getAuditDetails(auditId,
                             PrefManager.getAccessToken(AuditDetailsActivity.this),
@@ -192,7 +196,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
             progressBar.setVisibility(View.VISIBLE);
 
-            APIClient.getDrinkClient()
+            APIClient.getClient()
                     .create(AuditSheetService.class)
                     .getAuditSheet(auditId,
                             PrefManager.getAccessToken(AuditDetailsActivity.this),

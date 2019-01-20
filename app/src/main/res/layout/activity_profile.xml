@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white2">
+    android:layout_height="match_parent">
+
+    <include layout="@layout/appbar" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,120 +20,95 @@
                 android:id="@+id/progress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing.20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:indeterminate="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                android:orientation="vertical">
+
+                <com.mspo.comspo.ui.widgets.CircleImageView
+                    android:id="@+id/imageViewProfileImage"
+                    android:layout_width="@dimen/roundPicNormal"
+                    android:layout_height="@dimen/roundPicNormal"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="#e3e3e3" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_user_name"
+                    style="@style/TextAppearance.MSPO.Toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/name" />
+
+            </LinearLayout>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing.12dp"
-                android:foreground="?selectableItemBackgroundBorderless">
+                android:layout_margin="@dimen/spacing_normal"
+                android:foreground="?selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/spacing.12dp"
-                    tools:ignore="MissingPrefix">
-
-                    <com.mspo.comspo.ui.widgets.CircleImageView
-                        android:id="@+id/imageViewProfileImage"
-                        android:layout_width="@dimen/roundPicNormal"
-                        android:layout_height="@dimen/roundPicNormal"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/line.spacing.normal"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:src="@color/mistyrose" />
+                    android:padding="@dimen/spacing_normal">
 
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="Name"
-                        android:textColor="@color/royalblue"
-                        android:textSize="@dimen/spacing.20dp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing.12dp"
-                android:layout_marginLeft="@dimen/spacing.12dp"
-                android:layout_marginRight="@dimen/spacing.12dp"
-                android:background="?attr/colorPrimary"
-                android:foreground="?selectableItemBackgroundBorderless">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:paddingBottom="@dimen/spacing.12dp"
-                    tools:ignore="MissingPrefix">
-
-
-                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Home Address"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/home_address" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_home_address"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - - "
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Email Address"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/email_address" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_email"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - -"
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Phone"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/phone" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_phone"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - -"
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
                 </LinearLayout>
 
@@ -142,85 +117,73 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing.12dp"
-                android:layout_marginLeft="@dimen/spacing.12dp"
-                android:layout_marginRight="@dimen/spacing.12dp"
-                android:background="?attr/colorPrimary"
-                android:foreground="?selectableItemBackgroundBorderless">
+                android:layout_margin="@dimen/spacing_normal"
+                android:foreground="?selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/spacing.12dp"
-                    tools:ignore="MissingPrefix">
+                    android:padding="@dimen/spacing_normal">
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Farm Name"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/farm_name" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_farm_name"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - -"
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Farm Address"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/farm_address" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_fatm_address"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - - "
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="District"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/district" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_district"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - -"
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Land Condetion"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/land_condition" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_landCondetion"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/spacing.16dp"
-                        android:text="- - -"
-                        android:textSize="@dimen/spacing.16dp" />
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
 
                 </LinearLayout>
 
@@ -229,27 +192,21 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing.12dp"
-                android:layout_marginLeft="@dimen/spacing.12dp"
-                android:layout_marginRight="@dimen/spacing.12dp"
-                android:background="?attr/colorPrimary"
-                android:foreground="?selectableItemBackgroundBorderless">
+                android:layout_margin="@dimen/spacing_normal"
+                android:foreground="?selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/spacing.12dp"
-                    tools:ignore="MissingPrefix">
+                    android:padding="@dimen/spacing_normal">
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="External Audits"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/external_audits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -257,160 +214,124 @@
                         android:orientation="horizontal">
 
                         <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextAppearance.AppCompat.Body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Approved :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp" />
+                            android:padding="@dimen/spacing_normal"
+                            android:text="@string/approved" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txt_ext_approved"
-                            android:layout_width="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="0"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing_normal"
+                            android:text="@string/_0" />
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Completed :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/completed" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_ext_completed"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Pending :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/pending" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_ext_pending"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Ongoing :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/ongoing" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_ext_ongoing"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Newly Assigned :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/newly_assigned" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_ext_newlyAssigned"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
-
 
                     </LinearLayout>
 
@@ -421,27 +342,21 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing.12dp"
-                android:layout_marginLeft="@dimen/spacing.12dp"
-                android:layout_marginRight="@dimen/spacing.12dp"
-                android:background="?attr/colorPrimary"
-                android:foreground="?selectableItemBackgroundBorderless">
+                android:layout_margin="@dimen/spacing_normal"
+                android:foreground="?selectableItemBackground">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/spacing.12dp"
-                    tools:ignore="MissingPrefix">
+                    android:padding="@dimen/spacing_normal">
 
                     <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/line.spacing.normal"
-                        android:text="Internal Audits"
-                        android:textColor="@color/dodgerblue"
-                        android:textSize="@dimen/spacing.18dp" />
+                        android:text="@string/internal_audits" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -449,164 +364,133 @@
                         android:orientation="horizontal">
 
                         <android.support.v7.widget.AppCompatTextView
+                            style="@style/TextAppearance.AppCompat.Body2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="Approved :"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp" />
+                            android:padding="@dimen/spacing_normal"
+                            android:text="@string/approved" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txt_int_approved"
-                            android:layout_width="wrap_content"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left|bottom"
-                            android:ellipsize="end"
-                            android:text="0"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/spacing.20dp"
-                            android:layout_marginLeft="@dimen/spacing.12dp"
-                            android:textStyle="bold" />
+                            android:layout_weight="1"
+                            android:padding="@dimen/spacing_normal"
+                            android:text="@string/_0" />
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Completed :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/completed" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_int_completed"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Pending :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/pending" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_int_pending"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:baselineAligned="false"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Ongoing :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/ongoing" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_int_ongoing"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body2"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="Newly Assigned :"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp" />
+                                android:text="@string/newly_assigned" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_int_newlyAssigned"
-                                android:layout_width="wrap_content"
+                                style="@style/TextAppearance.AppCompat.Body1"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:ellipsize="end"
-                                android:text="0"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/spacing.20dp"
-                                android:layout_marginLeft="@dimen/spacing.12dp"
-                                android:textStyle="bold" />
+                                android:padding="@dimen/spacing_normal"
+                                android:text="@string/_0" />
 
                         </LinearLayout>
+
                     </LinearLayout>
+
                 </LinearLayout>
+
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
+
     </android.support.v4.widget.NestedScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

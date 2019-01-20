@@ -14,7 +14,7 @@ public class ErrorUtils {
 
     public static ErrorResponse parseError(Response<?> response) {
         Converter<ResponseBody, ErrorResponse> converter =
-                APIClient.getDrinkClient()
+                APIClient.getClient()
                         .responseBodyConverter(ErrorResponse.class, new Annotation[0]);
 
         ErrorResponse error = null;
