@@ -31,6 +31,18 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txt_empty"
+            style="@style/TextAppearance.MSPO.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/txt_empty"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

@@ -1,5 +1,6 @@
 package com.mspo.comspo.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +21,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.LogoutRequest;
@@ -39,6 +43,9 @@ import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
 import com.mspo.comspo.ui.fragments.home_smallholder.HomeFragmentSmallholder;
 import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +69,10 @@ public class MainActivity extends AppCompatActivity
     private MaterialButton reset;
 
     private FilterInterface filterInterfaceExternal,filterInterfaceInternal;
+
+    ArrayList<String> yearList = new ArrayList<String>();
+    private Spinner yearSpinner;
+    private ArrayAdapter<String> adapter;
 
 
 
@@ -155,6 +166,13 @@ public class MainActivity extends AppCompatActivity
 
                     search.setText(managerFilter.getFilterKey());
 
+                    if(managerFilter.getFilterYear().equals("")){
+                        yearSpinner.setSelection(0);
+                    }else {
+                        int spinnerPosition = adapter.getPosition(managerFilter.getFilterYear());
+                        yearSpinner.setSelection(spinnerPosition);
+                    }
+
 
                 }else {
                     Log.e("drawer_:", "open 1");
@@ -209,8 +227,20 @@ public class MainActivity extends AppCompatActivity
 
                 managerFilter.setFilterKey(search.getText().toString());
 
+                if(String.valueOf(yearSpinner.getSelectedItem()).equals("- - NA - -")){
+                    managerFilter.setFilterYear("");
+                }else {
+                    managerFilter.setFilterYear(String.valueOf(yearSpinner.getSelectedItem()));
+                }
+
                 filterInterfaceExternal.filter();
                 filterInterfaceInternal.filter();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
                 drawer.closeDrawer(GravityCompat.END);
             }
         });
@@ -223,9 +253,29 @@ public class MainActivity extends AppCompatActivity
                 managerFilter.clearFilter();
                 filterInterfaceExternal.filter();
                 filterInterfaceInternal.filter();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
                 drawer.closeDrawer(GravityCompat.END);
             }
         });
+
+
+        yearSpinner = headerView.findViewById(R.id.spnYear);
+
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+
+        yearList.add("- - NA - -");
+        for (int i = currentYear ; i>= 2000 ; i--){
+            yearList.add(""+i);
+        }
+
+        adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, yearList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(adapter);
 
         if(PrefManager.getUserType(MainActivity.this).equals("admin")){
             updateMainFragment(Pages.PAGE_2.getPagePosition());

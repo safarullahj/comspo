@@ -122,40 +122,11 @@
                 android:text="@string/year" />
 
             <Spinner
-                android:id="@+id/category"
+                android:id="@+id/spnYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_normal"
                 android:padding="@dimen/spacing_normal" />
-
-
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dip"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/spacing_normal">-->
-
-
-            <!--<android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnApply"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/spacing.12dp"
-                android:background="@color/btn_login_bg"
-                android:gravity="center"
-                android:text="FILTER" />-->
-
-            <!--<android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imgReset"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="@dimen/spacing_normal"
-                app:srcCompat="@drawable/ic_autorenew_black_24dp" />-->
-
-            <!--</LinearLayout>-->
 
         </LinearLayout>
     </ScrollView>

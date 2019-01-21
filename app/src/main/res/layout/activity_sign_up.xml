@@ -29,15 +29,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_name"
-            android:inputType="textCapWords"
-            android:singleLine="true" />-->
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,15 +50,6 @@
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <!--<android.support.v7.widget.AppCompatEditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:hint="@string/prompt_username"
-                android:inputType="textCapWords"
-                android:singleLine="true" />-->
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -123,15 +105,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_address"
-            android:inputType="textPostalAddress"
-            android:singleLine="true" />-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,19 +131,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-            <!--<android.support.v7.widget.AppCompatEditText
-                android:id="@+id/country_code"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginBottom="10dp"
-
-                android:hint="@string/prompt_code"
-
-                android:singleLine="true"
-                 />-->
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/phone_text_input"
                 style="@style/Widget.MSPO.TextInputLayout"
@@ -192,16 +152,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <!--<android.support.v7.widget.AppCompatEditText
-                android:id="@+id/phone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-
-                android:hint="@string/prompt_phone"
-                android:inputType="phone"
-                android:singleLine="true" />-->
-
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -219,15 +169,6 @@
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />-->
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/password_text_input"
             style="@style/Widget.MSPO.TextInputLayout"
@@ -243,15 +184,6 @@
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:singleLine="true" />-->
-
         <!-- Login Button -->
 
         <android.support.design.button.MaterialButton
@@ -260,13 +192,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_register" />
-
-        <!--<android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_normal"
-            android:text="@string/btn_register" />-->
 
     </LinearLayout>
 

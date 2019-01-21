@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,10 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
 
     @Override
     public int getItemCount() {
-        if(auditList!= null)
+        if(auditList!= null) {
+            Log.e("tst_:", "size : " + auditList.size());
             return auditList.size();
+        }
         else
             return 0;
     }
@@ -48,6 +51,7 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
     @Override
     public void onBindViewHolder(@NonNull final AuditItemViewHolder holder, final int position) {
 
+        Log.e("tst_:" , "Audit Id : "+auditList.get(position).getAuditId());
         holder.audit_id.setText("Audit Id : "+auditList.get(position).getAuditId());
         holder.audit_year.setText("Year : "+auditList.get(position).getYear());
         String status = auditList.get(position).getAuditStatus();

@@ -48,7 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SmallholderInternalFragment extends Fragment implements FilterInterface{
+public class SmallholderInternalFragment extends Fragment implements FilterInterface {
 
     private ProgressBar progressBar;
     private RecyclerView recyclerViewAuditList;
@@ -56,6 +56,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
     private FloatingActionButton fab;
     private InternalAuditAdapter internalAuditAdapter;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
+    private AppCompatTextView empty;
 
     private long startTimeStamp = 0, endTimeStamp = 0;
 
@@ -72,7 +73,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity)getActivity()).setFilterListenerInternal(this);
+        ((MainActivity) getActivity()).setFilterListenerInternal(this);
     }
 
 
@@ -84,6 +85,8 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         progressBar = view.findViewById(R.id.progress);
         recyclerViewAuditList = view.findViewById(R.id.recycler_view);
         refreshView = view.findViewById(R.id.refresh_view);
+        empty = view.findViewById(R.id.txt_empty);
+        empty.setVisibility(View.GONE);
 
         fab = view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,13 +157,13 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(startTimeStamp == 0){
-                    Toast.makeText(getActivity(),"Select Start Date",Toast.LENGTH_LONG).show();
-                }else if(endTimeStamp == 0){
-                    Toast.makeText(getActivity(),"Select End Date",Toast.LENGTH_LONG).show();
-                }else if(startTimeStamp > endTimeStamp){
-                    Toast.makeText(getActivity(),"End Date Mismatch",Toast.LENGTH_LONG).show();
-                }else {
+                if (startTimeStamp == 0) {
+                    Toast.makeText(getActivity(), "Select Start Date", Toast.LENGTH_LONG).show();
+                } else if (endTimeStamp == 0) {
+                    Toast.makeText(getActivity(), "Select End Date", Toast.LENGTH_LONG).show();
+                } else if (startTimeStamp > endTimeStamp) {
+                    Toast.makeText(getActivity(), "End Date Mismatch", Toast.LENGTH_LONG).show();
+                } else {
                     createNewAudit();
                     b.dismiss();
                 }
@@ -219,7 +222,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                                         .setAction("Action", null).show();
                             }
                         });
-            }else {
+            } else {
                 Snackbar.make(refreshView, "Farm Not Registered yet", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -317,25 +320,32 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                             "",
                             managerFilter.getFilterStatus(),
                             PrefManager.getFarmId(getActivity()),
-                            "",
+                            managerFilter.getFilterYear(),
                             true
                     )
                     .enqueue(new Callback<SmallholderAuditListResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Response<SmallholderAuditListResponse> response) {
-
+                            Log.e("tst_:", "response ");
                             if (response.isSuccessful()) {
-
+                                Log.e("tst_:", "succcdess ");
                                 if (response.body() != null) {
 
-                                        internalAuditAdapter = new InternalAuditAdapter(getContext(), response.body().getAudits());
-                                        recyclerViewAuditList.setAdapter(internalAuditAdapter);
+                                    if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
+                                        refreshView.setVisibility(View.VISIBLE);
+                                        empty.setVisibility(View.GONE);
+                                    } else {
+                                        refreshView.setVisibility(View.GONE);
+                                        empty.setVisibility(View.VISIBLE);
+                                    }
+                                    internalAuditAdapter = new InternalAuditAdapter(getContext(), response.body().getAudits());
+                                    recyclerViewAuditList.setAdapter(internalAuditAdapter);
 
                                 }
 
 
                             } else {
-
+                                Log.e("tst_:", "response else ");
                                 Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
@@ -346,7 +356,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
 
                         @Override
                         public void onFailure(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Throwable t) {
-
+                            Log.e("tst_:", "response fail : " + t.getMessage());
                             progressBar.setVisibility(View.GONE);
                             Snackbar.make(refreshView, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
@@ -364,7 +374,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
     @Override
     public void filter() {
         PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
-        Log.e("Filter_:", "internal fragment "+managerFilter.getFilterStatus() );
+        Log.e("Filter_:", "internal fragment " + managerFilter.getFilterStatus());
         getAuditList("0");
     }
 }

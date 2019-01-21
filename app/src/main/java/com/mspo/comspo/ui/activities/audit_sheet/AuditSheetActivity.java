@@ -2,6 +2,7 @@ package com.mspo.comspo.ui.activities.audit_sheet;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,8 +24,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.AuditDetail;
@@ -49,7 +54,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuditSheetActivity extends AppCompatActivity {
+public class AuditSheetActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String KEY_AUDIT_SHEET = "key.auditSheet";
     private static final String KEY_DETAILS = "key.details";
@@ -73,6 +78,13 @@ public class AuditSheetActivity extends AppCompatActivity {
     private IndividualAuditDetailsResponse auditDetailsResponse;
     private static CustomSpinnerAdapter customAdapter;
 
+
+    private LinearLayout dotsLayout;
+    private TextView[] dots;
+    private int size;
+    private Button btnPrevious, btnNext;
+
+
     public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse) {
         Intent intent = new Intent(context, AuditSheetActivity.class);
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
@@ -92,6 +104,12 @@ public class AuditSheetActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         mViewPager = findViewById(R.id.viewpager);
+
+        dotsLayout = findViewById(R.id.layoutDots);
+        btnPrevious = findViewById(R.id.btn_previous);
+        btnNext = findViewById(R.id.btn_next);
+        btnPrevious.setOnClickListener(this);
+        btnNext.setOnClickListener(this);
 
         setSupportActionBar(toolbar);
 
@@ -129,6 +147,18 @@ public class AuditSheetActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_previous:
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
+                break;
+            case R.id.btn_next:
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
+                break;
+        }
     }
 
     /**
@@ -193,6 +223,16 @@ public class AuditSheetActivity extends AppCompatActivity {
             super(fm);
             this.criterias = criterias;
             Log.e("chk", "pager Adapter");
+            size = criterias.size();
+            addBottomDots(0);
+
+            if (size == 1) {
+                btnNext.setVisibility(View.GONE);
+                btnPrevious.setVisibility(View.GONE);
+            } else {
+                btnNext.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -227,6 +267,54 @@ public class AuditSheetActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+    }
+
+    //  viewpager change listener
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageSelected(int position) {
+            addBottomDots(position);
+
+            // changing the next button text 'NEXT' / 'GOT IT'
+            if (position == 0) {
+                btnNext.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.GONE);
+            }else if(position == size-1){
+                btnNext.setVisibility(View.GONE);
+                btnPrevious.setVisibility(View.VISIBLE);
+            } else {
+                btnNext.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+    };
+
+    private void addBottomDots(int currentPage) {
+        dots = new TextView[size];
+
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(Color.WHITE);
+            dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(Color.parseColor("#51C709"));
     }
 
     @Override

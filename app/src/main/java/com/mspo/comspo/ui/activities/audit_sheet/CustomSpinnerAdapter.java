@@ -31,7 +31,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return chapters.size();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             }
 
 
-        chapterName.setText(list.get(i));
+        chapterName.setText(chapters.get(i).getChapterName()+" ("+String.format("%.2f", chapters.get(i).getCompliancePercentage())+"%)");
         return view;
     }
 }

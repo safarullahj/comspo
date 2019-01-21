@@ -36,13 +36,13 @@ public class PrefManagerFilter {
         return pref.getString(FILTER_STATUS, "");
     }
 
-    public void setFilterYear(int year) {
-        editor.putInt(FILTER_YEAR, year);
+    public void setFilterYear(String year) {
+        editor.putString(FILTER_YEAR, year);
         editor.commit();
     }
 
-    public int getFilterYear() {
-        return pref.getInt(FILTER_YEAR, 0);
+    public String getFilterYear() {
+        return pref.getString(FILTER_YEAR, "");
     }
 
     public void setFilterKey(String key) {

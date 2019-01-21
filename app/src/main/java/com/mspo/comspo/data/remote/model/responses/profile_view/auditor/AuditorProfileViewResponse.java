@@ -16,7 +16,7 @@ public class AuditorProfileViewResponse {
     private Integer newlyAssignedCount;
     @SerializedName("approved_percentage")
     @Expose
-    private Integer approvedPercentage;
+    private Double approvedPercentage;
     @SerializedName("pending_count")
     @Expose
     private Integer pendingCount;
@@ -46,13 +46,13 @@ public class AuditorProfileViewResponse {
     private Integer yearOfRegistration;
     @SerializedName("pending_percentage")
     @Expose
-    private Integer pendingPercentage;
+    private Double pendingPercentage;
     @SerializedName("address")
     @Expose
     private String address;
     @SerializedName("ongoing_percentage")
     @Expose
-    private Integer ongoingPercentage;
+    private Double ongoingPercentage;
     @SerializedName("education")
     @Expose
     private String education;
@@ -88,13 +88,13 @@ public class AuditorProfileViewResponse {
     private Boolean auditorAuditStatus;
     @SerializedName("newly_assigned_percentage")
     @Expose
-    private Integer newlyAssignedPercentage;
+    private Double newlyAssignedPercentage;
     @SerializedName("training_details")
     @Expose
     private String trainingDetails;
     @SerializedName("completed_percentage")
     @Expose
-    private Integer completedPercentage;
+    private Double completedPercentage;
     @SerializedName("landline")
     @Expose
     private String landline;
@@ -138,11 +138,11 @@ public class AuditorProfileViewResponse {
         this.newlyAssignedCount = newlyAssignedCount;
     }
 
-    public Integer getApprovedPercentage() {
+    public Double getApprovedPercentage() {
         return approvedPercentage;
     }
 
-    public void setApprovedPercentage(Integer approvedPercentage) {
+    public void setApprovedPercentage(Double approvedPercentage) {
         this.approvedPercentage = approvedPercentage;
     }
 
@@ -218,11 +218,11 @@ public class AuditorProfileViewResponse {
         this.yearOfRegistration = yearOfRegistration;
     }
 
-    public Integer getPendingPercentage() {
+    public Double getPendingPercentage() {
         return pendingPercentage;
     }
 
-    public void setPendingPercentage(Integer pendingPercentage) {
+    public void setPendingPercentage(Double pendingPercentage) {
         this.pendingPercentage = pendingPercentage;
     }
 
@@ -234,11 +234,11 @@ public class AuditorProfileViewResponse {
         this.address = address;
     }
 
-    public Integer getOngoingPercentage() {
+    public Double getOngoingPercentage() {
         return ongoingPercentage;
     }
 
-    public void setOngoingPercentage(Integer ongoingPercentage) {
+    public void setOngoingPercentage(Double ongoingPercentage) {
         this.ongoingPercentage = ongoingPercentage;
     }
 
@@ -330,11 +330,11 @@ public class AuditorProfileViewResponse {
         this.auditorAuditStatus = auditorAuditStatus;
     }
 
-    public Integer getNewlyAssignedPercentage() {
+    public Double getNewlyAssignedPercentage() {
         return newlyAssignedPercentage;
     }
 
-    public void setNewlyAssignedPercentage(Integer newlyAssignedPercentage) {
+    public void setNewlyAssignedPercentage(Double newlyAssignedPercentage) {
         this.newlyAssignedPercentage = newlyAssignedPercentage;
     }
 
@@ -346,11 +346,11 @@ public class AuditorProfileViewResponse {
         this.trainingDetails = trainingDetails;
     }
 
-    public Integer getCompletedPercentage() {
+    public Double getCompletedPercentage() {
         return completedPercentage;
     }
 
-    public void setCompletedPercentage(Integer completedPercentage) {
+    public void setCompletedPercentage(Double completedPercentage) {
         this.completedPercentage = completedPercentage;
     }
 

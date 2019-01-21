@@ -31,7 +31,7 @@ public class Audit {
     private String year;
     @SerializedName("overall_score")
     @Expose
-    private Integer overallScore;
+    private Double overallScore;
 
     public String getCategory() {
         return category;
@@ -97,11 +97,11 @@ public class Audit {
         this.year = year;
     }
 
-    public Integer getOverallScore() {
+    public Double getOverallScore() {
         return overallScore;
     }
 
-    public void setOverallScore(Integer overallScore) {
+    public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
     }
 

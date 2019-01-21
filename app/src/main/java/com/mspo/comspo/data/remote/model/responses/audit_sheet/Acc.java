@@ -30,13 +30,13 @@ public class Acc implements Serializable{
     private Integer chapterId;
     @SerializedName("green_percentage")
     @Expose
-    private Integer greenPercentage;
+    private Double greenPercentage;
     @SerializedName("compliance_value")
     @Expose
     private Integer complianceValue;
     @SerializedName("amber_percentage")
     @Expose
-    private Integer amberPercentage;
+    private Double amberPercentage;
     @SerializedName("criterion_description")
     @Expose
     private String criterionDescription;
@@ -115,11 +115,11 @@ public class Acc implements Serializable{
         this.chapterId = chapterId;
     }
 
-    public Integer getGreenPercentage() {
+    public Double getGreenPercentage() {
         return greenPercentage;
     }
 
-    public void setGreenPercentage(Integer greenPercentage) {
+    public void setGreenPercentage(Double greenPercentage) {
         this.greenPercentage = greenPercentage;
     }
 
@@ -131,11 +131,11 @@ public class Acc implements Serializable{
         this.complianceValue = complianceValue;
     }
 
-    public Integer getAmberPercentage() {
+    public Double getAmberPercentage() {
         return amberPercentage;
     }
 
-    public void setAmberPercentage(Integer amberPercentage) {
+    public void setAmberPercentage(Double amberPercentage) {
         this.amberPercentage = amberPercentage;
     }
 

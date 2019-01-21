@@ -39,7 +39,7 @@ public class IndividualAuditDetailsResponse implements Serializable {
     private String licenceNo;
     @SerializedName("overall_score")
     @Expose
-    private Integer overallScore;
+    private Double overallScore;
     @SerializedName("category")
     @Expose
     private String category;
@@ -184,11 +184,11 @@ public class IndividualAuditDetailsResponse implements Serializable {
         this.licenceNo = licenceNo;
     }
 
-    public Integer getOverallScore() {
+    public Double getOverallScore() {
         return overallScore;
     }
 
-    public void setOverallScore(Integer overallScore) {
+    public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
     }
 

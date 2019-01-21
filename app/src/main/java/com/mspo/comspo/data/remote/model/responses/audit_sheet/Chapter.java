@@ -33,7 +33,7 @@ public class Chapter implements Serializable{
     private String otherImprovementAreas;
     @SerializedName("red_percentage")
     @Expose
-    private Integer redPercentage;
+    private Double redPercentage;
     @SerializedName("strength_area")
     @Expose
     private String strengthArea;
@@ -42,10 +42,10 @@ public class Chapter implements Serializable{
     private Integer chapterId;
     @SerializedName("green_percentage")
     @Expose
-    private Integer greenPercentage;
+    private Double greenPercentage;
     @SerializedName("amber_percentage")
     @Expose
-    private Integer amberPercentage;
+    private Double amberPercentage;
     @SerializedName("chapter_position")
     @Expose
     private Integer chapterPosition;
@@ -123,11 +123,11 @@ public class Chapter implements Serializable{
         this.otherImprovementAreas = otherImprovementAreas;
     }
 
-    public Integer getRedPercentage() {
+    public Double getRedPercentage() {
         return redPercentage;
     }
 
-    public void setRedPercentage(Integer redPercentage) {
+    public void setRedPercentage(Double redPercentage) {
         this.redPercentage = redPercentage;
     }
 
@@ -147,19 +147,19 @@ public class Chapter implements Serializable{
         this.chapterId = chapterId;
     }
 
-    public Integer getGreenPercentage() {
+    public Double getGreenPercentage() {
         return greenPercentage;
     }
 
-    public void setGreenPercentage(Integer greenPercentage) {
+    public void setGreenPercentage(Double greenPercentage) {
         this.greenPercentage = greenPercentage;
     }
 
-    public Integer getAmberPercentage() {
+    public Double getAmberPercentage() {
         return amberPercentage;
     }
 
-    public void setAmberPercentage(Integer amberPercentage) {
+    public void setAmberPercentage(Double amberPercentage) {
         this.amberPercentage = amberPercentage;
     }
 

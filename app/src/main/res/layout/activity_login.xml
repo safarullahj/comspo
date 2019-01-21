@@ -36,16 +36,6 @@
                 android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/username"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_username"
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:inputType="textEmailAddress"
-            android:singleLine="true" />-->
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/password_text_input"
             style="@style/Widget.MSPO.TextInputLayout"
@@ -60,16 +50,6 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
-
-        <!--<android.support.v7.widget.AppCompatEditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            style="@style/Base.TextAppearance.AppCompat.Title"
-            android:singleLine="true" />-->
 
         <android.support.design.button.MaterialButton
             android:id="@+id/btnLogin"
