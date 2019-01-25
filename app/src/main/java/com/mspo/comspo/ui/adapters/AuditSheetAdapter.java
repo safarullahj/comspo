@@ -29,12 +29,14 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     private Context context;
     private List<Aic> sheetList;
     private CustomSpinnerAdapter customAdapter;
+    private String version;
 
 
-    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter) {
+    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter, String version) {
         this.context = context;
         this.sheetList = sheetList;
         this.customAdapter = customAdapter;
+        this.version = version;
     }
 
 
@@ -58,7 +60,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     @Override
     public void onBindViewHolder(@NonNull final SheetItemViewHolder holder, final int position) {
 
-        holder.txtIndicatorHead.setText((position+1)+". INDICATORS");
+        holder.txtIndicatorHead.setText(version+"."+sheetList.get(position).getPosition() +" INDICATORS");
         holder.txtIndicator.setText( sheetList.get(position).getIndicatorDescription());
 
         if (sheetList.get(position).getIndicatorType().equals("M")){

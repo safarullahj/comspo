@@ -19,12 +19,10 @@ import java.util.List;
 public class CustomSpinnerAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<String> list;
     private List<Chapter> chapters;
 
-    CustomSpinnerAdapter(Context applicationContext, ArrayList<String> list, List<Chapter> chapters) {
+    CustomSpinnerAdapter(Context applicationContext, List<Chapter> chapters) {
         this.context = applicationContext;
-        this.list = list;
         this.chapters = chapters;
     }
 
@@ -61,7 +59,7 @@ public class CustomSpinnerAdapter extends BaseAdapter {
             }
 
 
-        chapterName.setText(chapters.get(i).getChapterName()+" ("+String.format("%.2f", chapters.get(i).getCompliancePercentage())+"%)");
+        chapterName.setText("4."+chapters.get(i).getChapterPosition()+" "+chapters.get(i).getChapterName()+" ("+String.format("%.2f", chapters.get(i).getCompliancePercentage())+"%)");
         return view;
     }
 }

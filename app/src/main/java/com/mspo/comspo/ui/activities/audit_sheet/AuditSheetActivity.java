@@ -1,6 +1,7 @@
 package com.mspo.comspo.ui.activities.audit_sheet;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,7 +68,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
      * The {@link ViewPager} that will host the section contents.
      */
 
-    ArrayList<String> actions = new ArrayList<String>();
+    //ArrayList<String> actions = new ArrayList<String>();
     private ViewPager mViewPager;
 
     private Spinner category;
@@ -122,14 +124,14 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             auditSheetResponse = (AuditSheetResponse) getIntent().getSerializableExtra(KEY_AUDIT_SHEET);
             auditDetailsResponse = (IndividualAuditDetailsResponse) getIntent().getSerializableExtra(KEY_DETAILS);
 
-            for (Chapter chapter : auditSheetResponse.getChapters()) {
+            /*for (Chapter chapter : auditSheetResponse.getChapters()) {
                 actions.add(chapter.getChapterName());
-            }
+            }*/
             /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), R.layout.spinner_item, actions);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             category.setAdapter(adapter);*/
 
-            customAdapter=new CustomSpinnerAdapter(getApplicationContext(),actions,auditSheetResponse.getChapters());
+            customAdapter=new CustomSpinnerAdapter(getApplicationContext(),auditSheetResponse.getChapters());
             category.setAdapter(customAdapter);
 
             //initializeViewPager(0);
@@ -177,7 +179,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             Log.e("chk", "instance+" + acc.getCriterionDescription());
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putSerializable(KEY_CRITERIA, acc);
+            args.putSerializable(KEY_CRITERIA, acc);;
             fragment.setArguments(args);
             return fragment;
         }
@@ -194,7 +196,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
 
             AppCompatTextView textView = rootView.findViewById(R.id.txt_criterion_description);
-            textView.setText(acc.getCriterionDescription());
+            String version = "4."+acc.getChapterPosition()+"."+acc.getCriterionPosition();
+            textView.setText(version+" "+acc.getCriterionDescription());
 
             RecyclerView criteria_list = rootView.findViewById(R.id.criteria_list);
 
@@ -203,7 +206,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             criteria_list.setLayoutManager(verticalLayoutmanager);
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter);
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version);
             criteria_list.setAdapter(auditSheetAdapter);
 
 
@@ -327,7 +330,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            showExitDialog();
         } else if (item.getItemId() == R.id.action_save) {
 
             if (Connectivity.checkInternetIsActive(AuditSheetActivity.this)) {
@@ -426,5 +429,25 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showExitDialog() {
+        new AlertDialog.Builder(AuditSheetActivity.this)
+                .setTitle(getString(R.string.warning_exit_without_save))
+                .setPositiveButton(getString(R.string.action_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton(getString(R.string.action_no), null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        showExitDialog();
     }
 }
