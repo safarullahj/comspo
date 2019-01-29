@@ -173,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onFailure(Call<ProfileViewResponse> call, Throwable t) {
 
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(findViewById(android.R.id.content), "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            Snackbar.make(findViewById(android.R.id.content), "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

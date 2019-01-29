@@ -1,13 +1,22 @@
 package com.mspo.comspo.ui.activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +34,25 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+import com.mspo.comspo.BuildConfig;
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.LogoutRequest;
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
@@ -57,6 +84,26 @@ public class MainActivity extends AppCompatActivity
     public static final int FRAGMENT_0 = 0;
     public static final int FRAGMENT_1 = 1;
     public static final int FRAGMENT_2 = 2;
+
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+    // fastest updates interval - 5 sec
+    // location updates will be received if another app is requesting the locations
+    // than your app can handle
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
+    private static final int REQUEST_CHECK_SETTINGS = 1002;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    // bunch of location related apis
+    private FusedLocationProviderClient mFusedLocationClient;
+    private SettingsClient mSettingsClient;
+    private LocationRequest mLocationRequest;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private LocationCallback mLocationCallback;
+
+    private MaterialButton refreshLocation;
+
+    // boolean flag to toggle the ui
+    private Boolean mRequestingLocationUpdates;
 
     //private BottomNavigationView bottomNavigation;
     private FloatingActionButton fab;
@@ -113,6 +160,16 @@ public class MainActivity extends AppCompatActivity
         //bottomNavigation =  findViewById(R.id.navigation);
         //bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        refreshLocation = findViewById(R.id.refreshLocation);
+        refreshLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*if (mRequestingLocationUpdates && checkPermissions()) {
+                    startLocationUpdates();
+                }*/
+                startLocationButtonClick();
+            }
+        });
 
         fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +284,7 @@ public class MainActivity extends AppCompatActivity
 
                 managerFilter.setFilterKey(search.getText().toString());
 
-                if(String.valueOf(yearSpinner.getSelectedItem()).equals("- - NA - -")){
+                if (String.valueOf(yearSpinner.getSelectedItem()).equals("Select")) {
                     managerFilter.setFilterYear("");
                 }else {
                     managerFilter.setFilterYear(String.valueOf(yearSpinner.getSelectedItem()));
@@ -268,7 +325,7 @@ public class MainActivity extends AppCompatActivity
 
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
-        yearList.add("- - NA - -");
+        yearList.add("Select");
         for (int i = currentYear ; i>= 2000 ; i--){
             yearList.add(""+i);
         }
@@ -288,6 +345,10 @@ public class MainActivity extends AppCompatActivity
                 updateMainFragment(Pages.PAGE_1.getPagePosition());
             //}
         }
+
+        init();
+
+        //startLocationButtonClick();
     }
 
     @Override
@@ -304,6 +365,10 @@ public class MainActivity extends AppCompatActivity
             //bottomNavigation.setVisibility(View.VISIBLE);
             fab.hide();
             navigationView.getMenu().getItem(0).setChecked(true);
+        }
+
+        if (mRequestingLocationUpdates && checkPermissions()) {
+            startLocationUpdates();
         }
 
     }
@@ -491,6 +556,186 @@ public class MainActivity extends AppCompatActivity
 
         Fragment getFragment() {
             return fragment;
+        }
+    }
+
+    private void init() {
+        Log.e("LOCTEST", "init");
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mSettingsClient = LocationServices.getSettingsClient(this);
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Location location = locationResult.getLastLocation();
+                updateLocationUI(location);
+                Log.e("LOCTEST", "updateLocationUI: " + location.getLatitude());
+                //get location
+            }
+        };
+
+        mRequestingLocationUpdates = false;
+        //mRequestingLocationUpdates = true;
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        mLocationSettingsRequest = builder.build();
+    }
+
+    private void updateLocationUI(Location currentLocation) {
+        if (currentLocation != null) {
+            stopLocationButtonClick();
+
+            Toast.makeText(this, "Location: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+            invalidateAndFetchWeather();
+        }
+    }
+
+    private void invalidateAndFetchWeather() {
+        // TODO: 29-Jan-19 Weather data
+    }
+
+    /**
+     * Starting location updates
+     * Check whether location settings are satisfied and then
+     * location updates will be requested
+     */
+    private void startLocationUpdates() {
+        Log.e("LOCTEST", "startLocationUpdates");
+        mSettingsClient
+                .checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener(this, locationSettingsResponse -> {
+                    Log.e(TAG, "All location settings are satisfied.");
+
+                    if (ActivityCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+
+                    mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                            mLocationCallback, Looper.myLooper());
+
+                })
+                .addOnFailureListener(this, e -> {
+                    int statusCode = ((ApiException) e).getStatusCode();
+
+                    switch (statusCode) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            Log.e(TAG, "Location settings are not satisfied. " +
+                                    "Attempting to upgrade location settings ");
+                            try {
+                                ResolvableApiException rae = (ResolvableApiException) e;
+                                rae.startResolutionForResult(this,
+                                        REQUEST_CHECK_SETTINGS);
+                            } catch (IntentSender.SendIntentException sie) {
+                                Log.i(TAG, "PendingIntent unable to execute request.");
+                            }
+                            break;
+                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            String errorMessage = "Location settings are inadequate, " +
+                                    "and cannot be fixed here. Fix in Settings.";
+                            Log.e(TAG, errorMessage);
+
+                            Toast.makeText(this, errorMessage,
+                                    Toast.LENGTH_LONG).show();
+                    }
+
+                });
+    }
+
+    public void startLocationButtonClick() {
+        Log.e("LOCTEST", "button click");
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        mRequestingLocationUpdates = true;
+                        Log.e("LOCTEST", "onPermissionGranted");
+                        startLocationUpdates();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            Log.e("LOCTEST", "onPermissionDenied");
+                            openSettings();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission,
+                                                                   PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    public void stopLocationButtonClick() {
+        mRequestingLocationUpdates = false;
+        stopLocationUpdates();
+    }
+
+    public void stopLocationUpdates() {
+        Log.e("LOCTEST", "stopLocationUpdates: ");
+        mFusedLocationClient
+                .removeLocationUpdates(mLocationCallback)
+                .addOnCompleteListener(this, task -> Log.i(TAG,
+                        "Location updates stopped!"));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CHECK_SETTINGS:
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        Log.e(TAG, "User agreed to make required location settings changes.");
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        Log.e(TAG, "User chose not to make required " +
+                                "location settings changes.");
+                        mRequestingLocationUpdates = false;
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent();
+        intent.setAction(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package",
+                BuildConfig.APPLICATION_ID, null);
+        intent.setData(uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mRequestingLocationUpdates) {
+            // pausing location updates
+            stopLocationUpdates();
         }
     }
 }

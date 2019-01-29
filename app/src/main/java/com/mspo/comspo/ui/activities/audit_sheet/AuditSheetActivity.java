@@ -3,7 +3,6 @@ package com.mspo.comspo.ui.activities.audit_sheet;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -18,7 +17,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,7 +25,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,7 +36,6 @@ import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.Acc;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
-import com.mspo.comspo.data.remote.model.responses.audit_sheet.Chapter;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
@@ -81,8 +77,36 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static CustomSpinnerAdapter customAdapter;
 
 
-    private LinearLayout dotsLayout;
-    private TextView[] dots;
+    //  viewpager change listener
+    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        @Override
+        public void onPageSelected(int position) {
+            //addBottomDots(position);
+
+            // changing the next button text 'NEXT' / 'GOT IT'
+            if (position == 0) {
+                btnNext.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.GONE);
+            } else if (position == size - 1) {
+                btnNext.setVisibility(View.GONE);
+                btnPrevious.setVisibility(View.VISIBLE);
+            } else {
+                btnNext.setVisibility(View.VISIBLE);
+                btnPrevious.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int arg0) {
+
+        }
+    };
     private int size;
     private Button btnPrevious, btnNext;
 
@@ -92,6 +116,21 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
         intent.putExtra(KEY_DETAILS, auditDetailsResponse);
         return intent;
+    }
+
+    //private LinearLayout dotsLayout;
+    private TextView[] dots;
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_previous:
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
+                break;
+            case R.id.btn_next:
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                break;
+        }
     }
 
     @Override
@@ -107,7 +146,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
         mViewPager = findViewById(R.id.viewpager);
 
-        dotsLayout = findViewById(R.id.layoutDots);
+        //dotsLayout = findViewById(R.id.layoutDots);
         btnPrevious = findViewById(R.id.btn_previous);
         btnNext = findViewById(R.id.btn_next);
         btnPrevious.setOnClickListener(this);
@@ -152,15 +191,19 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_previous:
-                    mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
-                break;
-            case R.id.btn_next:
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
-                break;
-        }
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void initializeViewPager(int i) {
+        Log.e("chk", "Accs (" + i + "): " + auditSheetResponse.getChapters().get(i).getChapterName());
+        mSectionsPagerAdapter = null;
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), auditSheetResponse.getChapters().get(i).getAccs());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
     }
 
     /**
@@ -179,7 +222,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             Log.e("chk", "instance+" + acc.getCriterionDescription());
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-            args.putSerializable(KEY_CRITERIA, acc);;
+            args.putSerializable(KEY_CRITERIA, acc);
             fragment.setArguments(args);
             return fragment;
         }
@@ -227,7 +270,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             this.criterias = criterias;
             Log.e("chk", "pager Adapter");
             size = criterias.size();
-            addBottomDots(0);
+            //addBottomDots(0);
 
             if (size == 1) {
                 btnNext.setVisibility(View.GONE);
@@ -256,55 +299,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
-
-    private void initializeViewPager(int i) {
-        Log.e("chk", "Accs (" + i + "): " + auditSheetResponse.getChapters().get(i).getChapterName());
-        mSectionsPagerAdapter = null;
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), auditSheetResponse.getChapters().get(i).getAccs());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.addOnPageChangeListener(viewPagerPageChangeListener);
-    }
-
-    //  viewpager change listener
-    ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
-        @Override
-        public void onPageSelected(int position) {
-            addBottomDots(position);
-
-            // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == 0) {
-                btnNext.setVisibility(View.VISIBLE);
-                btnPrevious.setVisibility(View.GONE);
-            }else if(position == size-1){
-                btnNext.setVisibility(View.GONE);
-                btnPrevious.setVisibility(View.VISIBLE);
-            } else {
-                btnNext.setVisibility(View.VISIBLE);
-                btnPrevious.setVisibility(View.VISIBLE);
-            }
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-    };
-
-    private void addBottomDots(int currentPage) {
+    /*private void addBottomDots(int currentPage) {
         dots = new TextView[size];
 
         dotsLayout.removeAllViews();
@@ -318,7 +313,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.parseColor("#51C709"));
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

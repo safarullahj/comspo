@@ -169,7 +169,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                         public void onFailure(Call<SmallholderAuditListResponse> call, Throwable t) {
 
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(refreshView, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

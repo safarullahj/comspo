@@ -148,7 +148,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                         public void onFailure(@NonNull Call<IndividualAuditDetailsResponse> call, @NonNull Throwable t) {
 
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(record_inspection, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            Snackbar.make(record_inspection, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
 
                             Log.e("err_:" , "msg : "+t.getMessage());
@@ -226,8 +226,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                         @Override
                         public void onFailure(@NonNull Call<AuditSheetResponse> call, @NonNull Throwable t) {
 
+                            Log.e("RetrofitErr", t.getMessage());
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(record_inspection, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            Snackbar.make(record_inspection, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

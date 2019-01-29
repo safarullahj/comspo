@@ -1,9 +1,10 @@
 package com.mspo.comspo.data.remote.model.responses.audit_sheet;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class Acc implements Serializable{
 
@@ -33,7 +34,7 @@ public class Acc implements Serializable{
     private Double greenPercentage;
     @SerializedName("compliance_value")
     @Expose
-    private Integer complianceValue;
+    private Double complianceValue;
     @SerializedName("amber_percentage")
     @Expose
     private Double amberPercentage;
@@ -123,11 +124,11 @@ public class Acc implements Serializable{
         this.greenPercentage = greenPercentage;
     }
 
-    public Integer getComplianceValue() {
+    public Double getComplianceValue() {
         return complianceValue;
     }
 
-    public void setComplianceValue(Integer complianceValue) {
+    public void setComplianceValue(Double complianceValue) {
         this.complianceValue = complianceValue;
     }
 

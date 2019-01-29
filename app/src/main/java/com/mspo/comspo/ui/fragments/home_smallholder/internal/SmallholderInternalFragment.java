@@ -358,7 +358,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                         public void onFailure(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Throwable t) {
                             Log.e("tst_:", "response fail : " + t.getMessage());
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(refreshView, "SOmething went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

@@ -14,6 +14,14 @@
 
         <include layout="@layout/toolbar" />
 
+        <android.support.design.button.MaterialButton
+            android:id="@+id/refreshLocation"
+            style="@style/Widget.MSPO.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Get Location" />
+
         <FrameLayout
             android:id="@+id/fragment"
             android:layout_width="match_parent"
