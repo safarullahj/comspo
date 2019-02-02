@@ -25,6 +25,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +38,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,12 +61,14 @@ import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.LogoutRequest;
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.LogoutResponse;
+import com.mspo.comspo.data.remote.model.responses.weather.WeatherResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LogoutService;
+import com.mspo.comspo.data.remote.webservice.WeatherService;
 import com.mspo.comspo.ui.activities.login.LoginActivity;
 import com.mspo.comspo.ui.activities.profile.AuditorProfileActivity;
 import com.mspo.comspo.ui.activities.profile.ProfileActivity;
@@ -74,9 +80,13 @@ import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExterna
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,13 +111,15 @@ public class MainActivity extends AppCompatActivity
     private LocationCallback mLocationCallback;
 
     private MaterialButton refreshLocation;
+    private AppCompatTextView textView_weather;
+    private AppCompatImageView imageView_weather;
 
     // boolean flag to toggle the ui
     private Boolean mRequestingLocationUpdates;
 
     //private BottomNavigationView bottomNavigation;
     private FloatingActionButton fab;
-    private NavigationView navigationView,navigationViewFilter;
+    private NavigationView navigationView, navigationViewFilter;
     private DrawerLayout drawer;
     private Fragment currentFragment;
     private RadioGroup statusRadioGroup;
@@ -115,20 +127,19 @@ public class MainActivity extends AppCompatActivity
     private MaterialButton apply;
     private MaterialButton reset;
 
-    private FilterInterface filterInterfaceExternal,filterInterfaceInternal;
+    private FilterInterface filterInterfaceExternal, filterInterfaceInternal;
 
     ArrayList<String> yearList = new ArrayList<String>();
     private Spinner yearSpinner;
     private ArrayAdapter<String> adapter;
 
 
-
-    public void setFilterListenerExternal(FilterInterface anInterface){
-        filterInterfaceExternal = anInterface ;
+    public void setFilterListenerExternal(FilterInterface anInterface) {
+        filterInterfaceExternal = anInterface;
     }
 
-    public void setFilterListenerInternal(FilterInterface anInterface){
-        filterInterfaceInternal = anInterface ;
+    public void setFilterListenerInternal(FilterInterface anInterface) {
+        filterInterfaceInternal = anInterface;
     }
     /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -160,6 +171,11 @@ public class MainActivity extends AppCompatActivity
         //bottomNavigation =  findViewById(R.id.navigation);
         //bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        textView_weather = findViewById(R.id.textView_weather);
+        textView_weather.setVisibility(View.GONE);
+        imageView_weather = findViewById(R.id.imageView_weather);
+        imageView_weather.setVisibility(View.GONE);
+
         refreshLocation = findViewById(R.id.refreshLocation);
         refreshLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +187,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        fab =  findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,15 +196,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        drawer =  findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 // Do whatever you want here
 
                 Log.e("drawer_:", "close");
             }
+
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 // Do whatever you want here
@@ -198,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                     PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
                     String flt = managerFilter.getFilterStatus();
 
-                    switch(flt){
+                    switch (flt) {
 
                         case "":
                             statusRadioGroup.check(R.id.rad_showAll);
@@ -223,15 +240,15 @@ public class MainActivity extends AppCompatActivity
 
                     search.setText(managerFilter.getFilterKey());
 
-                    if(managerFilter.getFilterYear().equals("")){
+                    if (managerFilter.getFilterYear().equals("")) {
                         yearSpinner.setSelection(0);
-                    }else {
+                    } else {
                         int spinnerPosition = adapter.getPosition(managerFilter.getFilterYear());
                         yearSpinner.setSelection(spinnerPosition);
                     }
 
 
-                }else {
+                } else {
                     Log.e("drawer_:", "open 1");
                 }
 
@@ -239,11 +256,8 @@ public class MainActivity extends AppCompatActivity
         };
 
 
-
-
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
 
 
         navigationView = findViewById(R.id.nav_view);
@@ -262,23 +276,23 @@ public class MainActivity extends AppCompatActivity
                 PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
 
                 int id = statusRadioGroup.getCheckedRadioButtonId();
-                if(id == R.id.rad_showAll) {
-                    Log.e("Filter_:", "status : showAll " );
+                if (id == R.id.rad_showAll) {
+                    Log.e("Filter_:", "status : showAll ");
                     managerFilter.setFilterStatus("");
-                }else if(id == R.id.rad_newlyAssigned) {
-                    Log.e("Filter_:", "status : newlyAssigned" );
+                } else if (id == R.id.rad_newlyAssigned) {
+                    Log.e("Filter_:", "status : newlyAssigned");
                     managerFilter.setFilterStatus("newly_assigned");
-                }else if(id == R.id.rad_pending) {
-                    Log.e("Filter_:", "status : pending" );
+                } else if (id == R.id.rad_pending) {
+                    Log.e("Filter_:", "status : pending");
                     managerFilter.setFilterStatus("pending");
-                }else if(id == R.id.rad_onGoing) {
-                    Log.e("Filter_:", "status : onGoing" );
+                } else if (id == R.id.rad_onGoing) {
+                    Log.e("Filter_:", "status : onGoing");
                     managerFilter.setFilterStatus("on_going");
-                }else if(id == R.id.rad_notApproved) {
-                    Log.e("Filter_:", "status : notApproved" );
+                } else if (id == R.id.rad_notApproved) {
+                    Log.e("Filter_:", "status : notApproved");
                     managerFilter.setFilterStatus("completed");
-                }else if(id == R.id.rad_approved) {
-                    Log.e("Filter_:", "status : approved" );
+                } else if (id == R.id.rad_approved) {
+                    Log.e("Filter_:", "status : approved");
                     managerFilter.setFilterStatus("approved");
                 }
 
@@ -286,7 +300,7 @@ public class MainActivity extends AppCompatActivity
 
                 if (String.valueOf(yearSpinner.getSelectedItem()).equals("Select")) {
                     managerFilter.setFilterYear("");
-                }else {
+                } else {
                     managerFilter.setFilterYear(String.valueOf(yearSpinner.getSelectedItem()));
                 }
 
@@ -326,23 +340,23 @@ public class MainActivity extends AppCompatActivity
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
         yearList.add("Select");
-        for (int i = currentYear ; i>= 2000 ; i--){
-            yearList.add(""+i);
+        for (int i = currentYear; i >= 2000; i--) {
+            yearList.add("" + i);
         }
 
         adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, yearList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(adapter);
 
-        if(PrefManager.getUserType(MainActivity.this).equals("admin")){
+        if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
             updateMainFragment(Pages.PAGE_2.getPagePosition());
-        }else {
+        } else {
             /*if(currentFragment instanceof SmallholderExternalFragment) {
                 updateMainFragment(Pages.PAGE_0.getPagePosition());
             }else if(currentFragment instanceof HomeFragmentSmallholder){
                 updateMainFragment(Pages.PAGE_1.getPagePosition());
             }else {*/
-                updateMainFragment(Pages.PAGE_1.getPagePosition());
+            updateMainFragment(Pages.PAGE_1.getPagePosition());
             //}
         }
 
@@ -354,13 +368,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("loging", "main : "+PrefManager.getUserType(MainActivity.this));
-        if(PrefManager.getUserType(MainActivity.this).equals("admin")){
+        Log.e("loging", "main : " + PrefManager.getUserType(MainActivity.this));
+        if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
             navigationView.getMenu().findItem(R.id.nav_audits).setVisible(false);
             //bottomNavigation.setVisibility(View.GONE);
             fab.hide();
             navigationView.getMenu().getItem(1).setChecked(true);
-        }else {
+        } else {
             navigationView.getMenu().findItem(R.id.nav_external_audits).setVisible(false);
             //bottomNavigation.setVisibility(View.VISIBLE);
             fab.hide();
@@ -379,14 +393,14 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
 
-            if(currentFragment instanceof HomeFragmentSmallholder) {
+            if (currentFragment instanceof HomeFragmentSmallholder) {
                 PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
                 managerFilter.clearFilter();
                 finish();
                 super.onBackPressed();
             }/*else if(currentFragment instanceof HomeFragmentSmallholder){
                 updateMainFragment(Pages.PAGE_0.getPagePosition());
-            }*/else if(currentFragment instanceof HomeFragmentExternalAudit){
+            }*/ else if (currentFragment instanceof HomeFragmentExternalAudit) {
                 finish();
                 super.onBackPressed();
             }
@@ -424,17 +438,17 @@ public class MainActivity extends AppCompatActivity
             //bottomNavigation.setSelectedItemId(R.id.bottom_nav_external);
             updateMainFragment(Pages.PAGE_1.getPagePosition());
         } else if (id == R.id.nav_profile) {
-            if(PrefManager.getUserType(MainActivity.this).equals("admin")) {
+            if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
                 startActivity(AuditorProfileActivity.getIntent(MainActivity.this));
-            }else {
+            } else {
                 startActivity(ProfileActivity.getIntent(MainActivity.this));
             }
 
-        }else if(id == R.id.nav_settings){
+        } else if (id == R.id.nav_settings) {
             startActivity(SettingsActivity.getIntent(MainActivity.this));
         } else if (id == R.id.nav_signout) {
 
-            if(Connectivity.checkInternetIsActive(MainActivity.this)) {
+            if (Connectivity.checkInternetIsActive(MainActivity.this)) {
                 if (PrefManager.getUserId(MainActivity.this) != 0) {
 
                     Log.e("logTest", "user_id : " + PrefManager.getUserId(MainActivity.this));
@@ -443,7 +457,7 @@ public class MainActivity extends AppCompatActivity
 
                     APIClient.getClient()
                             .create(LogoutService.class)
-                            .doLogout(PrefManager.getAccessToken(MainActivity.this),logoutRequest)
+                            .doLogout(PrefManager.getAccessToken(MainActivity.this), logoutRequest)
                             .enqueue(new Callback<LogoutResponse>() {
                                 @Override
                                 public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
@@ -462,7 +476,7 @@ public class MainActivity extends AppCompatActivity
                                         ErrorResponse error = ErrorUtils.parseError(response);
                                         Log.e("logTest", "fail" + error.getErrorMessage());
 
-                                        if (error.getErrorMessage()!=null &&!error.getErrorMessage().equals("")) {
+                                        if (error.getErrorMessage() != null && !error.getErrorMessage().equals("")) {
                                             Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                                     .setAction("Action", null).show();
                                         } else {
@@ -481,14 +495,13 @@ public class MainActivity extends AppCompatActivity
                                 }
                             });
                 }
-            }else {
+            } else {
                 Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
 
 
-
-        }else if(id == R.id.nav_external_audits){
+        } else if (id == R.id.nav_external_audits) {
             //bottomNavigation.setVisibility(View.GONE);
             fab.hide();
             updateMainFragment(Pages.PAGE_2.getPagePosition());
@@ -507,7 +520,7 @@ public class MainActivity extends AppCompatActivity
 
         currentFragment = getFragment(position);
 
-        Log.e("TEST","position_:"+position+" , frg_:"+fragment);
+        Log.e("TEST", "position_:" + position + " , frg_:" + fragment);
         if (fragment != null) {
             transaction.replace(R.id.fragment, fragment);
         }
@@ -517,9 +530,9 @@ public class MainActivity extends AppCompatActivity
     private Fragment getFragment(int position) {
         if (position == Pages.PAGE_0.getPagePosition()) {
             return Pages.PAGE_0.getFragment();
-        }else if (position == Pages.PAGE_1.getPagePosition()) {
+        } else if (position == Pages.PAGE_1.getPagePosition()) {
             return Pages.PAGE_1.getFragment();
-        }else if (position == Pages.PAGE_2.getPagePosition()) {
+        } else if (position == Pages.PAGE_2.getPagePosition()) {
             return Pages.PAGE_2.getFragment();
         }
         return null;
@@ -528,9 +541,9 @@ public class MainActivity extends AppCompatActivity
     private String getFragmentTitle(int position) {
         if (position == Pages.PAGE_0.getPagePosition()) {
             return "HOME";
-        }else if (position == Pages.PAGE_1.getPagePosition()) {
+        } else if (position == Pages.PAGE_1.getPagePosition()) {
             return "HOME";
-        }else if (position == Pages.PAGE_2.getPagePosition()) {
+        } else if (position == Pages.PAGE_2.getPagePosition()) {
             return "HOME";
         }
         return null;
@@ -586,6 +599,12 @@ public class MainActivity extends AppCompatActivity
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
+
+        PrefManager prefManager = new PrefManager(MainActivity.this);
+
+        if (!prefManager.getLocationLat().equals("") && !prefManager.getLocationLon().equals("")) {
+            invalidateAndFetchWeather(Double.valueOf(prefManager.getLocationLat()) , Double.valueOf(prefManager.getLocationLon()));
+        }
     }
 
     private void updateLocationUI(Location currentLocation) {
@@ -593,12 +612,68 @@ public class MainActivity extends AppCompatActivity
             stopLocationButtonClick();
 
             Toast.makeText(this, "Location: " + currentLocation.getLatitude() + ", " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-            invalidateAndFetchWeather();
+
+            PrefManager prefManager = new PrefManager(MainActivity.this);
+
+            prefManager.setLocationLat(String.valueOf(currentLocation.getLatitude()));
+            prefManager.setLocationLon(String.valueOf(currentLocation.getLongitude()));
+
+            invalidateAndFetchWeather(currentLocation.getLatitude(), currentLocation.getLongitude());
+            Log.e("LOCTEST", "lat: " + currentLocation.getLatitude() + " long: " + currentLocation.getLongitude());
         }
     }
 
-    private void invalidateAndFetchWeather() {
+    private void invalidateAndFetchWeather(double latitude, double longitude) {
         // TODO: 29-Jan-19 Weather data
+
+        Log.e("LOCTEST", "fetch: ");
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit mRetrofit = new Retrofit.Builder()
+                .baseUrl("http://api.openweathermap.org/data/2.5/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build();
+
+        mRetrofit.create(WeatherService.class)
+                .getWeatherData(latitude,
+                        longitude,
+                        "d0372bd419bbe3feea2c991161d774ef",
+                        "metric")
+                .enqueue(new Callback<WeatherResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
+
+                        Log.e("LOCTEST", "response: ");
+                        if (response.body() != null) {
+                            Log.e("LOCTEST", "not null: ");
+                            Log.e("LOCTEST", "description : " + response.body().getWeather().get(0).getDescription() +
+                                    " " + response.body().getMain().getTemp() + "°C");
+
+                            textView_weather.setVisibility(View.VISIBLE);
+                            String temp = String.format("%.0f", response.body().getMain().getTemp());
+                            textView_weather.setText(response.body().getWeather().get(0).getDescription() + " " + temp + "°C");
+
+                            try {
+                                imageView_weather.setVisibility(View.VISIBLE);
+                                Glide.with(MainActivity.this)
+                                        .load("http://openweathermap.org/img/w/" + response.body().getWeather().get(0).getIcon() + ".png")
+                                        .into(imageView_weather);
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                        Log.e("LOCTEST", "fail: " + t.getMessage());
+                        // daily_container.setVisibility(View.GONE);
+                        //customViewMarketingWidget.setVisibility(View.GONE);
+                    }
+                });
     }
 
     /**

@@ -3,6 +3,7 @@ package com.mspo.comspo.data.remote.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 public class PrefManager {
 
@@ -14,6 +15,8 @@ public class PrefManager {
     private static final String LOGIN_FARMID = "LoginFarmId";
     private static final String LOGIN_USER_TYPE = "LoginUserTYpe";
     private static final String LOGIN_USER_LANGUAGE = "LoginUserLLanguage";
+    private static final String USER_LOCATION_LAT = "userLocationLat";
+    private static final String USER_LOCATION_LON = "userLocationLon";
 
     private Context context;
     private SharedPreferences pref;
@@ -90,5 +93,23 @@ public class PrefManager {
     public static String getUserLanguage(Context ctx) {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return sharedpreferences.getString(LOGIN_USER_LANGUAGE, "malay");
+    }
+
+    public String getLocationLat() {
+        return pref.getString(USER_LOCATION_LAT, "");
+    }
+
+    public void setLocationLat(String lat) {
+        editor.putString(USER_LOCATION_LAT, lat);
+        editor.commit();
+    }
+
+    public String getLocationLon() {
+        return pref.getString(USER_LOCATION_LON, "");
+    }
+
+    public void setLocationLon(String lon) {
+        editor.putString(USER_LOCATION_LON, lon);
+        editor.commit();
     }
 }

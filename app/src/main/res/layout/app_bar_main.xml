@@ -14,13 +14,42 @@
 
         <include layout="@layout/toolbar" />
 
-        <android.support.design.button.MaterialButton
-            android:id="@+id/refreshLocation"
-            style="@style/Widget.MSPO.Button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Get Location" />
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_weather"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_tiny" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/spacing_medium"
+                android:layout_marginRight="@dimen/spacing_medium"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Audit Id:"
+                android:textSize="@dimen/spacing_normal"
+                android:textStyle="bold" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/refreshLocation"
+                style="@style/Widget.MSPO.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Get Location" />
+
+
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/fragment"
@@ -36,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/spacing_normal"
+        android:visibility="gone"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
-        android:visibility="gone"/>
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
 </FrameLayout>
