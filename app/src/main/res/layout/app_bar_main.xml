@@ -21,32 +21,52 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageView_weather"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_tiny" />
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="14dp"
+                app:srcCompat="@drawable/ic_refresh"
+                android:layout_gravity="center_vertical" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView_weather"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/spacing_normal"
+                android:layout_marginRight="@dimen/spacing_normal"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/spacing_medium"
-                android:layout_marginRight="@dimen/spacing_medium"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="Audit Id:"
-                android:textSize="@dimen/spacing_normal"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <android.support.design.button.MaterialButton
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/temperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:text="@string/temperature_unavailable" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/condition"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:text="@string/refresh_to_update_weather" />
+
+            </LinearLayout>
+
+            <ImageView
                 android:id="@+id/refreshLocation"
-                style="@style/Widget.MSPO.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="Get Location" />
-
+                app:srcCompat="@drawable/ic_refresh"
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="12dp"
+                android:contentDescription="@string/refresh_location" />
 
 
         </LinearLayout>

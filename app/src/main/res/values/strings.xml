@@ -86,4 +86,7 @@
     <string name="warning_exit_without_save">Exit without saving?</string>
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
+    <string name="temperature_unavailable">Temperature unavailable</string>
+    <string name="refresh_to_update_weather">Refresh to update weather</string>
+    <string name="refresh_location">Refresh location</string>
 </resources>
