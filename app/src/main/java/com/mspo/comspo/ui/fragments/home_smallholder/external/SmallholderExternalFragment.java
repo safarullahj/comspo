@@ -25,7 +25,7 @@ import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.SmallholderAuditListService;
 import com.mspo.comspo.ui.activities.FilterInterface;
 import com.mspo.comspo.ui.activities.MainActivity;
-import com.mspo.comspo.ui.adapters.ExternalAuditAdapter;
+import com.mspo.comspo.ui.adapters.SmallholderExternalAuditAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
 import retrofit2.Call;
@@ -37,7 +37,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
 
     private RecyclerView recyclerViewAuditList;
     private SwipeRefreshLayout refreshView;
-    private ExternalAuditAdapter externalAuditAdapter;
+    private SmallholderExternalAuditAdapter smallholderExternalAuditAdapter;
     private ProgressBar progressBar;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private AppCompatTextView empty;
@@ -147,8 +147,8 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                                         refreshView.setVisibility(View.GONE);
                                         empty.setVisibility(View.VISIBLE);
                                     }
-                                    externalAuditAdapter = new ExternalAuditAdapter(getContext(), response.body().getAudits());
-                                    recyclerViewAuditList.setAdapter(externalAuditAdapter);
+                                    smallholderExternalAuditAdapter = new SmallholderExternalAuditAdapter(getContext(), response.body().getAudits());
+                                    recyclerViewAuditList.setAdapter(smallholderExternalAuditAdapter);
 
                                 } else {
                                     Log.e("empty_:", "ext null ");

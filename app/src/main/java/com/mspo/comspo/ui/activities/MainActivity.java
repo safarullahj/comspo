@@ -122,7 +122,8 @@ public class MainActivity extends AppCompatActivity
     private Fragment currentFragment;
     private RadioGroup statusRadioGroup;
     private AppCompatEditText search;
-    private FilterInterface filterInterfaceExternal, filterInterfaceInternal;
+    private FilterInterface filterInterfaceExternal, filterInterfaceInternal,
+            filterInterfaceSingle,filterInterfaceGroup,filterInterfaceSub;
     private Spinner yearSpinner;
     private ArrayAdapter<String> adapter;
 
@@ -133,6 +134,15 @@ public class MainActivity extends AppCompatActivity
 
     public void setFilterListenerInternal(FilterInterface anInterface) {
         filterInterfaceInternal = anInterface;
+    }
+    public void setFilterListenerSingle(FilterInterface anInterface) {
+        filterInterfaceSingle = anInterface;
+    }
+    public void setFilterListenerGroup(FilterInterface anInterface) {
+        filterInterfaceGroup = anInterface;
+    }
+    public void setFilterListenerSub(FilterInterface anInterface) {
+        filterInterfaceSub = anInterface;
     }
     /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -278,8 +288,14 @@ public class MainActivity extends AppCompatActivity
                 managerFilter.setFilterYear(String.valueOf(yearSpinner.getSelectedItem()));
             }
 
-            filterInterfaceExternal.filter();
-            filterInterfaceInternal.filter();
+            if (PrefManager.getUserType(MainActivity.this).equals("auditor")) {
+                filterInterfaceSingle.filter();
+                filterInterfaceGroup.filter();
+                filterInterfaceSub.filter();
+            }else {
+                filterInterfaceExternal.filter();
+                filterInterfaceInternal.filter();
+            }
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) {
@@ -293,8 +309,14 @@ public class MainActivity extends AppCompatActivity
         reset.setOnClickListener(view -> {
             PrefManagerFilter managerFilter = new PrefManagerFilter(MainActivity.this);
             managerFilter.clearFilter();
-            filterInterfaceExternal.filter();
-            filterInterfaceInternal.filter();
+            if (PrefManager.getUserType(MainActivity.this).equals("auditor")) {
+                filterInterfaceSingle.filter();
+                filterInterfaceGroup.filter();
+                filterInterfaceSub.filter();
+            }else {
+                filterInterfaceExternal.filter();
+                filterInterfaceInternal.filter();
+            }
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) {
@@ -318,7 +340,7 @@ public class MainActivity extends AppCompatActivity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(adapter);
 
-        if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
+        if (PrefManager.getUserType(MainActivity.this).equals("auditor")) {
             updateMainFragment(Pages.PAGE_2.getPagePosition());
         } else {
             /*if(currentFragment instanceof SmallholderExternalFragment) {
@@ -339,7 +361,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         //Log.e("loging", "main : " + PrefManager.getUserType(MainActivity.this));
-        if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
+        if (PrefManager.getUserType(MainActivity.this).equals("auditor")) {
             navigationView.getMenu().findItem(R.id.nav_audits).setVisible(false);
             //bottomNavigation.setVisibility(View.GONE);
             fab.hide();
@@ -408,7 +430,7 @@ public class MainActivity extends AppCompatActivity
             //bottomNavigation.setSelectedItemId(R.id.bottom_nav_external);
             updateMainFragment(Pages.PAGE_1.getPagePosition());
         } else if (id == R.id.nav_profile) {
-            if (PrefManager.getUserType(MainActivity.this).equals("admin")) {
+            if (PrefManager.getUserType(MainActivity.this).equals("auditor")) {
                 startActivity(AuditorProfileActivity.getIntent(MainActivity.this));
             } else {
                 startActivity(ProfileActivity.getIntent(MainActivity.this));

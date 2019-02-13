@@ -33,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GroupAuditFragment extends Fragment implements FilterInterface {
+public class SubAuditFragment extends Fragment implements FilterInterface {
 
     private RecyclerView recyclerViewAuditList;
     private SwipeRefreshLayout refreshView;
@@ -42,21 +42,21 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
     private AppCompatTextView empty;
     private AuditorAuditsAdapter auditorAuditsAdapter;
 
-    public static GroupAuditFragment newInstance() {
-        return new GroupAuditFragment();
+    public static SubAuditFragment newInstance() {
+        return new SubAuditFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MainActivity) getActivity()).setFilterListenerGroup(this);
+        ((MainActivity) getActivity()).setFilterListenerSub(this);
     }
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_group_audits, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_audits, container, false);
 
         progressBar = view.findViewById(R.id.progress);
         recyclerViewAuditList = view.findViewById(R.id.recycler_view);
@@ -126,7 +126,7 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
                             managerFilter.getFilterYear(),
                             PrefManager.getFarmId(getActivity()),
                             managerFilter.getFilterStatus(),
-                            "group_audit",
+                            "sub_audit",
                             ""
                     )
                     .enqueue(new Callback<AuditorAuditListResponse>() {

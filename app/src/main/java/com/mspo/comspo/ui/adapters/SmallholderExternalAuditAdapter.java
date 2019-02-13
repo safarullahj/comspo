@@ -10,18 +10,17 @@ import android.view.ViewGroup;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.responses.smallholder_home_audit_list.Audit;
-import com.mspo.comspo.ui.activities.audit_details.AuditDetailsActivity;
 
 import java.util.List;
 
 
-public class ExternalAuditAdapter extends RecyclerView.Adapter<ExternalAuditAdapter.AuditItemViewHolder> {
+public class SmallholderExternalAuditAdapter extends RecyclerView.Adapter<SmallholderExternalAuditAdapter.AuditItemViewHolder> {
 
     private Context context;
     private List<Audit> auditList;
 
 
-    public ExternalAuditAdapter(Context context, List<Audit> auditList) {
+    public SmallholderExternalAuditAdapter(Context context, List<Audit> auditList) {
         this.context = context;
         this.auditList = auditList;
     }

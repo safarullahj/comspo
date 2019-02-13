@@ -60,13 +60,13 @@ public class HomeFragmentExternalAudit extends Fragment {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = AllAuditFragment.newInstance();
-                    break;
-                case 1:
                     fragment = SingleAuditFragment.newInstance();
                     break;
-                case 2:
+                case 1:
                     fragment = GroupAuditFragment.newInstance();
+                    break;
+                case 2:
+                    fragment = SubAuditFragment.newInstance();
                     break;
             }
             return fragment;
@@ -81,11 +81,11 @@ public class HomeFragmentExternalAudit extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "All";
-                case 1:
                     return "Single";
-                case 2:
+                case 1:
                     return "Group";
+                case 2:
+                    return "Sub";
             }
             return null;
         }
