@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/productGridBackgroundColor"
+    android:paddingTop="@dimen/spacing_tiny"
+    android:paddingBottom="@dimen/spacing_tiny">
+
+    <!--<android.support.v7.widget.AppCompatTextView
+        style="@style/TextAppearance.MSPO.Toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/audit_id" />-->
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_ChapterName"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_small"
+        android:layout_marginRight="@dimen/spacing_small"
+        android:layout_gravity="left"
+        android:textColor="@color/textColorPrimary"
+        android:text="5.Environment, natural resources, biodiversity and ecosystem services" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/progress_"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_margin="@dimen/spacing_small"
+        app:rcProgress="75"
+        app:rcMax="100"
+        app:rcRadius="10dp"
+        app:rcBackgroundPadding="5dp"
+        app:rcReverse="false"
+        app:rcProgressColor="@color/colorAccent"
+        app:rcBackgroundColor="@color/colorOnPrimary"
+        android:layout_weight="1"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textView_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:text="75%"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

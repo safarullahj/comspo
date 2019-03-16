@@ -161,7 +161,9 @@ public class ProfileActivity extends AppCompatActivity {
                                         Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     } else {*/
-                                Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 //}
 
@@ -173,7 +175,9 @@ public class ProfileActivity extends AppCompatActivity {
                         public void onFailure(Call<ProfileViewResponse> call, Throwable t) {
 
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(findViewById(android.R.id.content), "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            /*Snackbar.make(findViewById(android.R.id.content), "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            Snackbar.make(findViewById(android.R.id.content), ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

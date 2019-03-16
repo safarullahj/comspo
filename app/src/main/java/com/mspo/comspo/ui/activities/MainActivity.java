@@ -461,7 +461,9 @@ public class MainActivity extends AppCompatActivity
                                                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
                                                 finish();
                                             } else {
-                                                Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                        .setAction("Action", null).show();*/
+                                                Snackbar.make(findViewById(android.R.id.content), "Response null", Snackbar.LENGTH_LONG)
                                                         .setAction("Action", null).show();
                                             }
                                         }
@@ -484,7 +486,9 @@ public class MainActivity extends AppCompatActivity
 
                                 @Override
                                 public void onFailure(@NonNull Call<LogoutResponse> call, @NonNull Throwable t) {
-                                    Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*/
+                                    Snackbar.make(findViewById(android.R.id.content), ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
                             });

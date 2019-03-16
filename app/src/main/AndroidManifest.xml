@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:fullBackupContent="@xml/backup_descriptor"
-        android:theme="@style/Theme.MSPO">
+        android:theme="@style/Theme.MSPO"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.activities.login.LoginActivity"
             android:label="@string/app_name">

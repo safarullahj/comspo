@@ -149,7 +149,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         progressBar.setVisibility(View.GONE);
                                         isAvailable = false;
 
-                                        Snackbar.make(view, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                        /*Snackbar.make(view, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();*/
+                                        Snackbar.make(view, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     }
                                 });
@@ -236,7 +238,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                                         @Override
                                         public void onFailure(Call<SmallHolderSignUpResponse> call, Throwable t) {
-                                            Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                            /*Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();*/
+                                            Snackbar.make(view, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                                     .setAction("Action", null).show();
                                         }
                                     });

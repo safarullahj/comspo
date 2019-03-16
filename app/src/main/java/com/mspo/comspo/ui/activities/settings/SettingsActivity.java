@@ -113,7 +113,9 @@ public class SettingsActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Call<ChangeLanguageResponse> call, @NonNull Throwable t) {
 
                             setRadioButton();
-                            Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                            /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            Snackbar.make(findViewById(android.R.id.content), ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

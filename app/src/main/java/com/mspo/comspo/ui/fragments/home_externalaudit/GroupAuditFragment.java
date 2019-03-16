@@ -158,7 +158,9 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
 
                             } else {
                                 Log.e("chk_adtr:", "else err");
-                                Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -170,7 +172,9 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
                         public void onFailure(Call<AuditorAuditListResponse> call, Throwable t) {
                             Log.e("chk_adtr:", "err msg : " + t.getMessage());
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            Snackbar.make(refreshView, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

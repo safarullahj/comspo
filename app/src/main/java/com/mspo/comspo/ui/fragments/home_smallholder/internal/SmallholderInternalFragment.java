@@ -203,12 +203,16 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                                                 .setAction("Action", null).show();
                                         getAuditList("0");
                                     } else {
-                                        Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();*/
+                                        Snackbar.make(refreshView, "Fail to Create", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     }
 
                                 } else {
-                                    Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*/
+                                    Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
 
                                 }
@@ -218,7 +222,9 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                             @Override
                             public void onFailure(@NonNull Call<NewInternalAuditResponse> call, @NonNull Throwable t) {
                                 progressBar.setVisibility(View.GONE);
-                                Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(refreshView, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                             }
                         });
@@ -346,7 +352,9 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
 
                             } else {
                                 Log.e("tst_:", "response else ");
-                                Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -358,7 +366,9 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                         public void onFailure(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Throwable t) {
                             Log.e("tst_:", "response fail : " + t.getMessage());
                             progressBar.setVisibility(View.GONE);
-                            Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                            /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            Snackbar.make(refreshView, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
                     });

@@ -33,7 +33,11 @@ public class APIClient {
                         .url(url)
                         .build();
 
-                Log.e(TAG, request.url().url().toString());
+                Log.e(TAG, "url : " + request.url().url().toString());
+                if (request.header("access-token") != null)
+                    Log.e(TAG, "head : " + request.header("access-token"));
+                if (request.body() != null)
+                    Log.e(TAG, "body : " + request.body().toString());
 
 
                 return chain.proceed(request);

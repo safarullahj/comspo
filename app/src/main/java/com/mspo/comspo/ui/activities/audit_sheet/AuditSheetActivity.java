@@ -384,7 +384,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                                         Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     } else {*/
-                                    Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*/
+                                    Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                     //}
                                 }
@@ -395,7 +397,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                             public void onFailure(@NonNull Call<SmallHolderAuditSheetSaveResponse> call, @NonNull Throwable t) {
 
 
-                                Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(findViewById(android.R.id.content), ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 progressBar.setVisibility(View.GONE);
                             }

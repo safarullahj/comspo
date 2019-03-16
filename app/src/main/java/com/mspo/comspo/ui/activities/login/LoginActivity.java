@@ -135,6 +135,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         log_in.setClickable(true);
                                         Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
+                                        Snackbar.make(view, ""+t.getMessage(), Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
                                     }
                                 });
 
