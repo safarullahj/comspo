@@ -30,13 +30,15 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     private List<Aic> sheetList;
     private CustomSpinnerAdapter customAdapter;
     private String version;
+    private boolean statusFlag;
 
 
-    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter, String version) {
+    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter, String version, boolean statusFlag) {
         this.context = context;
         this.sheetList = sheetList;
         this.customAdapter = customAdapter;
         this.version = version;
+        this.statusFlag = statusFlag;
     }
 
 
@@ -114,10 +116,27 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
             rMinorNonComplience = itemView.findViewById(R.id.rad_minorNonComplience);
             rNotApplicable = itemView.findViewById(R.id.rad_notApplicable);
 
-            rComplies.setOnClickListener(this);
-            rMajorNonComplience.setOnClickListener(this);
-            rMinorNonComplience.setOnClickListener(this);
-            rNotApplicable.setOnClickListener(this);
+            if(statusFlag){
+
+                rComplies.setClickable(true);
+                rMajorNonComplience.setClickable(true);
+                rMinorNonComplience.setClickable(true);
+                rNotApplicable.setClickable(true);
+                edtObservation.setFocusable(true);
+
+                rComplies.setOnClickListener(this);
+                rMajorNonComplience.setOnClickListener(this);
+                rMinorNonComplience.setOnClickListener(this);
+                rNotApplicable.setOnClickListener(this);
+            }else {
+
+                rComplies.setClickable(false);
+                rMajorNonComplience.setClickable(false);
+                rMinorNonComplience.setClickable(false);
+                rNotApplicable.setClickable(false);
+                edtObservation.setFocusable(false);
+
+            }
 
 
             /*scoreRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -168,7 +187,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                 @Override
                 public void afterTextChanged(Editable editable) {
                    Log.e("obser" , "obs_: "+edtObservation.getText().toString());
-                    sheetList.get(getAdapterPosition()).setIndicatorSuggestion(edtObservation.getText().toString());
+                    //sheetList.get(getAdapterPosition()).setIndicatorSuggestion(edtObservation.getText().toString());
                 }
             });
         }

@@ -57,6 +57,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static final String KEY_AUDIT_SHEET = "key.auditSheet";
     private static final String KEY_DETAILS = "key.details";
     private static final String KEY_CRITERIA = "key.criteria";
+    private static final String KEY_AUDIT_STATUS = "key.auditStatus";
+    private static final String KEY_AUDIT_STATUS_FLAG = "key.auditStatus";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -74,6 +76,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     private AuditSheetResponse auditSheetResponse;
     private IndividualAuditDetailsResponse auditDetailsResponse;
+    private String auditStatus;
+    private boolean status = false;
+
     private static CustomSpinnerAdapter customAdapter;
 
 
@@ -111,10 +116,11 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private Button btnPrevious, btnNext;
 
 
-    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse) {
+    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus) {
         Intent intent = new Intent(context, AuditSheetActivity.class);
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
         intent.putExtra(KEY_DETAILS, auditDetailsResponse);
+        intent.putExtra(KEY_AUDIT_STATUS, auditStatus);
         return intent;
     }
 
@@ -162,6 +168,22 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         if (getIntent().getExtras() != null) {
             auditSheetResponse = (AuditSheetResponse) getIntent().getSerializableExtra(KEY_AUDIT_SHEET);
             auditDetailsResponse = (IndividualAuditDetailsResponse) getIntent().getSerializableExtra(KEY_DETAILS);
+            auditStatus = getIntent().getExtras().getString(KEY_AUDIT_STATUS,"");
+
+            switch (auditStatus) {
+                case "Newly Assigned Audit":
+                        status = true;
+                    break;
+                case "Pending Audit":
+                        status = true;
+                    break;
+                case "OnGoing Audit":
+                        status = true;
+                    break;
+                default:
+                        status = false;
+                    break;
+            }
 
             /*for (Chapter chapter : auditSheetResponse.getChapters()) {
                 actions.add(chapter.getChapterName());
@@ -218,11 +240,12 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         }
 
 
-        public static PlaceholderFragment newInstance(Acc acc) {
+        public static PlaceholderFragment newInstance(Acc acc, boolean statusFlag) {
             Log.e("chk", "instance+" + acc.getCriterionDescription());
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putSerializable(KEY_CRITERIA, acc);
+            args.putBoolean(KEY_AUDIT_STATUS_FLAG , statusFlag);
             fragment.setArguments(args);
             return fragment;
         }
@@ -233,6 +256,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             View rootView = inflater.inflate(R.layout.fragment_audit_sheet, container, false);
 
             acc = (Acc) getArguments().getSerializable(KEY_CRITERIA);
+            boolean statusFlag = getArguments().getBoolean(KEY_AUDIT_STATUS_FLAG , false);
 
             Log.e("chk", "fragment oncreate");
             Log.e("chk", "description : " + acc.getCriterionDescription());
@@ -249,7 +273,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             criteria_list.setLayoutManager(verticalLayoutmanager);
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version);
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version,statusFlag);
             criteria_list.setAdapter(auditSheetAdapter);
 
 
@@ -285,7 +309,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(criterias.get(position));
+            return PlaceholderFragment.newInstance(criterias.get(position),status);
         }
 
         @Override
@@ -317,7 +341,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_audit_sheet, menu);
+        if(status) {
+            getMenuInflater().inflate(R.menu.menu_audit_sheet, menu);
+        }
         return true;
     }
 

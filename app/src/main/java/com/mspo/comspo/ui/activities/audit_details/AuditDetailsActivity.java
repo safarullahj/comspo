@@ -44,6 +44,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private static final String KEY_AUDIT_ID = "key.auditId";
     private static final String KEY_FARM_NAME = "key.farmName";
+    private static final String KEY_AUDIT_STATUS = "key.auditStatus";
 
     private ProgressBar progressBar;
     private MaterialButton record_inspection, btn_Submit;
@@ -59,16 +60,17 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout perfomance_container;
 
     private int auditId;
-    private String farmName;
+    private String farmName,auditStatus;
 
     private AuditSheetResponse auditSheetResponse;
 
     private IndividualAuditDetailsResponse auditDetailsResponse = null;
 
-    public static Intent getIntent(Context context, Integer auditId, String farmName) {
+    public static Intent getIntent(Context context, Integer auditId, String farmName, String auditStatus) {
         Intent intent = new Intent(context, AuditDetailsActivity.class);
         intent.putExtra(KEY_AUDIT_ID, auditId);
         intent.putExtra(KEY_FARM_NAME, farmName);
+        intent.putExtra(KEY_AUDIT_STATUS, auditStatus);
         return intent;
     }
 
@@ -111,6 +113,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         if (getIntent().getExtras() != null) {
             auditId = getIntent().getExtras().getInt(KEY_AUDIT_ID, 0);
             farmName = getIntent().getExtras().getString(KEY_FARM_NAME, "");
+            auditStatus = getIntent().getExtras().getString(KEY_AUDIT_STATUS, "");
 
             Log.e("de_data", "frm_name: " + farmName);
             Log.e("de_data", "audit id: " + auditId);
@@ -230,7 +233,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                 //getAuditSheet();
 
                 if (auditSheetResponse != null && auditDetailsResponse != null) {
-                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse));
+                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse,auditStatus));
                 } else {
                     /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();*/
