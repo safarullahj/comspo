@@ -95,7 +95,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/spacing_small"/>
+                android:padding="@dimen/spacing_small" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_normal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="Audit Duration" />
+
+                    <android.support.design.button.MaterialButton
+                        android:id="@+id/btn_edit_duration"
+                        style="@style/Widget.MSPO.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:text="EDIT" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_startDate"
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:paddingLeft="@dimen/spacing_normal"
+                    android:text="Start Date :" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_endDate"
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_small"
+                    android:paddingLeft="@dimen/spacing_normal"
+                    android:text="End Date :" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,7 +189,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Audit Details" />
+                    android:text="Smallholder Details "
+                    android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -143,10 +198,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Farm / Group" />
+                    android:text="Smallholder Name :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_farmGroup"
+                    android:id="@+id/text_Smallholder_Name"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,10 +216,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Address" />
+                    android:text="MPOB License Number :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_address"
+                    android:id="@+id/text_MPOB_License_Number"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,10 +235,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Mobile Number" />
+                    android:text="IC No. :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_mobileNumber"
+                    android:id="@+id/text_ICNo"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -198,10 +253,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Year" />
+                    android:text="Grant Area In Ha :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_year"
+                    android:id="@+id/text_Grant_Area_In_Ha"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -216,10 +271,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Audit Type" />
+                    android:text="Land Use :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_audit_type"
+                    android:id="@+id/text_Land_Use"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="- - -" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="Contact Details "
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:text="Small Holder Farm Address :" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_Small_Holder_Farm_Address"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -234,10 +315,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Start Date" />
+                    android:text="Home Address :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_startDate"
+                    android:id="@+id/text_Home_Address"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -252,10 +333,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="End Date" />
+                    android:text="District :" />
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/text_endDate"
+                    android:id="@+id/text_District"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -263,6 +344,45 @@
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
                     android:text="- - -" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:text="Contact Details :" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_Contact_Details"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="- - -" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="General Comments "
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/text_General_Comments"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_normal"
+                    android:layout_marginRight="@dimen/spacing_normal"
+                    android:paddingBottom="@dimen/spacing_normal"
+                    android:paddingLeft="@dimen/spacing_normal"
+                    android:paddingRight="@dimen/spacing_normal"
+                    android:text="- - -" />
+
 
             </LinearLayout>
 

@@ -13,6 +13,9 @@ public class PrefManager {
     private static final String LOGIN_ACCESSTOCKEN = "LoginAccessToken";
     private static final String LOGIN_USERID = "LoginUserId";
     private static final String LOGIN_FARMID = "LoginFarmId";
+    private static final String LOGIN_USERNAME = "LoginUsername";
+    private static final String LOGIN_USEREMAIL = "LoginEmail";
+    private static final String LOGIN_USERPIC = "LoginUserpic";
     private static final String LOGIN_USER_TYPE = "LoginUserTYpe";
     private static final String LOGIN_USER_LANGUAGE = "LoginUserLLanguage";
     private static final String USER_LOCATION_LAT = "userLocationLat";
@@ -40,7 +43,7 @@ public class PrefManager {
         return true;
     }
 
-    public static boolean saveLoginToken(Context ctx, String userType, Integer userId, String accessToken,Integer farmId) {
+    public static boolean saveLoginToken(Context ctx, String userType, Integer userId, String accessToken,Integer farmId, String userName,String userEmail,String profilePic) {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -49,6 +52,9 @@ public class PrefManager {
                 .putString(LOGIN_ACCESSTOCKEN, accessToken)
                 .putBoolean(LOGIN_CHECK, true)
                 .putInt(LOGIN_FARMID, farmId)
+                .putString(LOGIN_USERNAME, userName)
+                .putString(LOGIN_USEREMAIL, userEmail)
+                .putString(LOGIN_USERPIC, profilePic)
                 .apply();
         return true;
     }
@@ -69,6 +75,24 @@ public class PrefManager {
         SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
                 Context.MODE_PRIVATE);
         return sharedpreferences.getInt(LOGIN_USERID, 0);
+    }
+
+    public static String getUserName(Context ctx) {
+        SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
+                Context.MODE_PRIVATE);
+        return sharedpreferences.getString(LOGIN_USERNAME, "");
+    }
+
+    public static String getUserEmail(Context ctx) {
+        SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
+                Context.MODE_PRIVATE);
+        return sharedpreferences.getString(LOGIN_USEREMAIL, "");
+    }
+
+    public static String getUserPic(Context ctx) {
+        SharedPreferences sharedpreferences = ctx.getSharedPreferences(LOGIN_SHARED,
+                Context.MODE_PRIVATE);
+        return sharedpreferences.getString(LOGIN_USERPIC, "");
     }
 
     public static Integer getFarmId(Context ctx) {

@@ -1,10 +1,11 @@
 package com.mspo.comspo.data.remote.model.responses.profile_view;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ProfileViewResponse {
+public class ProfileViewResponse implements Serializable {
 
     @SerializedName("username")
     @Expose

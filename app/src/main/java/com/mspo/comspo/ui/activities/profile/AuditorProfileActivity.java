@@ -34,9 +34,10 @@ public class AuditorProfileActivity extends AppCompatActivity {
     private AppCompatTextView userName;
     private AppCompatTextView homeAddress;
     private AppCompatTextView email;
-    private AppCompatTextView phone;
+    private AppCompatTextView mobile;
+    private AppCompatTextView landline;
     private AppCompatTextView education;
-    private AppCompatTextView trainingYear;
+    private AppCompatTextView certificationBody;
     private AppCompatTextView trainingDetails;
     private AppCompatTextView experiance;
     private AppCompatTextView per_approved;
@@ -49,6 +50,8 @@ public class AuditorProfileActivity extends AppCompatActivity {
     private AppCompatTextView cnt_pending;
     private AppCompatTextView cnt_ongoing;
     private AppCompatTextView cnt_newlyAssigned;
+
+    AuditorProfileViewResponse auditorProfileViewResponse = null;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, AuditorProfileActivity.class);
@@ -71,9 +74,10 @@ public class AuditorProfileActivity extends AppCompatActivity {
         userName = findViewById(R.id.txt_user_name);
         homeAddress = findViewById(R.id.txt_home_address);
         email = findViewById(R.id.txt_email);
-        phone = findViewById(R.id.txt_phone);
+        mobile = findViewById(R.id.txt_Mobile);
+        landline = findViewById(R.id.txt_Landline);
         education = findViewById(R.id.txt_education);
-        trainingYear = findViewById(R.id.txt_training_year);
+        certificationBody = findViewById(R.id.txt_CertificationBody);
         trainingDetails = findViewById(R.id.txt_trainingDetails);
         experiance = findViewById(R.id.txt_experience);
         per_approved = findViewById(R.id.txt_per_approved);
@@ -104,7 +108,7 @@ public class AuditorProfileActivity extends AppCompatActivity {
 
             APIClient.getClient()
                     .create(ProfileService.class)
-                    .getAuditorProfile(PrefManager.getAccessToken(AuditorProfileActivity.this), "1")
+                    .getAuditorProfile(PrefManager.getAccessToken(AuditorProfileActivity.this),PrefManager.getFarmId(AuditorProfileActivity.this) ,"1")
                     .enqueue(new Callback<AuditorProfileViewResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<AuditorProfileViewResponse> call, @NonNull Response<AuditorProfileViewResponse> response) {
@@ -112,6 +116,7 @@ public class AuditorProfileActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
 
                                 if (response.body() != null) {
+                                    auditorProfileViewResponse = response.body();
 
                                     if (response.body().getProfilePic() != null && !response.body().getProfilePic().equals("")) {
                                         try {
@@ -125,9 +130,10 @@ public class AuditorProfileActivity extends AppCompatActivity {
                                     userName.setText(response.body().getName());
                                     homeAddress.setText(checkText(response.body().getAddress()));
                                     email.setText(checkText(response.body().getEmail()));
-                                    phone.setText(checkText(response.body().getMobile()));
+                                    landline.setText(checkText(response.body().getLandline()));
+                                    mobile.setText(checkText(response.body().getMobile()));
                                     education.setText(checkText(response.body().getEducation()));
-                                    trainingYear.setText(checkText(response.body().getTrainingYear()));
+                                    certificationBody.setText(checkText(response.body().getCbName()));
                                     trainingDetails.setText(checkText(response.body().getTrainingDetails()));
                                     experiance.setText(checkText(response.body().getExperience()));
 
@@ -205,7 +211,9 @@ public class AuditorProfileActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.action_edit_profile) {
-            startActivity(ProfileEditActivity.getIntent(AuditorProfileActivity.this));
+            if(auditorProfileViewResponse != null) {
+                startActivity(AuditorProfileEditActivity.getIntent(AuditorProfileActivity.this, auditorProfileViewResponse));
+            }
         }
 
         return super.onOptionsItemSelected(item);

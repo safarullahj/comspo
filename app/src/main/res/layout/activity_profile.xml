@@ -39,7 +39,7 @@
                     android:layout_margin="@dimen/spacing_normal"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="#e3e3e3" />
+                    android:src="@drawable/profile" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_user_name"
@@ -66,22 +66,6 @@
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_normal">
 
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_address" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_home_address"
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/spacing_normal"
-                        android:text="@string/dash" />
-
-
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
@@ -90,6 +74,20 @@
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_email"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="IC No." />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_ICNo"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -109,6 +107,37 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
                         android:text="@string/dash" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_address" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_home_address"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/district" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_district"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
+
+
 
                 </LinearLayout>
 
@@ -156,15 +185,14 @@
                         android:padding="@dimen/spacing_normal"
                         android:text="@string/dash" />
 
-
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/district" />
+                        android:text="MPOB License Number" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_district"
+                        android:id="@+id/txt_MPOBLicenseNumber"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -179,6 +207,34 @@
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_landCondetion"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Grant Area In Ha" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_GrantAreaInHa"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="@string/dash" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Certification Body" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_CertificationBody"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

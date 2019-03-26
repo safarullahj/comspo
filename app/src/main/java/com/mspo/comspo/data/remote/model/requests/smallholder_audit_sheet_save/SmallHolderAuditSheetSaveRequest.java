@@ -10,6 +10,12 @@ public class SmallHolderAuditSheetSaveRequest {
     @SerializedName("farm_id")
     @Expose
     private Integer farmId;
+    @SerializedName("auditor_id")
+    @Expose
+    private Integer auditorId;
+    @SerializedName("sub_audit_id")
+    @Expose
+    private String subAuditId;
     @SerializedName("is_submit")
     @Expose
     private String isSubmit;
@@ -20,8 +26,10 @@ public class SmallHolderAuditSheetSaveRequest {
     @Expose
     private List<Chapter> chapters = null;
 
-    public SmallHolderAuditSheetSaveRequest(Integer farmId, String isSubmit, List<Chapter> chapters, List<AuditDetail> auditDetailList) {
+    public SmallHolderAuditSheetSaveRequest(Integer farmId,Integer auditorId, String subAuditId,String isSubmit, List<Chapter> chapters, List<AuditDetail> auditDetailList) {
         this.farmId = farmId;
+        this.auditorId = auditorId;
+        this.subAuditId = subAuditId;
         this.isSubmit = isSubmit;
         this.chapters = chapters;
         this.auditDetails = auditDetailList;
@@ -57,6 +65,22 @@ public class SmallHolderAuditSheetSaveRequest {
 
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
+    }
+
+    public Integer getAuditorId() {
+        return auditorId;
+    }
+
+    public void setAuditorId(Integer auditorId) {
+        this.auditorId = auditorId;
+    }
+
+    public String getSubAuditId() {
+        return subAuditId;
+    }
+
+    public void setSubAuditId(String subAuditId) {
+        this.subAuditId = subAuditId;
     }
 
 }

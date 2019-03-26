@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.responses.smallholder_home_audit_list.Audit;
+import com.mspo.comspo.ui.activities.audit_details.AuditDetailsActivity;
 
 import java.util.List;
 
@@ -71,7 +72,12 @@ public class SmallholderExternalAuditAdapter extends RecyclerView.Adapter<Smallh
 
         @Override
         public void onClick(View view) {
-            //context.startActivity(AuditDetailsActivity.getIntent(context));
+            context.startActivity(AuditDetailsActivity.getIntent(context,
+                    auditList.get(getAdapterPosition()).getAuditId(),
+                    0,
+                    auditList.get(getAdapterPosition()).getName(),
+                    auditList.get(getAdapterPosition()).getCategory()));
+
         }
     }
 }

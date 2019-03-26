@@ -59,6 +59,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static final String KEY_CRITERIA = "key.criteria";
     private static final String KEY_AUDIT_STATUS = "key.auditStatus";
     private static final String KEY_AUDIT_STATUS_FLAG = "key.auditStatus";
+    private static final String KEY_SUBAUDIT_ID = "key.subauditid";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -76,7 +77,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     private AuditSheetResponse auditSheetResponse;
     private IndividualAuditDetailsResponse auditDetailsResponse;
-    private String auditStatus;
+    private String auditStatus,subAuditId;
     private boolean status = false;
 
     private static CustomSpinnerAdapter customAdapter;
@@ -116,11 +117,12 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private Button btnPrevious, btnNext;
 
 
-    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus) {
+    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus, String subAuditId) {
         Intent intent = new Intent(context, AuditSheetActivity.class);
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
         intent.putExtra(KEY_DETAILS, auditDetailsResponse);
         intent.putExtra(KEY_AUDIT_STATUS, auditStatus);
+        intent.putExtra(KEY_SUBAUDIT_ID, subAuditId);
         return intent;
     }
 
@@ -169,20 +171,44 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             auditSheetResponse = (AuditSheetResponse) getIntent().getSerializableExtra(KEY_AUDIT_SHEET);
             auditDetailsResponse = (IndividualAuditDetailsResponse) getIntent().getSerializableExtra(KEY_DETAILS);
             auditStatus = getIntent().getExtras().getString(KEY_AUDIT_STATUS,"");
+            subAuditId = getIntent().getExtras().getString(KEY_SUBAUDIT_ID,"");
+            if(subAuditId.equals("")){
+                subAuditId = null;
+            }
 
-            switch (auditStatus) {
-                case "Newly Assigned Audit":
+            if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
+                switch (auditStatus) {
+                    case "Newly Assigned Audit":
                         status = true;
-                    break;
-                case "Pending Audit":
+                        break;
+                    case "Pending Audit":
                         status = true;
-                    break;
-                case "OnGoing Audit":
+                        break;
+                    case "OnGoing Audit":
                         status = true;
-                    break;
-                default:
+                        break;
+                    default:
                         status = false;
-                    break;
+                        break;
+                }
+            }else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")){
+                switch (auditStatus) {
+                    case "Newly Assigned Audit":
+                        status = true;
+                        break;
+                    case "Pending Audit":
+                        status = true;
+                        break;
+                    case "OnGoing Audit":
+                        status = true;
+                        break;
+                    default:
+                        status = false;
+                        break;
+                }
+            }
+            else {
+                status = false;
             }
 
             /*for (Chapter chapter : auditSheetResponse.getChapters()) {
@@ -351,7 +377,11 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            showExitDialog();
+            if(status) {
+                showExitDialog();
+            }else {
+                finish();
+            }
         } else if (item.getItemId() == R.id.action_save) {
 
             if (Connectivity.checkInternetIsActive(AuditSheetActivity.this)) {
@@ -361,26 +391,51 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                 AuditDetail auditDetail = new AuditDetail();
 
                 auditDetail.setAddress(auditDetailsResponse.getAddress());
+                auditDetail.setComment(auditDetailsResponse.getComment());
+                auditDetail.setCountryCode(auditDetailsResponse.getCountryCode());
                 auditDetail.setDistrict(auditDetailsResponse.getDistrict());
+                auditDetail.setEndDate(auditDetailsResponse.getEndDate());
+                auditDetail.setFarmName(auditDetailsResponse.getFarmName());
+                auditDetail.setGrantArea(auditDetailsResponse.getGrantArea());
+                auditDetail.setHomeAddress(auditDetailsResponse.getHomeAddress());
+                auditDetail.setIcNo(auditDetailsResponse.getIcNo());
+                auditDetail.setLandCondition(auditDetailsResponse.getLandCondition());
+                auditDetail.setLicenceNo(auditDetailsResponse.getLicenceNo());
+                auditDetail.setName(auditDetailsResponse.getName());
                 auditDetail.setPhone(auditDetailsResponse.getPhone());
+                auditDetail.setStartDate(auditDetailsResponse.getStartDate());
 
-                auditDetail.setRegistrationNumber("gfgdgs");
+                /*auditDetail.setRegistrationNumber("gfgdgs");
                 auditDetail.setGrantAreaInHa("gghghsa");
                 auditDetail.setTehsil("tehsil");
                 auditDetail.setVillage("village");
                 auditDetail.setOfficerName("officer_name");
                 auditDetail.setCrop("crop");
-                auditDetail.setTotalProductionArea("total_production_area");
+                auditDetail.setTotalProductionArea("total_production_area");*/
 
                 List<AuditDetail> auditDetailList = new ArrayList<>();
                 auditDetailList.add(auditDetail);
 
+                SmallHolderAuditSheetSaveRequest auditSheetSaveRequest = null;
 
-                SmallHolderAuditSheetSaveRequest auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(PrefManager.getFarmId(AuditSheetActivity.this),
-                        "false",
-                        auditSheetResponse.getChapters(),
-                        auditDetailList
-                );
+                if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator")) {
+
+                    auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(PrefManager.getFarmId(AuditSheetActivity.this),
+                            null,
+                            subAuditId,
+                            "false",
+                            auditSheetResponse.getChapters(),
+                            auditDetailList
+                    );
+                }else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")) {
+                    auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(null,
+                            PrefManager.getFarmId(AuditSheetActivity.this),
+                            subAuditId,
+                            "false",
+                            auditSheetResponse.getChapters(),
+                            auditDetailList
+                    );
+                }
 
                 Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getComplianceValue());
                 Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getLastEditedTime());
@@ -473,6 +528,10 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        showExitDialog();
+        if(status) {
+            showExitDialog();
+        }else {
+            finish();
+        }
     }
 }

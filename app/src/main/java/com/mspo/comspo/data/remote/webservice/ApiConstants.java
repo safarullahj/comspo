@@ -9,11 +9,16 @@ public class ApiConstants {
     public static final String ENDPOINT_USERNAME_AVAILABILITY = "usermanager/user/username/availability/";
     public static final String ENDPOINT_LANGUAGE = "usermanager/user/language/update/";
     public static final String ENDPOINT_PROFILE_VIEW = "usermanager/farm/{farmId}/get/";
-    public static final String ENDPOINT_AUDITOR_PROFILE_VIEW = "usermanager/auditor/1/get/";
+    public static final String ENDPOINT_EDIT_PROFILE_VIEW = "usermanager/farm/{farmId}/update/";
+    public static final String ENDPOINT_AUDITOR_PROFILE_VIEW = "usermanager/auditor/{auditId}/get/";
+    public static final String ENDPOINT_EDIT_AUDITOR_PROFILE_VIEW = "usermanager/auditor/{auditorId}/update/";
     public static final String ENDPOINT_SMALLHOLDER_AUDIT_LIST = "scoringtool/audit/farm/{farmId}/get/";
     public static final String ENDPOINT_NEW_INTERNAL_AUDIT = "scoringtool/audit/internal/create/";
     public static final String ENDPOINT_INDIVIDUAL_AUDIT_DETAILS = "scoringtool/audit/single/{auditId}/get/";
+    public static final String ENDPOINT_GROUP_AUDIT_DETAILS = "scoringtool/audit/group/{auditId}/get/";
     public static final String ENDPOINT_GET_AUDIT_SHEET = "scoringtool/audit/sheet/{auditId}/get/";
     public static final String ENDPOINT_SAVE_SMALLHOLDER_AUDIT_SHEET = "scoringtool/audit/{auditId}/save/";
     public static final String ENDPOINT_AUDITOR_AUDIT_LIST = "scoringtool/audit/get/";
+    public static final String ENDPOINT_RESULT_SHEET = "scoringtool/audit/result/{auditId}/get/";
+    public static final String ENDPOINT_EDIT_AUDIT_DURATION = "scoringtool/audit/{auditId}/edit/";
 }

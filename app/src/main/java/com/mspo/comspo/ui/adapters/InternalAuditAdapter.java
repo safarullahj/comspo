@@ -89,8 +89,9 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
         public void onClick(View view) {
             context.startActivity(AuditDetailsActivity.getIntent(context,
                     auditList.get(getAdapterPosition()).getAuditId(),
+                    0,
                     auditList.get(getAdapterPosition()).getName(),
-                    auditList.get(getAdapterPosition()).getAuditStatus()));
+                    auditList.get(getAdapterPosition()).getCategory()));
         }
     }
 }

@@ -38,6 +38,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -77,6 +78,7 @@ import com.mspo.comspo.ui.activities.settings.SettingsActivity;
 import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit;
 import com.mspo.comspo.ui.fragments.home_smallholder.HomeFragmentSmallholder;
 import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
+import com.mspo.comspo.ui.widgets.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
 
         temperature = findViewById(R.id.temperature);
@@ -247,6 +249,23 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View navHeaderView = navigationView.getHeaderView(0);
+        CircleImageView circleImageView = navHeaderView.findViewById(R.id.imageViewProfileImage);
+        TextView username = navHeaderView.findViewById(R.id.textView_username);
+        TextView email = navHeaderView.findViewById(R.id.textView_email);
+
+        if (!PrefManager.getUserPic(MainActivity.this).equals("")) {
+            try {
+                Glide.with(MainActivity.this)
+                        .load(PrefManager.getUserPic(MainActivity.this))
+                        .into(circleImageView);
+            } catch (Exception ignored) {
+            }
+        }
+        username.setText(PrefManager.getUserName(MainActivity.this));
+        email.setText(PrefManager.getUserEmail(MainActivity.this));
 
         NavigationView navigationViewFilter = findViewById(R.id.nav_view_filter);
         View headerView = navigationViewFilter.getHeaderView(0);

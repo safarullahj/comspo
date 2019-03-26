@@ -3,6 +3,7 @@ package com.mspo.comspo.data.remote.webservice;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.SmallHolderAuditSheetSaveRequest;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
+import com.mspo.comspo.data.remote.model.responses.result_sheet.ResultSheetResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,11 +20,24 @@ public interface AuditSheetService {
                                            @Query(value = "farm_id", encoded = true) Integer farm_id,
                                            @Query(value = "sub_audit_id", encoded = true) String sub_audit_id);
 
+    @GET(ApiConstants.ENDPOINT_GET_AUDIT_SHEET)
+    Call<AuditSheetResponse> getAuditorAuditSheet(@Path("auditId") Integer auditId,
+                                           @Header("access-token") String access_token,
+                                           @Query(value = "auditor_id", encoded = true) Integer farm_id,
+                                           @Query(value = "sub_audit_id", encoded = true) String sub_audit_id);
+
 
     @POST(ApiConstants.ENDPOINT_SAVE_SMALLHOLDER_AUDIT_SHEET)
     Call<SmallHolderAuditSheetSaveResponse> saveFarmerAuditSheet(@Path("auditId") Integer auditId,
                                                                  @Header("access-token") String access_token,
                                                                  @Body SmallHolderAuditSheetSaveRequest auditSheetSaveRequest);
+
+
+    @GET(ApiConstants.ENDPOINT_RESULT_SHEET)
+    Call<ResultSheetResponse> getResultSheetData(@Path("auditId") Integer auditId,
+                                                 @Header("access-token") String access_token,
+                                                 @Query(value = "farm_id", encoded = true) Integer farm_id);
+
 
 
 }

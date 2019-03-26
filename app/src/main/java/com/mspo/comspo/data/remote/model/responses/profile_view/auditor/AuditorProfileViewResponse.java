@@ -3,7 +3,9 @@ package com.mspo.comspo.data.remote.model.responses.profile_view.auditor;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AuditorProfileViewResponse {
+import java.io.Serializable;
+
+public class AuditorProfileViewResponse implements Serializable {
 
     @SerializedName("username")
     @Expose

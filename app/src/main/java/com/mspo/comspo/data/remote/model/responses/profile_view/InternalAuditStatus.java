@@ -3,7 +3,9 @@ package com.mspo.comspo.data.remote.model.responses.profile_view;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class InternalAuditStatus {
+import java.io.Serializable;
+
+public class InternalAuditStatus implements Serializable {
 
     @SerializedName("pending_count")
     @Expose

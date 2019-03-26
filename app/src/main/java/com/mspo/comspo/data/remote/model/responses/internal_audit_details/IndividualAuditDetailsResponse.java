@@ -51,7 +51,7 @@ public class IndividualAuditDetailsResponse implements Serializable {
     private String landCondition;
     @SerializedName("auditors")
     @Expose
-    private List<Object> auditors = null;
+    private List<Auditor> auditors = null;
     @SerializedName("uploaded_time")
     @Expose
     private String uploadedTime;
@@ -103,6 +103,9 @@ public class IndividualAuditDetailsResponse implements Serializable {
     @SerializedName("ic_no")
     @Expose
     private String icNo;
+    @SerializedName("auditor_audit_status")
+    @Expose
+    private Boolean auditorAuditStatus;
 
     public String getComment() {
         return comment;
@@ -216,11 +219,11 @@ public class IndividualAuditDetailsResponse implements Serializable {
         this.landCondition = landCondition;
     }
 
-    public List<Object> getAuditors() {
+    public List<Auditor> getAuditors() {
         return auditors;
     }
 
-    public void setAuditors(List<Object> auditors) {
+    public void setAuditors(List<Auditor> auditors) {
         this.auditors = auditors;
     }
 
@@ -358,6 +361,14 @@ public class IndividualAuditDetailsResponse implements Serializable {
 
     public void setIcNo(String icNo) {
         this.icNo = icNo;
+    }
+
+    public Boolean getAuditorAuditStatus() {
+        return auditorAuditStatus;
+    }
+
+    public void setAuditorAuditStatus(Boolean auditorAuditStatus) {
+        this.auditorAuditStatus = auditorAuditStatus;
     }
 
 }

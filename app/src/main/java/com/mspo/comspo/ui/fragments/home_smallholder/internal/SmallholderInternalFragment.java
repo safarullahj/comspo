@@ -133,6 +133,8 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         b = dialogBuilder.create();
         b.show();
 
+        AppCompatTextView date_title = dialog.findViewById(R.id.date_title);
+        date_title.setText("New Audit");
         final AppCompatTextView startDate = dialog.findViewById(R.id.textView_StartDate);
         final AppCompatTextView endtDate = dialog.findViewById(R.id.textView_endDate);
         AppCompatImageView startCalender = dialog.findViewById(R.id.startCalender);

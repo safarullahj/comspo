@@ -39,7 +39,7 @@
                     android:layout_margin="@dimen/spacing_normal"
                     android:clickable="true"
                     android:focusable="true"
-                    android:src="#e3e3e3" />
+                    android:src="@drawable/profile" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/txt_user_name"
@@ -98,10 +98,10 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Phone" />
+                        android:text="Mobile" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_phone"
+                        android:id="@+id/txt_Mobile"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -112,15 +112,16 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Education" />
+                        android:text="Landline" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_education"
+                        android:id="@+id/txt_Landline"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
                         android:text="- - - " />
+
 
                 </LinearLayout>
 
@@ -143,24 +144,10 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Training Year" />
+                        android:text="Qualification" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_training_year"
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/TextAppearance.AppCompat.Body2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Training Details" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/txt_trainingDetails"
+                        android:id="@+id/txt_education"
                         style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,6 +167,37 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
                         android:text="- - - " />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Training Details" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_trainingDetails"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="- - - " />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Certification Body" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/txt_CertificationBody"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_normal"
+                        android:text="- - - " />
+
+
 
                 </LinearLayout>
 

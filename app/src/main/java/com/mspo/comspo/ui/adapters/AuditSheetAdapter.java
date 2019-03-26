@@ -187,7 +187,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                 @Override
                 public void afterTextChanged(Editable editable) {
                    Log.e("obser" , "obs_: "+edtObservation.getText().toString());
-                    //sheetList.get(getAdapterPosition()).setIndicatorSuggestion(edtObservation.getText().toString());
+                    sheetList.get(getAdapterPosition()).setIndicatorSuggestion(edtObservation.getText().toString());
                 }
             });
         }

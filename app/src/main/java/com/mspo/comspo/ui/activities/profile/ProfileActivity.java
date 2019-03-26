@@ -35,11 +35,15 @@ public class ProfileActivity extends AppCompatActivity {
     private AppCompatTextView userName;
     private AppCompatTextView homeAddress;
     private AppCompatTextView email;
+    private AppCompatTextView icNo;
     private AppCompatTextView phone;
     private AppCompatTextView farmName;
     private AppCompatTextView farmAddress;
     private AppCompatTextView district;
     private AppCompatTextView landCondetion;
+    private AppCompatTextView MPOBLicenseNumber;
+    private AppCompatTextView grantAreaInHa;
+    private AppCompatTextView certificationBody;
     private AppCompatTextView ext_approved;
     private AppCompatTextView ext_completed;
     private AppCompatTextView ext_pending;
@@ -50,6 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
     private AppCompatTextView int_pending;
     private AppCompatTextView int_ongoing;
     private AppCompatTextView int_newlyAssigned;
+
+    private ProfileViewResponse profileViewResponse = null;
 
 
     public static Intent getIntent(Context context) {
@@ -73,11 +79,15 @@ public class ProfileActivity extends AppCompatActivity {
         userName = findViewById(R.id.txt_user_name);
         homeAddress = findViewById(R.id.txt_home_address);
         email = findViewById(R.id.txt_email);
+        icNo = findViewById(R.id.txt_ICNo);
         phone = findViewById(R.id.txt_phone);
         farmName = findViewById(R.id.txt_farm_name);
         farmAddress = findViewById(R.id.txt_fatm_address);
         district = findViewById(R.id.txt_district);
         landCondetion = findViewById(R.id.txt_landCondetion);
+        MPOBLicenseNumber = findViewById(R.id.txt_MPOBLicenseNumber);
+        grantAreaInHa = findViewById(R.id.txt_GrantAreaInHa);
+        certificationBody = findViewById(R.id.txt_CertificationBody);
         ext_approved = findViewById(R.id.txt_ext_approved);
         ext_completed = findViewById(R.id.txt_ext_completed);
         ext_pending = findViewById(R.id.txt_ext_pending);
@@ -115,6 +125,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 if (response.body() != null) {
 
+                                    profileViewResponse = response.body();
+
                                     if(response.body().getProfilePic()!= null && !response.body().getProfilePic().equals("")) {
                                         try {
                                             Glide.with(ProfileActivity.this)
@@ -127,11 +139,15 @@ public class ProfileActivity extends AppCompatActivity {
                                     userName.setText(response.body().getUsername());
                                     homeAddress.setText(checkText(response.body().getHomeAddress()));
                                     email.setText(checkText(response.body().getEmail()));
+                                    icNo.setText(checkText(response.body().getIcNo()));
                                     phone.setText(checkText(response.body().getPhone()));
                                     farmName.setText(checkText(response.body().getName()));
                                     farmAddress.setText(checkText(response.body().getAddress()));
                                     district.setText(checkText(response.body().getDistrict()));
                                     landCondetion.setText(checkText(response.body().getLandCondition()));
+                                    MPOBLicenseNumber.setText(checkText(response.body().getLicenceNo()));
+                                    grantAreaInHa.setText(checkText(response.body().getGrantArea()));
+                                    certificationBody.setText(checkText(response.body().getCbName()));
 
 
                                     if (response.body().getExternalAuditStatus() != null && response.body().getExternalAuditStatus().size() > 0) {
@@ -209,7 +225,9 @@ public class ProfileActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.action_edit_profile) {
-            startActivity(ProfileEditActivity.getIntent(ProfileActivity.this));
+            if(profileViewResponse != null) {
+                startActivity(ProfileEditActivity.getIntent(ProfileActivity.this, profileViewResponse));
+            }
         }
 
         return super.onOptionsItemSelected(item);
