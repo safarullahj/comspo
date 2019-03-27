@@ -20,14 +20,16 @@ public class SubAuditListing implements View.OnClickListener  {
     private String year;
     private String farmname;
     private Integer auditId;
+    private Boolean auditorAuditStatus;
 
 
-    SubAuditListing(Activity activity, List<SubAudit> subAudit, Integer auditId, LinearLayout view, String year, String farmname) {
+    SubAuditListing(Activity activity, List<SubAudit> subAudit, Integer auditId, LinearLayout view, String year, String farmname, Boolean auditorAuditStatus) {
         this.activity = activity;
         this.subAudit = subAudit;
         this.auditId = auditId;
         this.year = year;
         this.farmname = farmname;
+        this.auditorAuditStatus = auditorAuditStatus;
 
         view.removeAllViews();
         if (subAudit.size() > 0) {
@@ -94,14 +96,16 @@ public class SubAuditListing implements View.OnClickListener  {
 
     @Override
     public void onClick(View view) {
-        SubAudit audit = (SubAudit) view.getTag();
-        Integer id = audit.getSubAuditId();
-        String name = audit.getFarmName();
-        name = name +"(In Audit- "+farmname+")";
-        activity.startActivity(AuditDetailsActivity.getIntent(activity,
-                auditId,
-                id,
-                name,
-                ""));
+        if(auditorAuditStatus) {
+            SubAudit audit = (SubAudit) view.getTag();
+            Integer id = audit.getSubAuditId();
+            String name = audit.getFarmName();
+            name = name + "(In Audit- " + farmname + ")";
+            activity.startActivity(AuditDetailsActivity.getIntent(activity,
+                    auditId,
+                    id,
+                    name,
+                    ""));
+        }
     }
 }

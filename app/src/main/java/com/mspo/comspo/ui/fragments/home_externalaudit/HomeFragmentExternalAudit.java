@@ -65,16 +65,16 @@ public class HomeFragmentExternalAudit extends Fragment {
                 case 1:
                     fragment = GroupAuditFragment.newInstance();
                     break;
-                case 2:
+                /*case 2:
                     fragment = SubAuditFragment.newInstance();
-                    break;
+                    break;*/
             }
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -84,8 +84,8 @@ public class HomeFragmentExternalAudit extends Fragment {
                     return "Single";
                 case 1:
                     return "Group";
-                case 2:
-                    return "Sub";
+                /*case 2:
+                    return "Sub";*/
             }
             return null;
         }

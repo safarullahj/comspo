@@ -26,9 +26,12 @@ import android.widget.Toast;
 
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 import com.mspo.comspo.R;
+import com.mspo.comspo.data.remote.model.requests.AuditAcceptRequest;
 import com.mspo.comspo.data.remote.model.requests.EditAuditRequest;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.AuditDetail;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.SmallHolderAuditSheetSaveRequest;
+import com.mspo.comspo.data.remote.model.responses.AuditorStatusResponse;
+import com.mspo.comspo.data.remote.model.responses.CommonResponse;
 import com.mspo.comspo.data.remote.model.responses.EditAuditResponse;
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
@@ -66,7 +69,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private static final String KEY_AUDIT_CATEGORY = "key.category";
 
     private ProgressBar progressBar;
-    private MaterialButton record_inspection, btn_Sync, btn_Submit, btn_Result, btn_edit_details, btn_edit_duration;
+    private MaterialButton record_inspection, btn_Sync, btn_Submit, btn_Result, btn_edit_details, btn_edit_duration,
+            btn_Accept,btn_Reject;
 
     private AppCompatTextView smallholderName;
     private AppCompatTextView MPOBLicenseNumber;
@@ -81,7 +85,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private AppCompatTextView startDate;
     private AppCompatTextView endDate;
 
-    private LinearLayout perfomance_container;
+    private LinearLayout perfomance_container, auditors_container,status_container;
+    private AppCompatTextView auditors_container_head;
 
     private int auditId;
     private String farmName, auditStatus, category, subAuditId;
@@ -166,6 +171,18 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
         perfomance_container = findViewById(R.id.perfomance_container);
         perfomance_container.setVisibility(View.GONE);
+
+        auditors_container_head = findViewById(R.id.auditors_container_head);
+        auditors_container_head.setVisibility(View.GONE);
+        auditors_container = findViewById(R.id.auditors_container);
+        auditors_container.setVisibility(View.GONE);
+
+        status_container = findViewById(R.id.status_container);
+        status_container.setVisibility(View.GONE);
+        btn_Accept = findViewById(R.id.btn_Accept);
+        btn_Accept.setOnClickListener(this);
+        btn_Reject = findViewById(R.id.btn_Reject);
+        btn_Reject.setOnClickListener(this);
 
         if (getIntent().getExtras() != null) {
             auditId = getIntent().getExtras().getInt(KEY_AUDIT_ID, 0);
@@ -361,6 +378,23 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                     auditDetailsResponse = response.body();
 
+                                    if(response.body().getAuditorAuditStatus()){
+                                        status_container.setVisibility(View.GONE);
+                                        btn_Sync.setVisibility(View.VISIBLE);
+                                        btn_Submit.setVisibility(View.VISIBLE);
+                                        btn_edit_details.setVisibility(View.VISIBLE);
+                                        btn_Result.setVisibility(View.VISIBLE);
+                                        record_inspection.setVisibility(View.VISIBLE);
+
+                                    }else {
+                                        status_container.setVisibility(View.VISIBLE);
+                                        btn_Sync.setVisibility(View.GONE);
+                                        btn_Submit.setVisibility(View.GONE);
+                                        btn_edit_details.setVisibility(View.GONE);
+                                        btn_Result.setVisibility(View.GONE);
+                                        record_inspection.setVisibility(View.GONE);
+                                    }
+
                                     /*if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
                                         btn_Sync.setVisibility(View.VISIBLE);
                                         btn_Submit.setVisibility(View.VISIBLE);
@@ -386,6 +420,14 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                     homeAddress.setText(checkText(response.body().getHomeAddress()));
                                     district.setText(checkText(response.body().getDistrict()));
                                     contactDetails.setText(response.body().getCountryCode() + "-" + checkText(response.body().getPhone()));
+
+                                    if(response.body().getAuditors() != null && response.body().getAuditors().size() > 0) {
+                                        auditors_container.setVisibility(View.VISIBLE);
+                                        auditors_container_head.setVisibility(View.VISIBLE);
+                                        new AuditorListing(AuditDetailsActivity.this,
+                                                response.body().getAuditors(),
+                                                auditors_container);
+                                    }
 
                                     generalComments.setText(checkText(response.body().getComment()));
 
@@ -546,7 +588,80 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                     }
                 }
                 break;
+
+            case R.id.btn_Accept:
+                if (auditDetailsResponse != null) {
+                    auditor_audit_status("accept");
+                }
+                break;
+
+            case R.id.btn_Reject:
+                if (auditDetailsResponse != null) {
+                    auditor_audit_status("reject");
+                }
+                break;
         }
+    }
+
+    private void auditor_audit_status(String auditor_status) {
+
+        if (Connectivity.checkInternetIsActive(this)) {
+
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            AuditAcceptRequest auditAcceptRequest = new AuditAcceptRequest(PrefManager.getFarmId(AuditDetailsActivity.this), auditor_status);
+
+
+            APIClient.getClient()
+                    .create(IndividualAuditDetailsService.class)
+                    .auditStatus(PrefManager.getAccessToken(AuditDetailsActivity.this), auditDetailsResponse.getAuditId(), auditAcceptRequest)
+                    .enqueue(new Callback<AuditorStatusResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<AuditorStatusResponse> call, @NonNull Response<AuditorStatusResponse> response) {
+
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful()) {
+                                if (response.body().getSuccess()) {
+                                    if(auditor_status.equals("accept")) {
+                                        Snackbar.make(btn_edit_duration, "Audit Accepted", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                        getAuditorSingleAuditDetails();
+                                    }else {
+                                        Toast.makeText(AuditDetailsActivity.this , "Audit Rejected" , Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
+                                } else {
+                                        /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();*/
+                                    Snackbar.make(btn_edit_duration, "Fail to Update", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
+
+                            } else {
+                                    /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*/
+                                Snackbar.make(btn_edit_duration, "Response Fail", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<AuditorStatusResponse> call, @NonNull Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                                /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                            Snackbar.make(btn_edit_duration, "" + t.getMessage(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+        } else {
+            Snackbar.make(btn_edit_duration, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null).show();
+        }
+
     }
 
     private void showDurationDialog() {

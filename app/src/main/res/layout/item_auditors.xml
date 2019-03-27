@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.mspo.comspo.ui.widgets.CircleImageView
+            android:id="@+id/imageViewAuditorImage"
+            android:layout_width="@dimen/roundPicNormal"
+            android:layout_height="@dimen/roundPicNormal"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/spacing_normal"
+            android:src="@drawable/profile" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/auditor_name"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_normal"
+            android:layout_marginRight="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:text="Contact Details :" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

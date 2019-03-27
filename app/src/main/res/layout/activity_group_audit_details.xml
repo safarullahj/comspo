@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:padding="@dimen/spacing_normal"
                     android:text="Audit Details"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <!--</LinearLayout>-->
 
@@ -211,9 +211,31 @@
                     android:text="- - -" />
 
 
-
-
             </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/auditors_container_head"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_normal"
+                android:text="Auditors "
+                android:textStyle="bold" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/auditors_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_small" />
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:id="@+id/subAudits_container"
@@ -225,5 +247,53 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/status_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#ff6060"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_normal"
+            android:text="This audit has been assigned to you!! "
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_Accept"
+                style="@style/Widget.MSPO.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:layout_weight="1"
+                android:text="Accept"
+                android:textColor="@color/colorPrimary" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/btn_Reject"
+                style="@style/Widget.MSPO.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_small"
+                android:layout_weight="1"
+                android:text="Reject"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

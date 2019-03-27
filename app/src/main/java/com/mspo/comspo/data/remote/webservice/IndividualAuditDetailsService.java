@@ -1,6 +1,9 @@
 package com.mspo.comspo.data.remote.webservice;
 
+import com.mspo.comspo.data.remote.model.requests.AuditAcceptRequest;
 import com.mspo.comspo.data.remote.model.requests.EditAuditRequest;
+import com.mspo.comspo.data.remote.model.responses.AuditorStatusResponse;
+import com.mspo.comspo.data.remote.model.responses.CommonResponse;
 import com.mspo.comspo.data.remote.model.responses.EditAuditResponse;
 import com.mspo.comspo.data.remote.model.responses.group_audit_details.GroupAuditDetailsResponse;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
@@ -37,5 +40,10 @@ public interface IndividualAuditDetailsService {
     Call<EditAuditResponse> editAudit(@Header("access-token") String access_token,
                                         @Path("auditId") Integer auditId,
                                         @Body EditAuditRequest editAuditRequest);
+
+    @POST(ApiConstants.ENDPOINT_AUDITOR_AUDIT_STATUS)
+    Call<AuditorStatusResponse> auditStatus(@Header("access-token") String access_token,
+                                            @Path("auditId") Integer auditId,
+                                            @Body AuditAcceptRequest auditAcceptRequest);
 
 }
