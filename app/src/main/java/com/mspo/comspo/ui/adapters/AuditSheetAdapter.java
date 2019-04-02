@@ -62,7 +62,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     @Override
     public void onBindViewHolder(@NonNull final SheetItemViewHolder holder, final int position) {
 
-        holder.txtIndicatorHead.setText(version+"."+sheetList.get(position).getPosition() +" INDICATORS");
+        holder.txtIndicatorHead.setText(version+"."+sheetList.get(position).getPosition() +context.getString(R.string.indicators));
         holder.txtIndicator.setText( sheetList.get(position).getIndicatorDescription());
 
         if (sheetList.get(position).getIndicatorType().equals("M")){

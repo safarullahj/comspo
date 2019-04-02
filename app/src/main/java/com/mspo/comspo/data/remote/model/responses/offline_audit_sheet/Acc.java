@@ -1,20 +1,19 @@
-package com.mspo.comspo.data.remote.model.responses.audit_sheet;
+package com.mspo.comspo.data.remote.model.responses.offline_audit_sheet;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-
-public class Acc implements Serializable {
+public class Acc extends RealmObject  {
 
     @SerializedName("comment")
     @Expose
     private String comment;
     @SerializedName("files")
     @Expose
-    private List<String> files;
+    private RealmList<String> files;
     @SerializedName("acc_id")
     @Expose
     private Integer accId;
@@ -26,7 +25,7 @@ public class Acc implements Serializable {
     private Integer auditId;
     @SerializedName("aics")
     @Expose
-    private List<Aic> aics ;
+    private RealmList<Aic> aics ;
     @SerializedName("chapter_id")
     @Expose
     private Integer chapterId;
@@ -69,11 +68,11 @@ public class Acc implements Serializable {
         this.comment = comment;
     }
 
-    public List<String> getFiles() {
+    public RealmList<String> getFiles() {
         return files;
     }
 
-    public void setFiles(List<String> files) {
+    public void setFiles(RealmList<String> files) {
         this.files = files;
     }
 
@@ -101,11 +100,11 @@ public class Acc implements Serializable {
         this.auditId = auditId;
     }
 
-    public List<Aic> getAics() {
+    public RealmList<Aic> getAics() {
         return aics;
     }
 
-    public void setAics(List<Aic> aics) {
+    public void setAics(RealmList<Aic> aics) {
         this.aics = aics;
     }
 

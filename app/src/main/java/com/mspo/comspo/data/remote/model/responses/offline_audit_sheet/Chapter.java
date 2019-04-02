@@ -1,11 +1,12 @@
-package com.mspo.comspo.data.remote.model.responses.audit_sheet;
+package com.mspo.comspo.data.remote.model.responses.offline_audit_sheet;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Chapter implements Serializable{
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class Chapter extends RealmObject {
 
     @SerializedName("audit_chapter_id")
     @Expose
@@ -27,7 +28,7 @@ public class Chapter implements Serializable{
     private Double compliancePercentage;
     @SerializedName("accs")
     @Expose
-    private List<Acc> accs ;
+    private RealmList<Acc> accs ;
     @SerializedName("other_improvement_areas")
     @Expose
     private String otherImprovementAreas;
@@ -107,11 +108,11 @@ public class Chapter implements Serializable{
         this.compliancePercentage = compliancePercentage;
     }
 
-    public List<Acc> getAccs() {
+    public RealmList<Acc> getAccs() {
         return accs;
     }
 
-    public void setAccs(List<Acc> accs) {
+    public void setAccs(RealmList<Acc> accs) {
         this.accs = accs;
     }
 

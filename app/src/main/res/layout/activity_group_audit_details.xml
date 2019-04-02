@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Audit Details"
+                    android:text="@string/audit_details"
                     android:textStyle="bold" />
 
                 <!--</LinearLayout>-->
@@ -59,7 +59,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:paddingLeft="@dimen/spacing_normal"
-                    android:text="Start Date :" />
+                    android:text="@string/text_start_date" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_endDate"
@@ -70,7 +70,7 @@
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:paddingLeft="@dimen/spacing_normal"
                     android:paddingTop="@dimen/spacing_small"
-                    android:text="End Date :" />
+                    android:text="@string/text_end_date" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_audit_status"
@@ -81,7 +81,7 @@
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:paddingLeft="@dimen/spacing_normal"
                     android:paddingTop="@dimen/spacing_small"
-                    android:text="Audit Status :" />
+                    android:text="@string/audit_status" />
 
             </LinearLayout>
 
@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Contact Details "
+                    android:text="@string/contact_details"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Group name : " />
+                    android:text="@string/group_name" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_group_name"
@@ -118,7 +118,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Head farmer :" />
+                    android:text="@string/head_farmer" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_head_farmer"
@@ -136,7 +136,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="No of farmers :" />
+                    android:text="@string/no_of_farmers" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_No_of_farmers"
@@ -154,7 +154,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Phone :" />
+                    android:text="@string/phone_" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_phone"
@@ -172,7 +172,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Address :" />
+                    android:text="@string/address_" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_address"
@@ -190,7 +190,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -198,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Category :" />
+                    android:text="@string/category_" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_category"
@@ -208,7 +208,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
 
             </LinearLayout>
@@ -219,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"
-                android:text="Auditors "
+                android:text="@string/auditors"
                 android:textStyle="bold" />
 
 
@@ -262,7 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/spacing_normal"
-            android:text="This audit has been assigned to you!! "
+            android:text="@string/this_audit_has_been_assigned_to_you"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold" />
 
@@ -280,7 +280,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
-                android:text="Accept"
+                android:text="@string/accept"
                 android:textColor="@color/colorPrimary" />
 
             <android.support.design.button.MaterialButton
@@ -290,7 +290,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
-                android:text="Reject"
+                android:text="@string/reject"
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>

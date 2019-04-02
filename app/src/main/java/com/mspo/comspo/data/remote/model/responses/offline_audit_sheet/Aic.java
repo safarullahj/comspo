@@ -1,11 +1,12 @@
-package com.mspo.comspo.data.remote.model.responses.audit_sheet;
+package com.mspo.comspo.data.remote.model.responses.offline_audit_sheet;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Aic implements Serializable{
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class Aic extends RealmObject {
 
     @SerializedName("comment")
     @Expose
@@ -15,16 +16,16 @@ public class Aic implements Serializable{
     private String indicatorDescription;
     @SerializedName("evidence_to_check")
     @Expose
-    private List<EvidenceToCheck> evidenceToCheck ;
+    private RealmList<EvidenceToCheck> evidenceToCheck ;
     @SerializedName("indicator_suggestion")
     @Expose
     private String indicatorSuggestion;
     @SerializedName("suggestions")
     @Expose
-    private List<Suggestion> suggestions;
+    private RealmList<Suggestion> suggestions;
     @SerializedName("issues_to_check")
     @Expose
-    private List<IssuesToCheck> issuesToCheck;
+    private RealmList<IssuesToCheck> issuesToCheck;
     @SerializedName("compliance_value")
     @Expose
     private Double complianceValue;
@@ -42,7 +43,7 @@ public class Aic implements Serializable{
     private Integer position;
     @SerializedName("files")
     @Expose
-    private List<String> files ;
+    private RealmList<String> files ;
     @SerializedName("audit_indicator_id")
     @Expose
     private Integer auditIndicatorId;
@@ -63,11 +64,11 @@ public class Aic implements Serializable{
         this.indicatorDescription = indicatorDescription;
     }
 
-    public List<EvidenceToCheck> getEvidenceToCheck() {
+    public RealmList<EvidenceToCheck> getEvidenceToCheck() {
         return evidenceToCheck;
     }
 
-    public void setEvidenceToCheck(List<EvidenceToCheck> evidenceToCheck) {
+    public void setEvidenceToCheck(RealmList<EvidenceToCheck> evidenceToCheck) {
         this.evidenceToCheck = evidenceToCheck;
     }
 
@@ -79,19 +80,19 @@ public class Aic implements Serializable{
         this.indicatorSuggestion = indicatorSuggestion;
     }
 
-    public List<Suggestion> getSuggestions() {
+    public RealmList<Suggestion> getSuggestions() {
         return suggestions;
     }
 
-    public void setSuggestions(List<Suggestion> suggestions) {
+    public void setSuggestions(RealmList<Suggestion> suggestions) {
         this.suggestions = suggestions;
     }
 
-    public List<IssuesToCheck> getIssuesToCheck() {
+    public RealmList<IssuesToCheck> getIssuesToCheck() {
         return issuesToCheck;
     }
 
-    public void setIssuesToCheck(List<IssuesToCheck> issuesToCheck) {
+    public void setIssuesToCheck(RealmList<IssuesToCheck> issuesToCheck) {
         this.issuesToCheck = issuesToCheck;
     }
 
@@ -135,11 +136,11 @@ public class Aic implements Serializable{
         this.position = position;
     }
 
-    public List<String> getFiles() {
+    public RealmList<String> getFiles() {
         return files;
     }
 
-    public void setFiles(List<String> files) {
+    public void setFiles(RealmList<String> files) {
         this.files = files;
     }
 

@@ -52,7 +52,7 @@ public class MyTableViewAdapter extends AbstractTableAdapter<String,String,Strin
     @Override
     public void onBindCellViewHolder(AbstractViewHolder holder, Object cellItemModel, int columnPosition, int rowPosition) {
 
-        Log.e("tbl_:" , "coloum_pos :"+columnPosition+" value_: "+(String)cellItemModel);
+        //Log.e("tbl_:" , "coloum_pos :"+columnPosition+" value_: "+(String)cellItemModel);
 
 
         MyCellViewHolder viewHolder = (MyCellViewHolder) holder;

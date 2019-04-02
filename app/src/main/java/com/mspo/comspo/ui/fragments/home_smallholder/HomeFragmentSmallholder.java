@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mspo.comspo.R;
+import com.mspo.comspo.ui.fragments.OfflineFragment;
 import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
 import com.mspo.comspo.ui.fragments.home_smallholder.internal.SmallholderInternalFragment;
 
@@ -69,6 +70,9 @@ public class HomeFragmentSmallholder extends Fragment {
                 case 1:
                     fragment = SmallholderInternalFragment.newInstance();
                     break;
+                case 2:
+                    fragment = OfflineFragment.newInstance("operator");
+                    break;
 
             }
             return fragment;
@@ -76,7 +80,7 @@ public class HomeFragmentSmallholder extends Fragment {
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -86,6 +90,8 @@ public class HomeFragmentSmallholder extends Fragment {
                     return "External";
                 case 1:
                     return "Internal";
+                case 2:
+                    return "Offline";
 
             }
             return null;

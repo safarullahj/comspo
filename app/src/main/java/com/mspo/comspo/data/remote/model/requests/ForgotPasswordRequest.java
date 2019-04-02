@@ -9,6 +9,10 @@ public class ForgotPasswordRequest {
     @Expose
     private String username;
 
+    public ForgotPasswordRequest(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }

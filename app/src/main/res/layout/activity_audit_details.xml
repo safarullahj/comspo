@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:text="SYNC" />
+                        android:text="@string/text_sync" />
 
                     <android.support.design.button.MaterialButton
                         android:id="@+id/btn_Submit"
@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:text="SUBMIT" />
+                        android:text="@string/submit" />
 
                 </LinearLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:text="Audit Sheet" />
+                        android:text="@string/title_activity_audit_sheet" />
 
                     <android.support.design.button.MaterialButton
                         android:id="@+id/btn_Result"
@@ -84,9 +84,28 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:text="RESULT  SHEET" />
+                        android:text="@string/text_result_sheet" />
 
                 </LinearLayout>
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/btn_offline"
+                    style="@style/Widget.MSPO.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:layout_weight="1"
+                    android:text="@string/text_offline_audit" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/txt_offline"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/spacing_normal"
+                    android:text="@string/text_this_is_offline_audit"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -115,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="@dimen/spacing_normal"
-                        android:text="Audit Duration" />
+                        android:text="@string/text_audit_duration" />
 
                     <android.support.design.button.MaterialButton
                         android:id="@+id/btn_edit_duration"
@@ -123,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_small"
-                        android:text="EDIT" />
+                        android:text="@string/text_edit" />
 
                 </LinearLayout>
 
@@ -135,7 +154,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:paddingLeft="@dimen/spacing_normal"
-                    android:text="Start Date :" />
+                    android:text="@string/text_start_date" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_endDate"
@@ -146,7 +165,7 @@
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingLeft="@dimen/spacing_normal"
-                    android:text="End Date :" />
+                    android:text="@string/text_end_date" />
 
             </LinearLayout>
 
@@ -164,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Basic Details" />
+                    android:text="@string/text_basic_details" />
 
                 <android.support.design.button.MaterialButton
                     android:id="@+id/btn_edit_details"
@@ -172,7 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_small"
-                    android:text="EDIT" />
+                    android:text="@string/text_edit" />
 
             </LinearLayout>
 
@@ -189,7 +208,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Smallholder Details "
+                    android:text="@string/smallholder_details"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -198,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Smallholder Name :" />
+                    android:text="@string/smallholder_name" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Smallholder_Name"
@@ -208,7 +227,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - - " />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -216,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="MPOB License Number :" />
+                    android:text="@string/mpob_license_number" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_MPOB_License_Number"
@@ -226,7 +245,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - - " />
+                    android:text="@string/space_dash" />
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -235,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="IC No. :" />
+                    android:text="@string/ic_no" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_ICNo"
@@ -245,7 +264,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -253,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Grant Area In Ha :" />
+                    android:text="@string/grant_area_in_ha" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Grant_Area_In_Ha"
@@ -263,7 +282,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -271,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Land Use :" />
+                    android:text="@string/land_use" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Land_Use"
@@ -281,14 +300,14 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/spacing_normal"
-                    android:text="Contact Details "
+                    android:text="@string/contact_details"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.AppCompatTextView
@@ -297,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Small Holder Farm Address :" />
+                    android:text="@string/small_holder_farm_address" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Small_Holder_Farm_Address"
@@ -307,7 +326,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -315,7 +334,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Home Address :" />
+                    android:text="@string/text_home_address" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Home_Address"
@@ -325,7 +344,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -333,7 +352,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="District :" />
+                    android:text="@string/text_district" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_District"
@@ -343,7 +362,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Body2"
@@ -351,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
-                    android:text="Contact Details :" />
+                    android:text="@string/text_contact_details" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/text_Contact_Details"
@@ -361,7 +380,7 @@
                     android:layout_marginLeft="@dimen/spacing_normal"
                     android:layout_marginRight="@dimen/spacing_normal"
                     android:padding="@dimen/spacing_normal"
-                    android:text="- - -" />
+                    android:text="@string/space_dash" />
 
 
             </LinearLayout>
@@ -372,7 +391,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"
-                android:text="Auditors "
+                android:text="@string/auditors"
                 android:textStyle="bold" />
 
 
@@ -394,7 +413,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"
-                android:text="General Comments "
+                android:text="@string/general_comments"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -407,7 +426,7 @@
                 android:paddingBottom="@dimen/spacing_normal"
                 android:paddingLeft="@dimen/spacing_normal"
                 android:paddingRight="@dimen/spacing_normal"
-                android:text="- - -" />
+                android:text="@string/space_dash" />
 
         </LinearLayout>
 
@@ -428,7 +447,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/spacing_normal"
             android:textColor="@color/colorPrimary"
-            android:text="This audit has been assigned to you!! "
+            android:text="@string/this_audit_has_been_assigned_to_you"
             android:textStyle="bold" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -445,7 +464,7 @@
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimary"
-                android:text="Accept" />
+                android:text="@string/accept" />
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/btn_Reject"
@@ -455,7 +474,7 @@
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimary"
-                android:text="Reject" />
+                android:text="@string/reject" />
 
         </LinearLayout>
 

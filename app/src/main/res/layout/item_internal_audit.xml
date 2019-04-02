@@ -44,11 +44,12 @@
             android:paddingRight="@dimen/spacing_normal">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_audit_status_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
                 android:ellipsize="end"
-                android:text="Status : "
+                android:text="@string/status_"
                 android:textSize="@dimen/spacing_normal" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -57,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|bottom"
                 android:ellipsize="end"
-                android:text="Newly Assigned Audit"
+                android:text=""
                 android:textSize="@dimen/spacing_normal" />
         </LinearLayout>
 

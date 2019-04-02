@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mspo.comspo.R;
+import com.mspo.comspo.ui.fragments.OfflineFragment;
 
 
 public class HomeFragmentExternalAudit extends Fragment {
@@ -65,16 +66,16 @@ public class HomeFragmentExternalAudit extends Fragment {
                 case 1:
                     fragment = GroupAuditFragment.newInstance();
                     break;
-                /*case 2:
-                    fragment = SubAuditFragment.newInstance();
-                    break;*/
+                case 2:
+                    fragment = OfflineFragment.newInstance("auditor");
+                    break;
             }
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
@@ -84,8 +85,8 @@ public class HomeFragmentExternalAudit extends Fragment {
                     return "Single";
                 case 1:
                     return "Group";
-                /*case 2:
-                    return "Sub";*/
+                case 2:
+                    return "Offline";
             }
             return null;
         }

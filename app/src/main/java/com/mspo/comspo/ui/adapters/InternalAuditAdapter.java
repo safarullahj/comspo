@@ -32,7 +32,7 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
     @Override
     public int getItemCount() {
         if(auditList!= null) {
-            Log.e("tst_:", "size : " + auditList.size());
+            //Log.e("tst_:", "size : " + auditList.size());
             return auditList.size();
         }
         else
@@ -51,9 +51,9 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
     @Override
     public void onBindViewHolder(@NonNull final AuditItemViewHolder holder, final int position) {
 
-        Log.e("tst_:" , "Audit Id : "+auditList.get(position).getAuditId());
-        holder.audit_id.setText("Audit Id : "+auditList.get(position).getAuditId());
-        holder.audit_year.setText("Year : "+auditList.get(position).getYear());
+        Log.e("tst_:" , context.getString(R.string.audit_id_)+auditList.get(position).getAuditId());
+        holder.audit_id.setText(context.getString(R.string.audit_id_)+auditList.get(position).getAuditId());
+        holder.audit_year.setText(context.getString(R.string.year_)+auditList.get(position).getYear());
         String status = auditList.get(position).getAuditStatus();
         holder.audit_status.setText(status);
 

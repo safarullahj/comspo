@@ -36,7 +36,9 @@ import com.mspo.comspo.data.remote.model.responses.EditAuditResponse;
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
+import com.mspo.comspo.data.remote.model.responses.audit_sheet.Chapter;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
+import com.mspo.comspo.data.remote.model.responses.offline_audit_sheet.OfflineAuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.result_sheet.ResultSheetResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
@@ -47,6 +49,8 @@ import com.mspo.comspo.data.remote.webservice.IndividualAuditDetailsService;
 import com.mspo.comspo.ui.activities.audit_sheet.AuditSheetActivity;
 import com.mspo.comspo.ui.activities.result_sheet.ResultSheetActivity;
 
+import org.modelmapper.ModelMapper;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,6 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +75,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
     private ProgressBar progressBar;
     private MaterialButton record_inspection, btn_Sync, btn_Submit, btn_Result, btn_edit_details, btn_edit_duration,
-            btn_Accept,btn_Reject;
+            btn_Accept, btn_Reject, btn_offline;
 
     private AppCompatTextView smallholderName;
     private AppCompatTextView MPOBLicenseNumber;
@@ -84,8 +89,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private AppCompatTextView generalComments;
     private AppCompatTextView startDate;
     private AppCompatTextView endDate;
+    private AppCompatTextView txt_offline;
 
-    private LinearLayout perfomance_container, auditors_container,status_container;
+    private LinearLayout perfomance_container, auditors_container, status_container;
     private AppCompatTextView auditors_container_head;
 
     private int auditId;
@@ -100,6 +106,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private AlertDialog bDialog;
     private DatePickerDialog datePickerDialog;
     private long startTimeStamp = 0, endTimeStamp = 0;
+    private ModelMapper modelMapper;
+
+    private Realm realm;
 
     public static Intent getIntent(Context context, Integer auditId, Integer subAuditId, String farmName, String category) {
         Intent intent = new Intent(context, AuditDetailsActivity.class);
@@ -123,6 +132,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        modelMapper = new ModelMapper();
 
         progressBar = findViewById(R.id.progress);
         progressBar.setVisibility(View.GONE);
@@ -146,6 +156,12 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
         btn_edit_duration = findViewById(R.id.btn_edit_duration);
         btn_edit_duration.setOnClickListener(this);
+
+        btn_offline = findViewById(R.id.btn_offline);
+        btn_offline.setOnClickListener(this);
+        btn_offline.setVisibility(View.GONE);
+        txt_offline = findViewById(R.id.txt_offline);
+        txt_offline.setVisibility(View.GONE);
 
 
         /*farmGroup = findViewById(R.id.text_farmGroup);
@@ -203,6 +219,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         }
 
 
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -210,6 +228,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         super.onResume();
 
         record_inspection.setClickable(false);
+        btn_offline.setVisibility(View.GONE);
+        txt_offline.setVisibility(View.GONE);
 
         if (auditId != 0) {
             if (auditDetailsResponse == null) {
@@ -220,11 +240,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                 }
             } else {
-                if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
-                    getAuditSheet();
-                }else {
-                    getAuditorAuditSheet();
-                }
+
+                callAuditsheet();
+
             }
         }
     }
@@ -243,6 +261,12 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         if (bDialog != null && bDialog.isShowing()) {
             bDialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 
     private void getDetails() {
@@ -272,16 +296,18 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                         btn_Submit.setVisibility(View.VISIBLE);
                                         btn_edit_details.setVisibility(View.VISIBLE);
                                         btn_edit_duration.setVisibility(View.VISIBLE);
+                                        btn_offline.setVisibility(View.VISIBLE);
 
                                     } else {
                                         btn_Sync.setVisibility(View.GONE);
                                         btn_Submit.setVisibility(View.GONE);
                                         btn_edit_details.setVisibility(View.GONE);
                                         btn_edit_duration.setVisibility(View.GONE);
+                                        btn_offline.setVisibility(View.GONE);
                                     }
 
-                                    startDate.setText("Start Date : " + checkText(response.body().getStartDate()));
-                                    endDate.setText("End Date : " + checkText(response.body().getEndDate()));
+                                    startDate.setText(getString(R.string.text_start_date) + checkText(response.body().getStartDate()));
+                                    endDate.setText(getString(R.string.text_end_date) + checkText(response.body().getEndDate()));
 
                                     smallholderName.setText(checkText(response.body().getFarmName()));
                                     MPOBLicenseNumber.setText(checkText(response.body().getLicenceNo()));
@@ -317,7 +343,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                             break;
                                     }
 
-                                    getAuditSheet();
+                                    //getAuditSheet();
+                                    callAuditsheet();
 
                                 }
 
@@ -327,7 +354,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
 
-                                Snackbar.make(record_inspection, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -350,7 +377,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }
@@ -378,21 +405,23 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                     auditDetailsResponse = response.body();
 
-                                    if(response.body().getAuditorAuditStatus()){
+                                    if (response.body().getAuditorAuditStatus()) {
                                         status_container.setVisibility(View.GONE);
                                         btn_Sync.setVisibility(View.VISIBLE);
                                         btn_Submit.setVisibility(View.VISIBLE);
                                         btn_edit_details.setVisibility(View.VISIBLE);
                                         btn_Result.setVisibility(View.VISIBLE);
                                         record_inspection.setVisibility(View.VISIBLE);
+                                        btn_offline.setVisibility(View.VISIBLE);
 
-                                    }else {
+                                    } else {
                                         status_container.setVisibility(View.VISIBLE);
                                         btn_Sync.setVisibility(View.GONE);
                                         btn_Submit.setVisibility(View.GONE);
                                         btn_edit_details.setVisibility(View.GONE);
                                         btn_Result.setVisibility(View.GONE);
                                         record_inspection.setVisibility(View.GONE);
+                                        btn_offline.setVisibility(View.GONE);
                                     }
 
                                     /*if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
@@ -408,8 +437,8 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                     btn_edit_duration.setVisibility(View.GONE);
                                     // }
 
-                                    startDate.setText("Start Date : " + checkText(response.body().getStartDate()));
-                                    endDate.setText("End Date : " + checkText(response.body().getEndDate()));
+                                    startDate.setText(getString(R.string.text_start_date) + checkText(response.body().getStartDate()));
+                                    endDate.setText(getString(R.string.text_end_date) + checkText(response.body().getEndDate()));
 
                                     smallholderName.setText(checkText(response.body().getFarmName()));
                                     MPOBLicenseNumber.setText(checkText(response.body().getLicenceNo()));
@@ -421,7 +450,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                     district.setText(checkText(response.body().getDistrict()));
                                     contactDetails.setText(response.body().getCountryCode() + "-" + checkText(response.body().getPhone()));
 
-                                    if(response.body().getAuditors() != null && response.body().getAuditors().size() > 0) {
+                                    if (response.body().getAuditors() != null && response.body().getAuditors().size() > 0) {
                                         auditors_container.setVisibility(View.VISIBLE);
                                         auditors_container_head.setVisibility(View.VISIBLE);
                                         new AuditorListing(AuditDetailsActivity.this,
@@ -453,17 +482,18 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                             break;
                                     }
 
-                                    getAuditorAuditSheet();
+                                   // getAuditorAuditSheet();
+                                    callAuditsheet();
 
                                 }
 
 
                             } else {
-                                Log.e("SUB_ADT", "fail 1: "  );
+                                Log.e("SUB_ADT", "fail 1: ");
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
 
-                                Snackbar.make(record_inspection, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -486,7 +516,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }
@@ -518,44 +548,91 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                 //getAuditSheet();
 
                 if (auditSheetResponse != null && auditDetailsResponse != null) {
-                    startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus,subAuditId));
+                    /*OfflineAuditSheetResponse sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                            .equalTo("auditId", auditId)
+                            .findFirst();
+
+                    if(sheetResponse != null){
+                        auditSheetResponse = new AuditSheetResponse();
+                        AuditSheetResponse auditResponse = modelMapper.map(sheetResponse, AuditSheetResponse.class);
+                        auditSheetResponse = auditResponse;
+                    }*/
+                    if(subAuditId != null) {
+                        startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus, subAuditId, Integer.valueOf(subAuditId)));
+                    }else {
+                        startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus, subAuditId,auditId));
+                    }
                 } else {
                     /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();*/
-                    Snackbar.make(record_inspection, "Auditsheet response null", Snackbar.LENGTH_LONG)
+                    Snackbar.make(record_inspection, R.string.response_null, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                break;
+            case R.id.btn_Sync:
+                if (auditSheetResponse != null && auditDetailsResponse != null) {
+                    if (!status) {
+
+                            //btn_Submit.setClickable(true);
+                        submitAudit("false", true);
+
+                    } else {
+                        Snackbar.make(btn_Submit, R.string.already_submit, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+
+                } else {
+                    Snackbar.make(btn_Submit, R.string.something_wrong, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
                 break;
             case R.id.btn_Submit:
 
+                OfflineAuditSheetResponse sheetResponse = null;
+                if(subAuditId != null){
+                    sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                            .equalTo("auditId", Integer.valueOf(subAuditId))
+                            .findFirst();
+                }else {
+                    sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                            .equalTo("auditId", auditId)
+                            .findFirst();
+                }
 
-                if (auditSheetResponse != null && auditDetailsResponse != null) {
-                    if (!status) {
+                if(sheetResponse != null){
+                    Snackbar.make(btn_Submit, R.string.sync_first, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }else {
 
-                        boolean f = true;
-                        for (int i = 0; i < auditSheetResponse.getChapters().size(); i++) {
-                            if (auditSheetResponse.getChapters().get(i).getGraphColor().equals("info") ||
-                                    auditSheetResponse.getChapters().get(i).getGraphColor().equals("primary")) {
-                                f = false;
-                                break;
+
+                    if (auditSheetResponse != null && auditDetailsResponse != null) {
+                        if (!status) {
+
+                            boolean f = true;
+                            for (int i = 0; i < auditSheetResponse.getChapters().size(); i++) {
+                                if (auditSheetResponse.getChapters().get(i).getGraphColor().equals("info") ||
+                                        auditSheetResponse.getChapters().get(i).getGraphColor().equals("primary")) {
+                                    f = false;
+                                    break;
+                                }
                             }
-                        }
-                        if (f) {
-                            //btn_Submit.setClickable(true);
-                            submitAudit("true", false);
+                            if (f) {
+                                //btn_Submit.setClickable(true);
+                                submitAudit("true", false);
+                            } else {
+                                //btn_Submit.setClickable(false);
+                                Snackbar.make(btn_Submit, R.string.audit_not_complete, Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+                            }
                         } else {
-                            //btn_Submit.setClickable(false);
-                            Snackbar.make(btn_Submit, "Audit not Completed", Snackbar.LENGTH_LONG)
+                            Snackbar.make(btn_Submit, R.string.already_submit, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }
+
                     } else {
-                        Snackbar.make(btn_Submit, "Already Submited...!", Snackbar.LENGTH_LONG)
+                        Snackbar.make(btn_Submit, R.string.something_wrong, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
-
-                } else {
-                    Snackbar.make(btn_Submit, "Something Went Wrong", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
                 }
 
 
@@ -566,7 +643,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                 if (status) {
                     getResultSheet();
                 } else {
-                    Snackbar.make(btn_Submit, "Audit not Completed", Snackbar.LENGTH_LONG)
+                    Snackbar.make(btn_Submit, R.string.audit_not_complete, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
 
@@ -583,7 +660,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                     if (!status) {
                         showDurationDialog();
                     } else {
-                        Snackbar.make(btn_Submit, "Submited Audit! \n Can't Change Date", Snackbar.LENGTH_LONG)
+                        Snackbar.make(btn_Submit, R.string.canot_change_date, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                 }
@@ -598,6 +675,52 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             case R.id.btn_Reject:
                 if (auditDetailsResponse != null) {
                     auditor_audit_status("reject");
+                }
+                break;
+
+            case R.id.btn_offline:
+                if (auditDetailsResponse != null && auditSheetResponse != null) {
+
+                    if (!status) {
+
+                        OfflineAuditSheetResponse offlineAuditSheetResponse = modelMapper.map(auditSheetResponse, OfflineAuditSheetResponse.class);
+                        if(subAuditId != null){
+                            offlineAuditSheetResponse.setAuditId(Integer.valueOf(subAuditId));
+                        }else {
+                            offlineAuditSheetResponse.setAuditId(auditDetailsResponse.getAuditId());
+                        }
+
+                        offlineAuditSheetResponse.setUserType(PrefManager.getUserType(AuditDetailsActivity.this));
+                        offlineAuditSheetResponse.setYeare(auditDetailsResponse.getYear());
+
+
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm_) {
+                                realm_.copyToRealmOrUpdate(offlineAuditSheetResponse);
+                            }
+                        }, new Realm.Transaction.OnSuccess() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(AuditDetailsActivity.this, "Offline Success", Toast.LENGTH_LONG).show();
+                                btn_offline.setVisibility(View.GONE);
+                                txt_offline.setVisibility(View.VISIBLE);
+                                callAuditsheet();
+                            }
+                        }, new Realm.Transaction.OnError() {
+                            @Override
+                            public void onError(Throwable error) {
+                                error.printStackTrace();
+                            }
+                        });
+                    }else {
+                        Snackbar.make(btn_Submit, R.string.already_submit, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+
+                }else {
+                    Snackbar.make(btn_Submit, R.string.something_wrong, Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
                 break;
         }
@@ -623,25 +746,25 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {
                                 if (response.body().getSuccess()) {
-                                    if(auditor_status.equals("accept")) {
-                                        Snackbar.make(btn_edit_duration, "Audit Accepted", Snackbar.LENGTH_LONG)
+                                    if (auditor_status.equals("accept")) {
+                                        Snackbar.make(btn_edit_duration, R.string.audit_accepted, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         getAuditorSingleAuditDetails();
-                                    }else {
-                                        Toast.makeText(AuditDetailsActivity.this , "Audit Rejected" , Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(AuditDetailsActivity.this, R.string.audit_rejected, Toast.LENGTH_LONG).show();
                                         finish();
                                     }
                                 } else {
                                         /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();*/
-                                    Snackbar.make(btn_edit_duration, "Fail to Update", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(btn_edit_duration, R.string.fail_to_update, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
 
                             } else {
                                     /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                Snackbar.make(btn_edit_duration, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(btn_edit_duration, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
                             }
@@ -658,7 +781,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                         }
                     });
         } else {
-            Snackbar.make(btn_edit_duration, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(btn_edit_duration, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 
@@ -673,13 +796,13 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         bDialog.show();
 
         AppCompatTextView date_title = dialog.findViewById(R.id.date_title);
-        date_title.setText("Update Audit");
+        date_title.setText(R.string.update_audit);
         final AppCompatTextView startDate = dialog.findViewById(R.id.textView_StartDate);
         final AppCompatTextView endtDate = dialog.findViewById(R.id.textView_endDate);
         AppCompatImageView startCalender = dialog.findViewById(R.id.startCalender);
         AppCompatImageView endCalender = dialog.findViewById(R.id.endCalender);
         AppCompatButton create = dialog.findViewById(R.id.btnCreate);
-        create.setText("UPDATE");
+        create.setText(R.string.text_update);
 
         startDate.setText(checkText(auditDetailsResponse.getStartDate()));
         endtDate.setText(checkText(auditDetailsResponse.getEndDate()));
@@ -715,11 +838,11 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 if (startTimeStamp == 0) {
-                    Toast.makeText(AuditDetailsActivity.this, "Select Start Date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AuditDetailsActivity.this, R.string.select_start_date, Toast.LENGTH_LONG).show();
                 } else if (endTimeStamp == 0) {
-                    Toast.makeText(AuditDetailsActivity.this, "Select End Date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AuditDetailsActivity.this, R.string.select_end_date, Toast.LENGTH_LONG).show();
                 } else if (startTimeStamp > endTimeStamp) {
-                    Toast.makeText(AuditDetailsActivity.this, "End Date Mismatch", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AuditDetailsActivity.this, R.string.end_date_mismatch, Toast.LENGTH_LONG).show();
                 } else {
                     if (auditDetailsResponse != null) {
                         updateAudit();
@@ -786,20 +909,20 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                             progressBar.setVisibility(View.GONE);
                             if (response.isSuccessful()) {
                                 if (response.body().getStatus()) {
-                                    Snackbar.make(btn_edit_duration, "Audit Duration Updated", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(btn_edit_duration, R.string.duration_updated, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                     getDetails();
                                 } else {
                                         /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();*/
-                                    Snackbar.make(btn_edit_duration, "Fail to Update", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(btn_edit_duration, R.string.fail_to_update, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
 
                             } else {
                                     /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                Snackbar.make(btn_edit_duration, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(btn_edit_duration, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
                             }
@@ -816,7 +939,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                         }
                     });
         } else {
-            Snackbar.make(btn_edit_duration, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(btn_edit_duration, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }
@@ -849,7 +972,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(record_inspection, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -872,7 +995,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         } else {
             perfomance_container.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 
@@ -926,15 +1049,15 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                 auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(PrefManager.getFarmId(AuditDetailsActivity.this),
                         null,
                         subAuditId,
-                        "false",
+                        save_submit,
                         auditSheetResponse.getChapters(),
                         auditDetailList
                 );
-            }else if (PrefManager.getUserType(AuditDetailsActivity.this).equals("auditor")) {
+            } else if (PrefManager.getUserType(AuditDetailsActivity.this).equals("auditor")) {
                 auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(null,
                         PrefManager.getFarmId(AuditDetailsActivity.this),
                         subAuditId,
-                        "false",
+                        save_submit,
                         auditSheetResponse.getChapters(),
                         auditDetailList
                 );
@@ -957,14 +1080,25 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                 if (response.body().getStatus()) {
                                     //finish();
                                     if (!loadDetail) {
-                                        Snackbar.make(btn_Submit, "Submit Successfully", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(btn_Submit, R.string.submit_successfully, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
+
                                     } else {
-                                        Snackbar.make(btn_Submit, "Update Successfully", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(btn_Submit, R.string.update_successfully, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
                                             getDetails();
-                                        }else {
+                                        } else {
+                                            getAuditorSingleAuditDetails();
+                                        }
+                                    }
+
+                                    if(save_submit.equals("false")){
+                                        deleteOffline();
+                                    }else {
+                                        if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
+                                            getDetails();
+                                        } else {
                                             getAuditorSingleAuditDetails();
                                         }
                                     }
@@ -980,7 +1114,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                     } else {*/
                                     /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(findViewById(android.R.id.content), R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 //}
                             }
@@ -1000,9 +1134,89 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                     });
         } else {
 
-            Snackbar.make(btn_Submit, "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+            Snackbar.make(btn_Submit, R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
+    }
+
+    private void deleteOffline() {
+
+        OfflineAuditSheetResponse sheetResponse = null;
+        if(subAuditId != null){
+            sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", Integer.valueOf(subAuditId))
+                    .findFirst();
+        }else {
+            sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", auditId)
+                    .findFirst();
+        }
+
+        OfflineAuditSheetResponse finalSheetResponse = sheetResponse;
+        if(finalSheetResponse != null) {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    // Delete all matches
+                    finalSheetResponse.deleteFromRealm();
+                    if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
+                        getDetails();
+                    } else {
+                        getAuditorSingleAuditDetails();
+                    }
+
+                }
+            });
+        }
+    }
+
+    private void callAuditsheet(){
+        OfflineAuditSheetResponse sheetResponse = null;
+        if(subAuditId != null){
+             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", Integer.valueOf(subAuditId))
+                    .findFirst();
+        }else {
+             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", auditId)
+                    .findFirst();
+        }
+
+        if(sheetResponse != null){
+            btn_offline.setVisibility(View.GONE);
+            txt_offline.setVisibility(View.VISIBLE);
+            auditSheetResponse = new AuditSheetResponse();
+            AuditSheetResponse auditResponse = modelMapper.map(sheetResponse, AuditSheetResponse.class);
+            auditSheetResponse = auditResponse;
+
+            /*if (auditSheetResponse.getChapters().size() > 0) {
+                perfomance_container.setVisibility(View.VISIBLE);
+                new PerfomanceListing(AuditDetailsActivity.this, auditSheetResponse.getChapters(), perfomance_container);
+            } else {
+                perfomance_container.setVisibility(View.GONE);
+            }*/
+            record_inspection.setClickable(true);
+            progressBar.setVisibility(View.GONE);
+        }else {
+
+            if ((PrefManager.getUserType(AuditDetailsActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) || PrefManager.getUserType(AuditDetailsActivity.this).equals("auditor")) {
+                btn_offline.setVisibility(View.VISIBLE);
+                txt_offline.setVisibility(View.GONE);
+            }else {
+                btn_offline.setVisibility(View.GONE);
+                txt_offline.setVisibility(View.GONE);
+            }
+            if(auditDetailsResponse.getStatus().equals("Not Approved Audit") || auditDetailsResponse.getStatus().equals("Approved Audit")){
+                btn_offline.setVisibility(View.GONE);
+                txt_offline.setVisibility(View.GONE);
+            }
+            if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
+                getAuditSheet();
+            } else {
+                getAuditorAuditSheet();
+            }
+        }
+
     }
 
     private void getAuditSheet() {
@@ -1061,7 +1275,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(record_inspection, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -1085,7 +1299,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         } else {
             perfomance_container.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 
@@ -1147,7 +1361,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(record_inspection, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -1171,7 +1385,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         } else {
             perfomance_container.setVisibility(View.GONE);
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(record_inspection, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 

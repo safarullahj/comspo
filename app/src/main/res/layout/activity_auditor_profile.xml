@@ -49,7 +49,7 @@
                     android:layout_gravity="center"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="Name" />
+                    android:text="@string/name" />
 
             </LinearLayout>
 
@@ -70,7 +70,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Address" />
+                        android:text="@string/address" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_home_address"
@@ -78,13 +78,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Email Address" />
+                        android:text="@string/email_address" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_email"
@@ -92,13 +92,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mobile" />
+                        android:text="@string/mobile" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_Mobile"
@@ -106,13 +106,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Landline" />
+                        android:text="@string/landline" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_Landline"
@@ -120,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
 
                 </LinearLayout>
@@ -144,7 +144,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Qualification" />
+                        android:text="@string/qualification" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_education"
@@ -152,13 +152,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Experience" />
+                        android:text="@string/experience" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_experience"
@@ -166,14 +166,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Training Details" />
+                        android:text="@string/training_details" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_trainingDetails"
@@ -181,13 +181,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Certification Body" />
+                        android:text="@string/certification_body" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_CertificationBody"
@@ -195,7 +195,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/spacing_normal"
-                        android:text="- - - " />
+                        android:text="@string/space_dash" />
 
 
 
@@ -220,7 +220,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Audit Percentage(%)" />
+                        android:text="@string/audit_percentage" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/spacing_normal"
-                            android:text="Approved :" />
+                            android:text="@string/approved" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txt_per_approved"
@@ -241,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/spacing_normal"
-                            android:text="0" />
+                            android:text="@string/_0" />
 
                     </LinearLayout>
 
@@ -262,7 +262,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Completed :" />
+                                android:text="@string/completed" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_per_completed"
@@ -270,7 +270,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -285,7 +285,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Pending :" />
+                                android:text="@string/pending" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_per_pending"
@@ -293,7 +293,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -315,7 +315,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Ongoing :" />
+                                android:text="@string/ongoing" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_per_ongoing"
@@ -323,7 +323,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -338,7 +338,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Newly Assigned :" />
+                                android:text="@string/newly_assigned" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_per_newlyAssigned"
@@ -346,7 +346,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -374,7 +374,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Audits Count" />
+                        android:text="@string/audits_count" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -386,7 +386,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/spacing_normal"
-                            android:text="Approved :" />
+                            android:text="@string/approved" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/txt_cnt_approved"
@@ -395,7 +395,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/spacing_normal"
-                            android:text="0" />
+                            android:text="@string/_0" />
                     </LinearLayout>
 
 
@@ -415,7 +415,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Completed :" />
+                                android:text="@string/completed" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_cnt_completed"
@@ -423,7 +423,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -438,7 +438,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Pending :" />
+                                android:text="@string/pending" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_cnt_pending"
@@ -446,7 +446,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -468,7 +468,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Ongoing :" />
+                                android:text="@string/ongoing" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_cnt_ongoing"
@@ -476,7 +476,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 
@@ -491,7 +491,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="Newly Assigned :" />
+                                android:text="@string/newly_assigned" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/txt_cnt_newlyAssigned"
@@ -499,7 +499,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/spacing_normal"
-                                android:text="0" />
+                                android:text="@string/_0" />
 
                         </LinearLayout>
 

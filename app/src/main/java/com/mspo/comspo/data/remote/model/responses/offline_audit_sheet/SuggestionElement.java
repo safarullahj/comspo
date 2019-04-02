@@ -1,11 +1,11 @@
-package com.mspo.comspo.data.remote.model.responses.audit_sheet;
+package com.mspo.comspo.data.remote.model.responses.offline_audit_sheet;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
 
-public class SuggestionElement implements Serializable{
+public class SuggestionElement extends RealmObject {
 
     @SerializedName("description")
     @Expose

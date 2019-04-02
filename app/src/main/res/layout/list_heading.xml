@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="Principal Summary"
+        android:text="@string/principal_summary"
         android:textSize="@dimen/spacing_normal"
         android:textStyle="bold" />
 

@@ -179,7 +179,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top|start"
-                            android:hint="MPOB License Number"
+                            android:hint="@string/mpob_license_number_"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -207,7 +207,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top|start"
-                            android:hint="Grant Area In Ha"
+                            android:hint="@string/grant_area_in_ha_"
                             android:inputType="text" />
                     </android.support.design.widget.TextInputLayout>
 

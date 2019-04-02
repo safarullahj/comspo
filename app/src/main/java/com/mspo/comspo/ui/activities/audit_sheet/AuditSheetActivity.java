@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.AuditDetail;
@@ -37,6 +38,7 @@ import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResp
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.Acc;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
+import com.mspo.comspo.data.remote.model.responses.offline_audit_sheet.OfflineAuditSheetResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
@@ -45,9 +47,12 @@ import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.ui.adapters.AuditSheetAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
+import org.modelmapper.ModelMapper;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +65,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static final String KEY_AUDIT_STATUS = "key.auditStatus";
     private static final String KEY_AUDIT_STATUS_FLAG = "key.auditStatus";
     private static final String KEY_SUBAUDIT_ID = "key.subauditid";
+    private static final String KEY_OFFAUDIT_ID = "key.offauditid";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -78,9 +84,11 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private AuditSheetResponse auditSheetResponse;
     private IndividualAuditDetailsResponse auditDetailsResponse;
     private String auditStatus,subAuditId;
+    private Integer offAuditId;
     private boolean status = false;
 
     private static CustomSpinnerAdapter customAdapter;
+    private Realm realm;
 
 
     //  viewpager change listener
@@ -117,12 +125,13 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private Button btnPrevious, btnNext;
 
 
-    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus, String subAuditId) {
+    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus, String subAuditId,Integer offAuditId) {
         Intent intent = new Intent(context, AuditSheetActivity.class);
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
         intent.putExtra(KEY_DETAILS, auditDetailsResponse);
         intent.putExtra(KEY_AUDIT_STATUS, auditStatus);
         intent.putExtra(KEY_SUBAUDIT_ID, subAuditId);
+        intent.putExtra(KEY_OFFAUDIT_ID , offAuditId);
         return intent;
     }
 
@@ -145,6 +154,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audit_sheet);
+
+        Realm.init(this);
+        realm = Realm.getDefaultInstance();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         category = findViewById(R.id.category);
@@ -175,40 +187,50 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             if(subAuditId.equals("")){
                 subAuditId = null;
             }
+            offAuditId = getIntent().getExtras().getInt(KEY_OFFAUDIT_ID);
 
-            if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
-                switch (auditStatus) {
-                    case "Newly Assigned Audit":
-                        status = true;
-                        break;
-                    case "Pending Audit":
-                        status = true;
-                        break;
-                    case "OnGoing Audit":
-                        status = true;
-                        break;
-                    default:
-                        status = false;
-                        break;
+            if(auditDetailsResponse != null) {
+                if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
+                    switch (auditStatus) {
+                        case "Newly Assigned Audit":
+                            status = true;
+                            break;
+                        case "Pending Audit":
+                            status = true;
+                            break;
+                        case "OnGoing Audit":
+                            status = true;
+                            break;
+                        case "Offline":
+                            status = true;
+                            break;
+                        default:
+                            status = false;
+                            break;
+                    }
+                } else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")) {
+                    switch (auditStatus) {
+                        case "Newly Assigned Audit":
+                            status = true;
+                            break;
+                        case "Pending Audit":
+                            status = true;
+                            break;
+                        case "OnGoing Audit":
+                            status = true;
+                            break;
+                        case "Offline":
+                            status = true;
+                            break;
+                        default:
+                            status = false;
+                            break;
+                    }
+                } else {
+                    status = false;
                 }
-            }else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")){
-                switch (auditStatus) {
-                    case "Newly Assigned Audit":
-                        status = true;
-                        break;
-                    case "Pending Audit":
-                        status = true;
-                        break;
-                    case "OnGoing Audit":
-                        status = true;
-                        break;
-                    default:
-                        status = false;
-                        break;
-                }
-            }
-            else {
-                status = false;
+            }else {
+                status = true;
             }
 
             /*for (Chapter chapter : auditSheetResponse.getChapters()) {
@@ -384,26 +406,61 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             }
         } else if (item.getItemId() == R.id.action_save) {
 
-            if (Connectivity.checkInternetIsActive(AuditSheetActivity.this)) {
+            OfflineAuditSheetResponse sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", offAuditId)
+                    .findFirst();
 
-                progressBar.setVisibility(View.VISIBLE);
+            if(sheetResponse != null){
+                 String userType = sheetResponse.getUserType();
+                 String year = sheetResponse.getYear();
 
-                AuditDetail auditDetail = new AuditDetail();
+                ModelMapper modelMapper = new ModelMapper();
+                sheetResponse = modelMapper.map(auditSheetResponse, OfflineAuditSheetResponse.class);
+                sheetResponse.setAuditId(offAuditId);
+                sheetResponse.setUserType(userType);
+                sheetResponse.setYeare(year);
 
-                auditDetail.setAddress(auditDetailsResponse.getAddress());
-                auditDetail.setComment(auditDetailsResponse.getComment());
-                auditDetail.setCountryCode(auditDetailsResponse.getCountryCode());
-                auditDetail.setDistrict(auditDetailsResponse.getDistrict());
-                auditDetail.setEndDate(auditDetailsResponse.getEndDate());
-                auditDetail.setFarmName(auditDetailsResponse.getFarmName());
-                auditDetail.setGrantArea(auditDetailsResponse.getGrantArea());
-                auditDetail.setHomeAddress(auditDetailsResponse.getHomeAddress());
-                auditDetail.setIcNo(auditDetailsResponse.getIcNo());
-                auditDetail.setLandCondition(auditDetailsResponse.getLandCondition());
-                auditDetail.setLicenceNo(auditDetailsResponse.getLicenceNo());
-                auditDetail.setName(auditDetailsResponse.getName());
-                auditDetail.setPhone(auditDetailsResponse.getPhone());
-                auditDetail.setStartDate(auditDetailsResponse.getStartDate());
+
+                OfflineAuditSheetResponse finalSheetResponse = sheetResponse;
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm_) {
+                        realm_.copyToRealmOrUpdate(finalSheetResponse);
+                    }
+                }, new Realm.Transaction.OnSuccess() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(AuditSheetActivity.this, "Offline Success", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }, new Realm.Transaction.OnError() {
+                    @Override
+                    public void onError(Throwable error) {
+                        error.printStackTrace();
+                    }
+                });
+            }else {
+
+                if (Connectivity.checkInternetIsActive(AuditSheetActivity.this)) {
+
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    AuditDetail auditDetail = new AuditDetail();
+
+                    auditDetail.setAddress(auditDetailsResponse.getAddress());
+                    auditDetail.setComment(auditDetailsResponse.getComment());
+                    auditDetail.setCountryCode(auditDetailsResponse.getCountryCode());
+                    auditDetail.setDistrict(auditDetailsResponse.getDistrict());
+                    auditDetail.setEndDate(auditDetailsResponse.getEndDate());
+                    auditDetail.setFarmName(auditDetailsResponse.getFarmName());
+                    auditDetail.setGrantArea(auditDetailsResponse.getGrantArea());
+                    auditDetail.setHomeAddress(auditDetailsResponse.getHomeAddress());
+                    auditDetail.setIcNo(auditDetailsResponse.getIcNo());
+                    auditDetail.setLandCondition(auditDetailsResponse.getLandCondition());
+                    auditDetail.setLicenceNo(auditDetailsResponse.getLicenceNo());
+                    auditDetail.setName(auditDetailsResponse.getName());
+                    auditDetail.setPhone(auditDetailsResponse.getPhone());
+                    auditDetail.setStartDate(auditDetailsResponse.getStartDate());
 
                 /*auditDetail.setRegistrationNumber("gfgdgs");
                 auditDetail.setGrantAreaInHa("gghghsa");
@@ -413,51 +470,51 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                 auditDetail.setCrop("crop");
                 auditDetail.setTotalProductionArea("total_production_area");*/
 
-                List<AuditDetail> auditDetailList = new ArrayList<>();
-                auditDetailList.add(auditDetail);
+                    List<AuditDetail> auditDetailList = new ArrayList<>();
+                    auditDetailList.add(auditDetail);
 
-                SmallHolderAuditSheetSaveRequest auditSheetSaveRequest = null;
+                    SmallHolderAuditSheetSaveRequest auditSheetSaveRequest = null;
 
-                if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator")) {
+                    if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator")) {
 
-                    auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(PrefManager.getFarmId(AuditSheetActivity.this),
-                            null,
-                            subAuditId,
-                            "false",
-                            auditSheetResponse.getChapters(),
-                            auditDetailList
-                    );
-                }else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")) {
-                    auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(null,
-                            PrefManager.getFarmId(AuditSheetActivity.this),
-                            subAuditId,
-                            "false",
-                            auditSheetResponse.getChapters(),
-                            auditDetailList
-                    );
-                }
+                        auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(PrefManager.getFarmId(AuditSheetActivity.this),
+                                null,
+                                subAuditId,
+                                "false",
+                                auditSheetResponse.getChapters(),
+                                auditDetailList
+                        );
+                    } else if (PrefManager.getUserType(AuditSheetActivity.this).equals("auditor")) {
+                        auditSheetSaveRequest = new SmallHolderAuditSheetSaveRequest(null,
+                                PrefManager.getFarmId(AuditSheetActivity.this),
+                                subAuditId,
+                                "false",
+                                auditSheetResponse.getChapters(),
+                                auditDetailList
+                        );
+                    }
 
-                Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getComplianceValue());
-                Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getLastEditedTime());
+                    Log.e("rad_sub", "" + auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getComplianceValue());
+                    Log.e("rad_sub", "" + auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getLastEditedTime());
 
-                APIClient.getClient()
-                        .create(AuditSheetService.class)
-                        .saveFarmerAuditSheet(auditDetailsResponse.getAuditId(), PrefManager.getAccessToken(AuditSheetActivity.this), auditSheetSaveRequest)
-                        .enqueue(new Callback<SmallHolderAuditSheetSaveResponse>() {
-                            @Override
-                            public void onResponse(@NonNull Call<SmallHolderAuditSheetSaveResponse> call, @NonNull Response<SmallHolderAuditSheetSaveResponse> response) {
+                    APIClient.getClient()
+                            .create(AuditSheetService.class)
+                            .saveFarmerAuditSheet(auditDetailsResponse.getAuditId(), PrefManager.getAccessToken(AuditSheetActivity.this), auditSheetSaveRequest)
+                            .enqueue(new Callback<SmallHolderAuditSheetSaveResponse>() {
+                                @Override
+                                public void onResponse(@NonNull Call<SmallHolderAuditSheetSaveResponse> call, @NonNull Response<SmallHolderAuditSheetSaveResponse> response) {
 
-                                Log.e("res_:", "res : " + response.body());
-                                ErrorResponse error = ErrorUtils.parseError(response);
-                                if (error != null)
-                                    Log.e("res_:", "err : " + error.getErrorMessage());
+                                    Log.e("res_:", "res : " + response.body());
+                                    ErrorResponse error = ErrorUtils.parseError(response);
+                                    if (error != null)
+                                        Log.e("res_:", "err : " + error.getErrorMessage());
 
-                                if (response.isSuccessful()) {
-                                    if (response.body().getStatus()) {
-                                        finish();
-                                    }
+                                    if (response.isSuccessful()) {
+                                        if (response.body().getStatus()) {
+                                            finish();
+                                        }
 
-                                } else {
+                                    } else {
 
                                     /*ErrorResponse error = ErrorUtils.parseError(response);
 
@@ -467,28 +524,29 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                                     } else {*/
                                     /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                    Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
-                                    //}
+                                        Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                        //}
+                                    }
+                                    progressBar.setVisibility(View.GONE);
                                 }
-                                progressBar.setVisibility(View.GONE);
-                            }
 
-                            @Override
-                            public void onFailure(@NonNull Call<SmallHolderAuditSheetSaveResponse> call, @NonNull Throwable t) {
+                                @Override
+                                public void onFailure(@NonNull Call<SmallHolderAuditSheetSaveResponse> call, @NonNull Throwable t) {
 
 
                                 /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(findViewById(android.R.id.content), ""+t.getMessage(), Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        });
-            } else {
+                                    Snackbar.make(findViewById(android.R.id.content), "" + t.getMessage(), Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            });
+                } else {
 
-                Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
 
             /*Log.e("rad_sub",""+auditSheetResponse.getChapters().get(0).getAccs().get(0).getAics().get(0).getComplianceValue());

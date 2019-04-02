@@ -42,7 +42,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/spacing_small"
                     android:layout_weight="1"
-                    android:text="Total Applicable Control Points :" />
+                    android:text="@string/total_applicable_control_points" />
 
                 <android.support.design.button.MaterialButton
                     android:id="@+id/btn_Total_Score"
@@ -51,7 +51,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/spacing_small"
                     android:layout_weight="1"
-                    android:text="Total Score : " />
+                    android:text="@string/total_score" />
 
                 <android.support.design.button.MaterialButton
                     android:id="@+id/btn_Compliance"
@@ -60,7 +60,7 @@
                     android:layout_height="0dp"
                     android:layout_margin="@dimen/spacing_small"
                     android:layout_weight="1"
-                    android:text="Compliance Percentage : " />
+                    android:text="@string/compliance_percentage" />
             </LinearLayout>
         </LinearLayout>
 

@@ -17,7 +17,7 @@
         android:layout_margin="@dimen/spacing_normal"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="New Audit" />
+        android:text="@string/new_audit" />
 
 
     <LinearLayout
@@ -32,7 +32,7 @@
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Date :" />
+            android:text="@string/text_start_date" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_StartDate"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:ellipsize="end"
-            android:text="DD/MM/YYYY" />
+            android:text="@string/dd_mm_yyyy" />
 
 
         <android.support.v7.widget.AppCompatImageView
@@ -70,7 +70,7 @@
             style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End Date :" />
+            android:text="@string/text_end_date" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_endDate"
@@ -79,7 +79,7 @@
             android:layout_marginStart="@dimen/spacing_normal"
             android:layout_marginLeft="@dimen/spacing_normal"
             android:ellipsize="end"
-            android:text="DD/MM/YYYY" />
+            android:text="@string/dd_mm_yyyy" />
 
 
         <android.support.v7.widget.AppCompatImageView

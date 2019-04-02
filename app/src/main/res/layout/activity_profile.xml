@@ -84,7 +84,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="IC No." />
+                        android:text="@string/ic_no_" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_ICNo"
@@ -189,7 +189,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="MPOB License Number" />
+                        android:text="@string/mpob_license_number_" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_MPOBLicenseNumber"
@@ -217,7 +217,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Grant Area In Ha" />
+                        android:text="@string/grant_area_in_ha_" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_GrantAreaInHa"
@@ -231,7 +231,7 @@
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Certification Body" />
+                        android:text="@string/certification_body" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/txt_CertificationBody"

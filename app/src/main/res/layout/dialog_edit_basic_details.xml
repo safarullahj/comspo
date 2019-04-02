@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"
-                android:text="Smallholder Details "
+                android:text="@string/smallholder_details"
                 android:textStyle="bold" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginRight="@dimen/spacing_normal"
-                android:text="Smallholder Name :" />
+                android:text="@string/smallholder_name" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/text_Smallholder_Name"
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginRight="@dimen/spacing_normal"
                 android:padding="@dimen/spacing_normal"
-                android:text="- - - " />
+                android:text="@string/space_dash" />
 
             <android.support.design.widget.TextInputLayout
                 style="@style/Widget.MSPO.TextInputLayout"
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="MPOB License Number "
+                    android:hint="@string/mpob_license_number_"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="Grant Area In Ha"
+                    android:hint="@string/grant_area_in_ha_"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="Land Use"
+                    android:hint="@string/land_condition"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_normal"
-                android:text="Contact Details "
+                android:text="@string/contact_details"
                 android:textStyle="bold" />
 
             <android.support.design.widget.TextInputLayout
@@ -110,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="Small Holder Farm Address"
+                    android:hint="@string/small_holder_farm_address_"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
 
@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="Home Address"
+                    android:hint="@string/home_address"
                     android:inputType="textMultiLine"
                     android:minLines="3" />
 
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="District"
+                    android:hint="@string/district"
                     android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="Mobile Number"
+                    android:hint="@string/mobile_number"
                     android:inputType="phone" />
 
             </android.support.design.widget.TextInputLayout>
@@ -172,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top|start"
-                    android:hint="General Comments"
+                    android:hint="@string/general_comments"
                     android:inputType="textMultiLine"
                     android:minLines="3"/>
 
