@@ -85,12 +85,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 log_in.setClickable(false);
                 if (Connectivity.checkInternetIsActive(LoginActivity.this)) {
                     if (username.getText() == null || username.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Username", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_username, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         progressBar.setVisibility(View.GONE);
                         log_in.setClickable(true);
                     } else if (password.getText() == null || password.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Password", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_password, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         progressBar.setVisibility(View.GONE);
                         log_in.setClickable(true);
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 Snackbar.make(view, error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                                         .setAction("Action", null).show();
                                             } else {
-                                                Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                Snackbar.make(view, R.string.something_wrong, Snackbar.LENGTH_LONG)
                                                         .setAction("Action", null).show();
                                             }
                                             progressBar.setVisibility(View.GONE);
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     public void onFailure(Call<LoginResponse> call, Throwable t) {
                                         progressBar.setVisibility(View.GONE);
                                         log_in.setClickable(true);
-                                        Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(view, R.string.something_wrong, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         Snackbar.make(view, ""+t.getMessage(), Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     progressBar.setVisibility(View.GONE);
                     log_in.setClickable(true);
-                    Snackbar.make(view, "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
 
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onClick(View v) {
                 if(editText_username.getText() == null || editText_username.getText().toString().equals("")){
-                    Toast.makeText(LoginActivity.this, "Enter Username", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, R.string.enter_username, Toast.LENGTH_LONG).show();
                 }else {
                     getUserName(editText_username.getText().toString());
                     fDialog.dismiss();
@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             if (response.isSuccessful()) {
                                 if (response.body().getStatus()) {
-                                    Snackbar.make(findViewById(android.R.id.content), "Request Send Successfully", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(findViewById(android.R.id.content), R.string.request_send_successfully, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
 
@@ -227,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 } else {
-                                    Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(findViewById(android.R.id.content), R.string.something_wrong, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
                             }
@@ -244,7 +244,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     });
         } else {
-            Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             progressBar.setVisibility(View.GONE);
         }

@@ -179,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     } else {*/
                                 /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(findViewById(android.R.id.content), R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
                                 //}
 
@@ -200,7 +200,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }

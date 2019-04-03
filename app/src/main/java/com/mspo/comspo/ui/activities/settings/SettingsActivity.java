@@ -123,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                     Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 } else {
-                                    Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(findViewById(android.R.id.content), R.string.something_wrong, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
                             }
@@ -143,7 +143,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     });
         } else {
             setRadioButton();
-            Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             progressBar.setVisibility(View.GONE);
         }
@@ -186,13 +186,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                if(editText_old_psw.getText() == null || editText_old_psw.getText().toString().equals("")){
-                   Toast.makeText(SettingsActivity.this, "Enter Old Password", Toast.LENGTH_LONG).show();
+                   Toast.makeText(SettingsActivity.this, R.string.enter_Old_Password, Toast.LENGTH_LONG).show();
                }else if(editText_new_psw.getText() == null || editText_new_psw.getText().toString().equals("")){
-                   Toast.makeText(SettingsActivity.this, "Enter New Password", Toast.LENGTH_LONG).show();
+                   Toast.makeText(SettingsActivity.this, R.string.enter_New_Password, Toast.LENGTH_LONG).show();
                }else if(editText_retype_psw.getText() == null || editText_retype_psw.getText().toString().equals("")){
-                   Toast.makeText(SettingsActivity.this, "Retype New Password", Toast.LENGTH_LONG).show();
+                   Toast.makeText(SettingsActivity.this, R.string.retype_New_Password, Toast.LENGTH_LONG).show();
                }else if(!editText_new_psw.getText().toString().equals(editText_retype_psw.getText().toString())){
-                   Toast.makeText(SettingsActivity.this, "Miss match Retype Password", Toast.LENGTH_LONG).show();
+                   Toast.makeText(SettingsActivity.this, R.string.miss_match_Retype_Password, Toast.LENGTH_LONG).show();
                }else {
                    /*Toast.makeText(SettingsActivity.this, ""+editText_old_psw.getText().toString()
                            +"-"+editText_new_psw.getText().toString()
@@ -221,7 +221,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
                             if (response.isSuccessful()) {
                                 if (response.body().getStatus()) {
-                                    Snackbar.make(findViewById(android.R.id.content), "Change Password Successfully", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(findViewById(android.R.id.content), R.string.change_Password_Successfully, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
 
@@ -232,7 +232,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                                     Snackbar.make(findViewById(android.R.id.content), error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 } else {
-                                    Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(findViewById(android.R.id.content), R.string.something_wrong, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
                             }
@@ -249,7 +249,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         }
                     });
         } else {
-            Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+            Snackbar.make(findViewById(android.R.id.content), R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             progressBar.setVisibility(View.GONE);
         }

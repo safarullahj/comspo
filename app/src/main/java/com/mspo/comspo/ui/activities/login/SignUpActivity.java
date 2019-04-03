@@ -157,7 +157,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 });
                     }
                 } else {
-                    Snackbar.make(view, "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
 
@@ -166,31 +166,31 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (Connectivity.checkInternetIsActive(SignUpActivity.this)) {
                     if (name.getText() == null || name.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Name", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_name, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         name.requestFocus();
                     } else if (username.getText() == null || username.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Username", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_username, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         username.requestFocus();
                     } else if (address.getText() == null || address.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Adress", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_address, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         address.requestFocus();
                     } else if (countryCode.getText() == null || countryCode.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Country Code", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_country_code, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         countryCode.requestFocus();
                     } else if (phone.getText() == null || phone.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Phone Number", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_ph, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         phone.requestFocus();
                     } else if (email.getText() == null || email.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Email", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_email, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         email.requestFocus();
                     } else if (password.getText() == null || password.getText().toString().equals("")) {
-                        Snackbar.make(view, "Enter Password", Snackbar.LENGTH_LONG)
+                        Snackbar.make(view, R.string.enter_password, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         password.requestFocus();
                     } else {
@@ -217,7 +217,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                                             if (response.isSuccessful()) {
                                                 Log.e("logTest", "username = " + response.body());
-                                                Toast.makeText(SignUpActivity.this, "Wait for Approval", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(SignUpActivity.this, R.string.wait_for_approval, Toast.LENGTH_LONG).show();
                                                 finish();
 
                                             } else {
@@ -229,7 +229,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                                     Snackbar.make(view, error.getErrorMessage(), Snackbar.LENGTH_LONG)
                                                             .setAction("Action", null).show();
                                                 } else {
-                                                    Snackbar.make(view, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                                    Snackbar.make(view, R.string.something_wrong, Snackbar.LENGTH_LONG)
                                                             .setAction("Action", null).show();
                                                 }
                                             }
@@ -246,13 +246,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     });
 
                         } else {
-                            Snackbar.make(view, "Check Username Availability", Snackbar.LENGTH_LONG)
+                            Snackbar.make(view, R.string.check_availability, Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                             username.requestFocus();
                         }
                     }
                 } else {
-                    Snackbar.make(view, "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
 

@@ -82,11 +82,11 @@ public class HomeFragmentExternalAudit extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Single";
+                    return getString(R.string.single);
                 case 1:
-                    return "Group";
+                    return getString(R.string.group);
                 case 2:
-                    return "Offline";
+                    return getString(R.string.offline);
             }
             return null;
         }

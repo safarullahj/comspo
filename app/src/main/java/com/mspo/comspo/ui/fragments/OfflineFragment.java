@@ -34,6 +34,8 @@ public class OfflineFragment extends Fragment {
     private AppCompatTextView empty;
     private OfflineAuditAdapter offlineAuditAdapter;
 
+    private Realm realm;
+
     private String user_type="";
 
     public static OfflineFragment newInstance(String user_type) {
@@ -58,6 +60,7 @@ public class OfflineFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_offline_audits, container, false);
 
         Realm.init(getContext());
+        realm = Realm.getDefaultInstance();
         progressBar = view.findViewById(R.id.progress);
         recyclerViewAuditList = view.findViewById(R.id.recycler_view);
         refreshView = view.findViewById(R.id.refresh_view);
@@ -108,12 +111,17 @@ public class OfflineFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
     private void getOfflineAuditList() {
 
         if(user_type != null && !user_type.equals("")) {
 
-            RealmResults<OfflineAuditSheetResponse> result = Realm.getDefaultInstance()
-                    .where(OfflineAuditSheetResponse.class)
+            RealmResults<OfflineAuditSheetResponse> result = realm.where(OfflineAuditSheetResponse.class)
                     .equalTo("userType", user_type)
                     .sort("auditId", Sort.DESCENDING)
                     .findAll();

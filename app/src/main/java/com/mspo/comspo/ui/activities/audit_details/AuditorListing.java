@@ -72,7 +72,7 @@ public class AuditorListing {
         if (li != null) {
             v = li.inflate(R.layout.list_heading, null);
             heading = v.findViewById(R.id.textView_head);
-            heading.setText("Auditors");
+            heading.setText(R.string.auditors);
         }
 
         return v;

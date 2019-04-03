@@ -266,6 +266,12 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
     private void initializeViewPager(int i) {
         Log.e("chk", "Accs (" + i + "): " + auditSheetResponse.getChapters().get(i).getChapterName());
         mSectionsPagerAdapter = null;
@@ -430,13 +436,14 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                 }, new Realm.Transaction.OnSuccess() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(AuditSheetActivity.this, "Offline Success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AuditSheetActivity.this, R.string.save_uccessfully, Toast.LENGTH_LONG).show();
                         finish();
                     }
                 }, new Realm.Transaction.OnError() {
                     @Override
                     public void onError(Throwable error) {
                         error.printStackTrace();
+                        Toast.makeText(AuditSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }else {
@@ -511,6 +518,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
                                     if (response.isSuccessful()) {
                                         if (response.body().getStatus()) {
+                                            Toast.makeText(AuditSheetActivity.this, R.string.save_uccessfully, Toast.LENGTH_LONG).show();
                                             finish();
                                         }
 
@@ -524,7 +532,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                                     } else {*/
                                     /*Snackbar.make(findViewById(android.R.id.content), "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                        Snackbar.make(findViewById(android.R.id.content), "Response Fail", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(findViewById(android.R.id.content), R.string.response_fail, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         //}
                                     }
@@ -544,7 +552,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                             });
                 } else {
 
-                    Snackbar.make(findViewById(android.R.id.content), "Check Internet Connectivity", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.check_internet_connection, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             }

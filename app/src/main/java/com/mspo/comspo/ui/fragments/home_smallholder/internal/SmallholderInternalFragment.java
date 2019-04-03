@@ -134,7 +134,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         b.show();
 
         AppCompatTextView date_title = dialog.findViewById(R.id.date_title);
-        date_title.setText("New Audit");
+        date_title.setText(getString(R.string.new_audit));
         final AppCompatTextView startDate = dialog.findViewById(R.id.textView_StartDate);
         final AppCompatTextView endtDate = dialog.findViewById(R.id.textView_endDate);
         AppCompatImageView startCalender = dialog.findViewById(R.id.startCalender);
@@ -160,11 +160,11 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
             @Override
             public void onClick(View v) {
                 if (startTimeStamp == 0) {
-                    Toast.makeText(getActivity(), "Select Start Date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.select_Start_Date, Toast.LENGTH_LONG).show();
                 } else if (endTimeStamp == 0) {
-                    Toast.makeText(getActivity(), "Select End Date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.select_End_Date, Toast.LENGTH_LONG).show();
                 } else if (startTimeStamp > endTimeStamp) {
-                    Toast.makeText(getActivity(), "End Date Mismatch", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.end_Date_Mismatch, Toast.LENGTH_LONG).show();
                 } else {
                     createNewAudit();
                     b.dismiss();
@@ -201,20 +201,20 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                                 progressBar.setVisibility(View.GONE);
                                 if (response.isSuccessful()) {
                                     if (response.body().getStatus()) {
-                                        Snackbar.make(refreshView, "New Audit Created", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(refreshView, R.string.new_audit_created, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         getAuditList("0");
                                     } else {
                                         /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();*/
-                                        Snackbar.make(refreshView, "Fail to Create", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(refreshView, R.string.fail_to_creat_audit, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                     }
 
                                 } else {
                                     /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                    Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(refreshView, R.string.response_fail, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
 
                                 }
@@ -231,11 +231,11 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                             }
                         });
             } else {
-                Snackbar.make(refreshView, "Farm Not Registered yet", Snackbar.LENGTH_LONG)
+                Snackbar.make(refreshView, R.string.farm_Not_Registered_yet, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         } else {
-            Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(refreshView, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 
@@ -261,7 +261,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
 
                         Calendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth);
 
-                        Log.e("ts", "ts : " + TimeUnit.MILLISECONDS.toSeconds(calendar.getTimeInMillis()));
+                        //Log.e("ts", "ts : " + TimeUnit.MILLISECONDS.toSeconds(calendar.getTimeInMillis()));
 
 
                         /*Calendar cal = Calendar.getInstance(Locale.ENGLISH);
@@ -356,7 +356,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                                 Log.e("tst_:", "response else ");
                                 /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(refreshView, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -377,7 +377,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(refreshView, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }

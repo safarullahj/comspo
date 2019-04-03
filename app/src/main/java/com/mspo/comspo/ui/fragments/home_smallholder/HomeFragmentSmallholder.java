@@ -87,11 +87,11 @@ public class HomeFragmentSmallholder extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "External";
+                    return getString(R.string.external);
                 case 1:
-                    return "Internal";
+                    return getString(R.string.internal);
                 case 2:
-                    return "Offline";
+                    return getString(R.string.offline);
 
             }
             return null;

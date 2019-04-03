@@ -134,10 +134,10 @@ public class SingleAuditFragment extends Fragment implements FilterInterface {
                         public void onResponse(@NonNull Call<AuditorAuditListResponse> call, @NonNull Response<AuditorAuditListResponse> response) {
 
                             if (response.isSuccessful()) {
-                                Log.e("empty_:", "ext success ");
+                                //Log.e("empty_:", "ext success ");
                                 if (response.body() != null) {
-                                    Log.e("empty_:", "not null ");
-                                    Log.e("empty_:", "size " + response.body().getAudits().size());
+                                  //  Log.e("empty_:", "not null ");
+                                   // Log.e("empty_:", "size " + response.body().getAudits().size());
 
                                     if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
                                         refreshView.setVisibility(View.VISIBLE);
@@ -153,15 +153,15 @@ public class SingleAuditFragment extends Fragment implements FilterInterface {
 
 
                                 } else {
-                                    Log.e("empty_:", "ext null ");
+                                    //Log.e("empty_:", "ext null ");
                                 }
 
 
                             } else {
-                                Log.e("chk_adtr:","else err");
+                                //Log.e("chk_adtr:","else err");
                                 /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(refreshView, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -171,7 +171,7 @@ public class SingleAuditFragment extends Fragment implements FilterInterface {
 
                         @Override
                         public void onFailure(Call<AuditorAuditListResponse> call, Throwable t) {
-                            Log.e("chk_adtr:","err msg : "+t.getMessage());
+                           // Log.e("chk_adtr:","err msg : "+t.getMessage());
                             progressBar.setVisibility(View.GONE);
                             /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();*/
@@ -182,7 +182,7 @@ public class SingleAuditFragment extends Fragment implements FilterInterface {
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(refreshView, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }

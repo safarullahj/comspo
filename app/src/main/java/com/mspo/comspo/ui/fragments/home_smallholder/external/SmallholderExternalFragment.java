@@ -135,10 +135,10 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                         public void onResponse(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Response<SmallholderAuditListResponse> response) {
 
                             if (response.isSuccessful()) {
-                                Log.e("empty_:", "ext success ");
+                               // Log.e("empty_:", "ext success ");
                                 if (response.body() != null) {
-                                    Log.e("empty_:", "not null ");
-                                    Log.e("empty_:", "size " + response.body().getAudits().size());
+                                  //  Log.e("empty_:", "not null ");
+                                   // Log.e("empty_:", "size " + response.body().getAudits().size());
 
                                     if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
                                         refreshView.setVisibility(View.VISIBLE);
@@ -151,7 +151,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                                     recyclerViewAuditList.setAdapter(smallholderExternalAuditAdapter);
 
                                 } else {
-                                    Log.e("empty_:", "ext null ");
+                                   // Log.e("empty_:", "ext null ");
                                 }
 
 
@@ -159,7 +159,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
 
                                 /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
-                                Snackbar.make(refreshView, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(refreshView, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -180,7 +180,7 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(refreshView, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(refreshView, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }

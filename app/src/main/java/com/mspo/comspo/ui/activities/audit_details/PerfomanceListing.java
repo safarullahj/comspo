@@ -75,7 +75,7 @@ public class PerfomanceListing {
         if (li != null) {
             v = li.inflate(R.layout.list_heading, null);
             heading = v.findViewById(R.id.textView_head);
-            heading.setText("Principal Summary");
+            heading.setText(R.string.principal_summary);
         }
 
         return v;

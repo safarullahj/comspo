@@ -214,7 +214,7 @@ public class GroupAuditDetailsActivity extends AppCompatActivity implements View
                                 /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();*/
 
-                                Snackbar.make(progressBar, "response fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(progressBar, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
 
@@ -237,7 +237,7 @@ public class GroupAuditDetailsActivity extends AppCompatActivity implements View
 
         } else {
             progressBar.setVisibility(View.GONE);
-            Snackbar.make(progressBar, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(progressBar, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
     }
@@ -288,24 +288,24 @@ public class GroupAuditDetailsActivity extends AppCompatActivity implements View
                             if (response.isSuccessful()) {
                                 if (response.body().getSuccess()) {
                                     if(auditor_status.equals("accept")) {
-                                        Snackbar.make(startDate, "Audit Accepted", Snackbar.LENGTH_LONG)
+                                        Snackbar.make(startDate, R.string.audit_accepted, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
                                         getAuditorGroupAuditDetails();
                                     }else {
-                                        Toast.makeText(GroupAuditDetailsActivity.this , "Audit Rejected" , Toast.LENGTH_LONG).show();
+                                        Toast.makeText(GroupAuditDetailsActivity.this , R.string.audit_rejected , Toast.LENGTH_LONG).show();
                                         finish();
                                     }
                                 } else {
                                         /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();*/
-                                    Snackbar.make(startDate, "Fail to Update", Snackbar.LENGTH_LONG)
+                                    Snackbar.make(startDate, R.string.fail_to_update, Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
 
                             } else {
                                     /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();*/
-                                Snackbar.make(startDate, "Response Fail", Snackbar.LENGTH_LONG)
+                                Snackbar.make(startDate, R.string.response_fail, Snackbar.LENGTH_LONG)
                                         .setAction("Action", null).show();
 
                             }
@@ -322,7 +322,7 @@ public class GroupAuditDetailsActivity extends AppCompatActivity implements View
                         }
                     });
         } else {
-            Snackbar.make(startDate, "Check Internet Connectivity", Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(startDate, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
                     .setAction("Action", null).show();
         }
 

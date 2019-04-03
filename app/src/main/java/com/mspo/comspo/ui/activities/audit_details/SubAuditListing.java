@@ -55,8 +55,8 @@ public class SubAuditListing implements View.OnClickListener  {
         audit_year = perfomance_view.findViewById(R.id.textView_audit_year);
         audit_status = perfomance_view.findViewById(R.id.textView_audit_status);
 
-        audit_id.setText("Audit Id : "+subAudit.get(position).getSubAuditId());
-        audit_year.setText("Year : "+year);
+        audit_id.setText(activity.getString(R.string.audit_id_)+subAudit.get(position).getSubAuditId());
+        audit_year.setText(activity.getString(R.string.year_)+year);
         String status = subAudit.get(position).getStatus();
         audit_status.setText(status);
 
@@ -88,7 +88,7 @@ public class SubAuditListing implements View.OnClickListener  {
         if (li != null) {
             v = li.inflate(R.layout.list_heading, null);
             heading = v.findViewById(R.id.textView_head);
-            heading.setText("Sub Audit");
+            heading.setText(R.string.sub_audit);
         }
 
         return v;

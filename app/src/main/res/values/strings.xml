@@ -166,7 +166,7 @@
     <string name="canot_change_date">Submited Audit!   Can\'t Change Date</string>
     <string name="audit_accepted">Audit Accepted</string>
     <string name="audit_rejected">Audit Rejected</string>
-    <string name="fail_to_update">Fail to Update</string>
+    <string name="fail_to_update">Failed to Update</string>
     <string name="update_audit">Update Audit</string>
     <string name="select_start_date">Select Start Date</string>
     <string name="select_end_date">Select End Date</string>
@@ -174,6 +174,50 @@
     <string name="duration_updated">Audit Duration Updated</string>
     <string name="submit_successfully">Submit Successfully</string>
     <string name="update_successfully">Update Successfully</string>
+    <string name="sub_audit">Sub Audit</string>
+    <string name="save_uccessfully">Save Successfully</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="request_send_successfully">Request Send Successfully</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_country_code">Enter Country Code</string>
+    <string name="enter_ph">Enter Phone Number</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="wait_for_approval">Wait for Approval</string>
+    <string name="check_availability">Check Username Availability</string>
+    <string name="audit_summary">Audit Summary</string>
+
+
+    <string name="rs_Principle">Principle</string>
+    <string name="rs_Applicable_Major_Control_Points">Applicable Major Control Points</string>
+    <string name="rs_Applicable_Minor_Control_Points">Applicable Minor Control Points</string>
+    <string name="rs_Total_Applicable_Points_For_Score_Calculation">Total Applicable Points For Score Calculation</string>
+    <string name="rs_Total_Score">Total Score</string>
+    <string name="rs_Compliance_Percentage">Compliance Percentage</string>
+    <string name="rs_Minor_Non_Conformity">Minor Non Conformity</string>
+    <string name="rs_Major_Non_Conformity">Major Non Conformity</string>
+    <string name="rs_Major_Criteria_Score">Major Criteria Score</string>
+    <string name="rs_Major_Criteria_score_percentage">Major Criteria score percentage</string>
+    <string name="rs_Minor_Criteria_Score">Minor Criteria Score</string>
+    <string name="rs_Minor_Criteria_Score_Percentage">Minor Criteria Score Percentage</string>
+
+    <string name="enter_Old_Password">Enter Old Password</string>
+    <string name="enter_New_Password">Enter New Password</string>
+    <string name="retype_New_Password">Retype New Password</string>
+    <string name="miss_match_Retype_Password">Miss match Retype Password</string>
+    <string name="change_Password_Successfully">Change Password Successfully</string>
+    <string name="single">Single</string>
+    <string name="group">Group</string>
+    <string name="offline">Offline</string>
+    <string name="select_Start_Date">Select Start Date</string>
+    <string name="select_End_Date">Select End Date</string>
+    <string name="end_Date_Mismatch">End Date Mismatch</string>
+    <string name="new_audit_created">New Audit Created</string>
+    <string name="fail_to_creat_audit">Fail to Create Audit</string>
+    <string name="farm_Not_Registered_yet">Farm Not Registered yet</string>
+    <string name="external">External</string>
+    <string name="internal">Internal</string>
 
 
 </resources>

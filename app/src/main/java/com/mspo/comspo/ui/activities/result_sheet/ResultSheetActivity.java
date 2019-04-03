@@ -29,7 +29,7 @@ public class ResultSheetActivity extends AppCompatActivity{
 
     private List<String> mRowHeaderList = new ArrayList<>();
     //private List<String> mColumnHeaderList;
-    List<String> mColumnHeaderList = Arrays.asList("Principle",
+    /*List<String> mColumnHeaderList = Arrays.asList("Principle",
             "Applicable Major Control Points",
             "Applicable Minor Control Points",
             "Total Applicable Points For Score Calculation",
@@ -40,7 +40,19 @@ public class ResultSheetActivity extends AppCompatActivity{
             "Major Criteria Score",
             "Major Criteria score percentage",
             "Minor Criteria Score",
-            "Minor Criteria Score Percentage");
+            "Minor Criteria Score Percentage");*/
+    List<String> mColumnHeaderList = Arrays.asList(getString(R.string.rs_Principle),
+            getString(R.string.rs_Applicable_Major_Control_Points),
+            getString(R.string.rs_Applicable_Minor_Control_Points),
+            getString(R.string.rs_Total_Applicable_Points_For_Score_Calculation),
+            getString(R.string.rs_Total_Score),
+            getString(R.string.rs_Compliance_Percentage),
+            getString(R.string.rs_Minor_Non_Conformity),
+            getString(R.string.rs_Major_Non_Conformity),
+            getString(R.string.rs_Major_Criteria_Score),
+            getString(R.string.rs_Major_Criteria_score_percentage),
+            getString(R.string.rs_Minor_Criteria_Score),
+            getString(R.string.rs_Minor_Criteria_Score_Percentage));
     private List<List<String>> mCellList = new ArrayList<>();
 
     public static Intent getIntent(Context context, ResultSheetResponse resultSheetResponse) {
@@ -61,7 +73,7 @@ public class ResultSheetActivity extends AppCompatActivity{
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
-        getSupportActionBar().setTitle("Audit Summary");
+        getSupportActionBar().setTitle(R.string.audit_summary);
 
         tableView = findViewById(R.id.tableview);
 
@@ -77,11 +89,11 @@ public class ResultSheetActivity extends AppCompatActivity{
 
         if (getIntent().getExtras() != null) {
             resultSheetResponse = (ResultSheetResponse) getIntent().getSerializableExtra(KEY_DETAILS);
-            Log.e("rSheet_:" , ""+resultSheetResponse);
+           // Log.e("rSheet_:" , ""+resultSheetResponse);
 
-            btn_Control_Points.setText("Total Applicable Control Points :"+resultSheetResponse.getTotalApplicablePointsCount());
-            btn_Total_Score.setText("Total Score : "+resultSheetResponse.getTotalScore());
-            btn_Compliance.setText("Compliance Percentage : "+String.format("%.2f", resultSheetResponse.getCompliancePercentage()) + "%");
+            btn_Control_Points.setText(getString(R.string.total_applicable_control_points)+resultSheetResponse.getTotalApplicablePointsCount());
+            btn_Total_Score.setText(getString(R.string.total_score)+resultSheetResponse.getTotalScore());
+            btn_Compliance.setText(getString(R.string.compliance_percentage)+String.format("%.2f", resultSheetResponse.getCompliancePercentage()) + "%");
 
             for(Chapter chapter :resultSheetResponse.getChapters()){
 
@@ -113,10 +125,10 @@ public class ResultSheetActivity extends AppCompatActivity{
             // Set this adapter to the our TableView
             tableView.setAdapter(adapter);
 
-            Log.e("rSheet_:" , "adpt "+adapter);
+            /*Log.e("rSheet_:" , "adpt "+adapter);
             Log.e("rSheet_:" , "L!"+mRowHeaderList.size());
             Log.e("rSheet_:" , ""+mColumnHeaderList.size());
-            Log.e("rSheet_:" , ""+mCellList.size());
+            Log.e("rSheet_:" , ""+mCellList.size());*/
 
             // Let's set datas of the TableView on the Adapter
             adapter.setAllItems(mColumnHeaderList, mRowHeaderList, mCellList);
