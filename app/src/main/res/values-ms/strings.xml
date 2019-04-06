@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_email">E-mel</string>
+    <string name="prompt_password">Kata laluan</string>
+    <string name="action_sign_in">Masuk</string>
+    <string name="error_invalid_email">Alamat e-mel ini tidak sah</string>
+    <string name="error_invalid_password">Kata laluan ini tidak sah</string>
+    <string name="error_incorrect_password">Kata laluan ini salah</string>
+    <string name="error_field_required">Bidang ini diperlukan</string>
+
+    <string name="btn_link_to_register">Small holder? Sign up now.</string>
+    <string name="btn_link_to_forgot_password">lupa kata laluan? Tekan di sini! </string>
+    <string name="btn_link_to_login">Sudah mendaftar! Masuk saya.</string>
+    <string name="btn_logout">Log keluar</string>
+    <string name="app_name">MSPO</string>
+    <string name="prompt_name">Nama</string>
+    <string name="prompt_username">Nama pengguna</string>
+    <string name="prompt_address">Alamat</string>
+    <string name="prompt_phone">Nombor telefon</string>
+    <string name="prompt_code">Kod</string>
+    <string name="btn_register">Daftar</string>
+    <string name="title_activity_main">MSPO</string>
+    <string name="navigation_drawer_open">Buka laci navigasi</string>
+    <string name="navigation_drawer_close">Tutup laci navigasi</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Tetapan</string>
+    <string name="text_edit">EDIT</string>
+    <string name="submit">SUBMIT</string>
+    <string name="text_create">CREATE</string>
+    <string name="text_change">CHANGE</string>
+    <string name="text_ok">OK</string>
+    <string name="text_update">UPDATE</string>
+    <string name="title_activity_audit_sheet">Audit Sheet</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="action_save">SAVE</string>
+    <string name="address">Alamat</string>
+    <string name="email">E-mel</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="landline_number">Nombor talian darat</string>
+    <string name="name">Nama</string>
+    <string name="_0">0</string>
+    <string name="newly_assigned">Baru ditugaskan :</string>
+    <string name="ongoing">Ongoing :</string>
+    <string name="pending">Pending :</string>
+    <string name="completed">Selesai :</string>
+    <string name="approved">Diluluskan :</string>
+    <string name="internal_audits">Audit dalaman</string>
+    <string name="newlyAssigned">Baru ditugaskan</string>
+    <string name="dash">---</string>
+    <string name="land_condition">Penggunaan tanah</string>
+    <string name="district">District</string>
+    <string name="farm_address">Alamat Ladang</string>
+    <string name="farm_name">Nama ladang</string>
+    <string name="phone">Telefon</string>
+    <string name="email_address">Alamat emel</string>
+    <string name="home_address">Alamat rumah</string>
+    <string name="language">Bahasa</string>
+    <string name="malay">Malay</string>
+    <string name="english">English</string>
+    <string name="show_all">Tunjukkan semua</string>
+    <string name="hint_pending">Pending</string>
+    <string name="hint_ongoing">Ongoing</string>
+    <string name="not_approved">Tidak diterima</string>
+    <string name="hint_approved">Diluluskan</string>
+    <string name="search_audit">Cari Audit</string>
+    <string name="search">Carian</string>
+    <string name="apply">Sapukan</string>
+    <string name="reset">Tetapkan semula</string>
+    <string name="complies">Complies</string>
+    <string name="major_non_complience">Major Non Complience</string>
+    <string name="minor_non_complience">Minor Non Complience</string>
+    <string name="not_applicable">Not Applicable</string>
+    <string name="audit_observation">Pemerhatian Audit</string>
+    <string name="indicators">INDIKATOR</string>
+    <string name="audit_id">Id Audit</string>
+    <string name="firm_group">Firma / Kumpulan</string>
+    <string name="year">Tahun</string>
+    <string name="status">Status</string>
+    <string name="category">Kategori</string>
+    <string name="filter">Penapis</string>
+    <string name="my_audits">Audit saya</string>
+    <string name="profile">Profil</string>
+    <string name="settings">Tetapan</string>
+    <string name="signout">Log keluar</string>
+    <string name="external_audits">Audit Luaran</string>
+    <string name="txt_empty">Tiada Audit Tersenarai</string>
+    <string name="txt_next">seterusnya</string>
+    <string name="txt_previous">sebelumnya</string>
+    <string name="warning_exit_without_save">Keluar tanpa menyimpan?</string>
+    <string name="action_yes">Ya</string>
+    <string name="action_no">Tidak</string>
+    <string name="temperature_unavailable">Suhu tidak tersedia</string>
+    <string name="refresh_to_update_weather">Muat semula untuk mengemas kini cuaca</string>
+    <string name="refresh_location">Muat semula lokasi</string>
+    <string name="text_message">Hi, \nIni berlaku kepada semua orang. Jangan risau. Apa yang anda perlukan adalah memberitahu kami Nama Pengguna anda dan kami akan menghantar pautan set semula kata laluan ke id mel anda. </string>
+    <string name="text_sync">SYNC</string>
+    <string name="text_result_sheet">RESULT SHEET</string>
+    <string name="text_offline_audit">Audit Luar Talian</string>
+    <string name="text_this_is_offline_audit">Ini adalah Audit Luar Talian</string>
+    <string name="text_audit_duration">Tempoh Audit</string>
+    <string name="text_start_date">Tarikh mula :</string>
+    <string name="text_end_date">Tarikh tamat :</string>
+    <string name="text_basic_details">Butiran Asas</string>
+    <string name="smallholder_details">Butiran Petani Kecil</string>
+    <string name="smallholder_name">Nama Pemegang Kecil :</string>
+    <string name="space_dash">- - -</string>
+    <string name="mpob_license_number">MPOB Nombor lesen :</string>
+    <string name="ic_no">IC No. :</string>
+    <string name="grant_area_in_ha">Kawasan Geran Di Ha :</string>
+    <string name="land_use">Penggunaan tanah :</string>
+    <string name="contact_details">Butiran kenalan</string>
+    <string name="small_holder_farm_address">Alamat Ladang Petani Kecil :</string>
+    <string name="text_home_address">Alamat rumah :</string>
+    <string name="text_district">District :</string>
+    <string name="text_contact_details">Butiran kenalan :</string>
+    <string name="auditors">Juruaudit</string>
+    <string name="general_comments">Komen umum</string>
+    <string name="this_audit_has_been_assigned_to_you">Audit ini telah diberikan kepada anda!!</string>
+    <string name="accept">Terima</string>
+    <string name="reject">Tolak</string>
+    <string name="mobile">Mobile</string>
+    <string name="landline">Landline</string>
+    <string name="qualification">Kelayakan</string>
+    <string name="experience">Pengalaman</string>
+    <string name="training_details">Butiran Latihan</string>
+    <string name="certification_body">Badan Persijilan</string>
+    <string name="audit_percentage">Peratusan Audit(%)</string>
+    <string name="audits_count">Audits Count</string>
+    <string name="experiance">Pengalaman</string>
+    <string name="audit_details">Butiran Audit</string>
+    <string name="audit_status">Status Audit :</string>
+    <string name="group_name">Nama kumpulan :</string>
+    <string name="head_farmer">Petani kepala :</string>
+    <string name="no_of_farmers">Bilangan petani :</string>
+    <string name="phone_">Telefon :</string>
+    <string name="address_">Alamat :</string>
+    <string name="category_">Kategori :</string>
+    <string name="ic_no_">IC No.</string>
+    <string name="mpob_license_number_">MPOB Nombor lesen</string>
+    <string name="grant_area_in_ha_">Kawasan Geran Di Ha</string>
+    <string name="total_applicable_control_points">Bilangan Titik Kawalan Sah :</string>
+    <string name="total_score">Jumlah markah :</string>
+    <string name="compliance_percentage">Peratusan Pematuhan :</string>
+    <string name="change_password">Tukar kata laluan</string>
+    <string name="change">Ubah</string>
+    <string name="retype_password">Tulis semula kata laluan</string>
+    <string name="new_password">Kata laluan baharu</string>
+    <string name="old_password">Kata laluan lama</string>
+    <string name="small_holder_farm_address_">Alamat Ladang Pemegang Kecil</string>
+    <string name="username">Nama pengguna</string>
+    <string name="new_audit">Audit baru</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="status_">Status :</string>
+    <string name="principal_summary">Principal Summary</string>
+    <string name="username_somedomain_com">username@somedomain.com</string>
+    <string name="audit_id_">Id Audit :</string>
+    <string name="year_">Tahun :</string>
+    <string name="response_fail">tindak balas gagal</string>
+    <string name="check_internet_connection">Semak Sambungan Internet</string>
+    <string name="response_null">Tindak balas Auditsheet null</string>
+    <string name="already_submit">Already Submited...!</string>
+    <string name="something_wrong">Ada sesuatu yang salah</string>
+    <string name="sync_first">Sinkronkan Pertama</string>
+    <string name="audit_not_complete">Audit tidak selesai</string>
+    <string name="canot_change_date">Audit yang Dihantar!   Tidak Boleh Tukar Tarikh</string>
+    <string name="audit_accepted">Audit Diterima</string>
+    <string name="audit_rejected">Audit Ditolak</string>
+    <string name="fail_to_update">Kemas kini Gagal</string>
+    <string name="update_audit">Kemas kini Audit</string>
+    <string name="select_start_date">Pilih Tarikh Mula</string>
+    <string name="select_end_date">Pilih Tarikh Akhir</string>
+    <string name="end_date_mismatch">Tarikh Akhir Pencocokan</string>
+    <string name="duration_updated">Tempoh Audit Dikemaskini</string>
+    <string name="submit_successfully">Hantar Berjaya</string>
+    <string name="update_successfully">Kemas kini Berjaya</string>
+    <string name="sub_audit">Sub Audit</string>
+    <string name="save_uccessfully">Simpan Berhasil</string>
+    <string name="enter_username">Masukkan Nama Pengguna</string>
+    <string name="enter_password">Masukkan kata laluan</string>
+    <string name="request_send_successfully">Permintaan Hantar Berhasil</string>
+    <string name="enter_name">Masukkan Nama</string>
+    <string name="enter_address">Masukkan Alamat</string>
+    <string name="enter_country_code">Masukkan Kod Negarae</string>
+    <string name="enter_ph">Masukkan Nombor Telefon</string>
+    <string name="enter_email">Masukkan email</string>
+    <string name="wait_for_approval">Wait for Approval</string>
+    <string name="check_availability">Semak Ketersediaan Nama Pengguna</string>
+    <string name="audit_summary">Ringkasan Audit</string>
+
+
+    <!--<string name="rs_Principle">Prinsip</string>
+    <string name="rs_Applicable_Major_Control_Points">Applicable Major Control Points</string>
+    <string name="rs_Applicable_Minor_Control_Points">Applicable Minor Control Points</string>
+    <string name="rs_Total_Applicable_Points_For_Score_Calculation">Total Applicable Points For Score Calculation</string>
+    <string name="rs_Total_Score">Total Score</string>
+    <string name="rs_Compliance_Percentage">Compliance Percentage</string>
+    <string name="rs_Minor_Non_Conformity">Minor Non Conformity</string>
+    <string name="rs_Major_Non_Conformity">Major Non Conformity</string>
+    <string name="rs_Major_Criteria_Score">Major Criteria Score</string>
+    <string name="rs_Major_Criteria_score_percentage">Major Criteria score percentage</string>
+    <string name="rs_Minor_Criteria_Score">Minor Criteria Score</string>
+    <string name="rs_Minor_Criteria_Score_Percentage">Minor Criteria Score Percentage</string>-->
+
+    <string-array name="headerList">
+        <item>Prinsip</item>
+        <item>Titik Kawalan Utama Terpakai</item>
+        <item>Mata Kawalan Minor Terpakai</item>
+        <item>Jumlah Titik Terpakai Untuk Perhitungan Skor</item>
+        <item>Jumlah Markah</item>
+        <item>Peratusan Pematuhan</item>
+        <item>Bukan Pematuhan Kecil</item>
+        <item>Bukan Pematuhan Utama</item>
+        <item>Markah Kriteria Utama</item>
+        <item>Markah Peratusan Kriteria Utama</item>
+        <item>Kriteria Minor Skor</item>
+        <item>Kriteria Kecil Skor Peratus</item>
+
+    </string-array>
+
+    <string name="enter_Old_Password">Masukkan Kata Laluan Lama</string>
+    <string name="enter_New_Password">Masukkan kata laluan baru</string>
+    <string name="retype_New_Password">Taip semula Kata Laluan Baru</string>
+    <string name="miss_match_Retype_Password">Kata Laluan Missmatch</string>
+    <string name="change_Password_Successfully">Kata Laluan berjaya ditukar</string>
+    <string name="single">Single</string>
+    <string name="group">Kumpulan</string>
+    <string name="offline">Luar talian</string>
+    <string name="select_Start_Date">Pilih Tarikh Mula</string>
+    <string name="select_End_Date">Pilih Tarikh Akhir</string>
+    <string name="end_Date_Mismatch">End Date Mismatch</string>
+    <string name="new_audit_created">Audit Baru Dibuat</string>
+    <string name="fail_to_creat_audit">Gagal Buat Audit</string>
+    <string name="farm_Not_Registered_yet">Farm Not Registered yet</string>
+    <string name="external">External</string>
+    <string name="internal">Internal</string>
+
+
+</resources>

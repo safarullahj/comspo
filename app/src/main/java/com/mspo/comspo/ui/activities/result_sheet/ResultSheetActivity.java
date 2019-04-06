@@ -41,18 +41,7 @@ public class ResultSheetActivity extends AppCompatActivity{
             "Major Criteria score percentage",
             "Minor Criteria Score",
             "Minor Criteria Score Percentage");*/
-    List<String> mColumnHeaderList = Arrays.asList(getString(R.string.rs_Principle),
-            getString(R.string.rs_Applicable_Major_Control_Points),
-            getString(R.string.rs_Applicable_Minor_Control_Points),
-            getString(R.string.rs_Total_Applicable_Points_For_Score_Calculation),
-            getString(R.string.rs_Total_Score),
-            getString(R.string.rs_Compliance_Percentage),
-            getString(R.string.rs_Minor_Non_Conformity),
-            getString(R.string.rs_Major_Non_Conformity),
-            getString(R.string.rs_Major_Criteria_Score),
-            getString(R.string.rs_Major_Criteria_score_percentage),
-            getString(R.string.rs_Minor_Criteria_Score),
-            getString(R.string.rs_Minor_Criteria_Score_Percentage));
+
     private List<List<String>> mCellList = new ArrayList<>();
 
     public static Intent getIntent(Context context, ResultSheetResponse resultSheetResponse) {
@@ -84,6 +73,20 @@ public class ResultSheetActivity extends AppCompatActivity{
         btn_Compliance.setClickable(false);
         btn_Total_Score.setClickable(false);
         btn_Control_Points.setClickable(false);
+
+        List<String> mColumnHeaderList = Arrays.asList(getResources().getStringArray(R.array.headerList));
+        /*List<String> mColumnHeaderList = Arrays.asList(getString(R.string.rs_Principle),
+                getString(R.string.rs_Applicable_Major_Control_Points),
+                getString(R.string.rs_Applicable_Minor_Control_Points),
+                getString(R.string.rs_Total_Applicable_Points_For_Score_Calculation),
+                getString(R.string.rs_Total_Score),
+                getString(R.string.rs_Compliance_Percentage),
+                getString(R.string.rs_Minor_Non_Conformity),
+                getString(R.string.rs_Major_Non_Conformity),
+                getString(R.string.rs_Major_Criteria_Score),
+                getString(R.string.rs_Major_Criteria_score_percentage),
+                getString(R.string.rs_Minor_Criteria_Score),
+                getString(R.string.rs_Minor_Criteria_Score_Percentage));*/
 
 
 

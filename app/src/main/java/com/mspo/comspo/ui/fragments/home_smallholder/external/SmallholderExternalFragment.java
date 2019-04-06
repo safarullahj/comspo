@@ -74,14 +74,19 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshView.setRefreshing(false);
+                smallholderExternalAuditAdapter = null;
+                endlessRecyclerViewScrollListener.resetState();
+                getAuditList("0");
             }
         });
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(verticalLayoutmanager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("page_ext_:" , "pg : "+page);
 
+                int offSet = page*15;
+                getAuditList(String.valueOf(offSet));
             }
         };
 
@@ -134,6 +139,9 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                         @Override
                         public void onResponse(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Response<SmallholderAuditListResponse> response) {
 
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             if (response.isSuccessful()) {
                                // Log.e("empty_:", "ext success ");
                                 if (response.body() != null) {
@@ -141,17 +149,22 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
                                    // Log.e("empty_:", "size " + response.body().getAudits().size());
 
                                     if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
-                                        refreshView.setVisibility(View.VISIBLE);
-                                        empty.setVisibility(View.GONE);
-                                    } else {
-                                        refreshView.setVisibility(View.GONE);
-                                        empty.setVisibility(View.VISIBLE);
-                                    }
-                                    smallholderExternalAuditAdapter = new SmallholderExternalAuditAdapter(getContext(), response.body().getAudits());
-                                    recyclerViewAuditList.setAdapter(smallholderExternalAuditAdapter);
 
-                                } else {
-                                   // Log.e("empty_:", "ext null ");
+                                        empty.setVisibility(View.GONE);
+
+                                        if(smallholderExternalAuditAdapter == null) {
+                                            smallholderExternalAuditAdapter = new SmallholderExternalAuditAdapter(getContext(), response.body().getAudits());
+                                            recyclerViewAuditList.setAdapter(smallholderExternalAuditAdapter);
+                                        }else {
+                                            smallholderExternalAuditAdapter.addAuditlist(response.body().getAudits());
+                                        }
+                                    } else {
+                                        if(smallholderExternalAuditAdapter == null) {
+                                            empty.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+
+
                                 }
 
 
@@ -169,7 +182,9 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
 
                         @Override
                         public void onFailure(Call<SmallholderAuditListResponse> call, Throwable t) {
-
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             progressBar.setVisibility(View.GONE);
                             /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();*/
@@ -189,6 +204,8 @@ public class SmallholderExternalFragment extends Fragment implements FilterInter
     public void filter() {
         PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
         Log.e("Filter_:", "External Fragment " + managerFilter.getFilterStatus());
+        smallholderExternalAuditAdapter = null;
+        endlessRecyclerViewScrollListener.resetState();
         getAuditList("0");
     }
 }

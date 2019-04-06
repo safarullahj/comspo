@@ -189,7 +189,7 @@
     <string name="audit_summary">Audit Summary</string>
 
 
-    <string name="rs_Principle">Principle</string>
+   <!-- <string name="rs_Principle">Principle</string>
     <string name="rs_Applicable_Major_Control_Points">Applicable Major Control Points</string>
     <string name="rs_Applicable_Minor_Control_Points">Applicable Minor Control Points</string>
     <string name="rs_Total_Applicable_Points_For_Score_Calculation">Total Applicable Points For Score Calculation</string>
@@ -200,13 +200,33 @@
     <string name="rs_Major_Criteria_Score">Major Criteria Score</string>
     <string name="rs_Major_Criteria_score_percentage">Major Criteria score percentage</string>
     <string name="rs_Minor_Criteria_Score">Minor Criteria Score</string>
-    <string name="rs_Minor_Criteria_Score_Percentage">Minor Criteria Score Percentage</string>
+    <string name="rs_Minor_Criteria_Score_Percentage">Minor Criteria Score Percentage</string>-->
+
+
+
+    <string-array name="headerList">
+        <item>Principle</item>
+        <item>Applicable Major Control Points</item>
+        <item>Applicable Minor Control Points</item>
+        <item>Total Applicable Points For Score Calculation</item>
+        <item>Total Score</item>
+        <item>Compliance Percentage</item>
+        <item>Minor Non Conformity</item>
+        <item>Major Non Conformity</item>
+        <item>Major Criteria Score</item>
+        <item>Major Criteria score percentage</item>
+        <item>Minor Criteria Score</item>
+        <item>Minor Criteria Score Percentage</item>
+
+    </string-array>
+
+
 
     <string name="enter_Old_Password">Enter Old Password</string>
     <string name="enter_New_Password">Enter New Password</string>
     <string name="retype_New_Password">Retype New Password</string>
     <string name="miss_match_Retype_Password">Miss match Retype Password</string>
-    <string name="change_Password_Successfully">Change Password Successfully</string>
+    <string name="change_Password_Successfully">Password Changed Successfully</string>
     <string name="single">Single</string>
     <string name="group">Group</string>
     <string name="offline">Offline</string>

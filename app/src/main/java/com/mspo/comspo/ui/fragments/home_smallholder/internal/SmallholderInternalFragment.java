@@ -54,7 +54,7 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
     private RecyclerView recyclerViewAuditList;
     private SwipeRefreshLayout refreshView;
     private FloatingActionButton fab;
-    private InternalAuditAdapter internalAuditAdapter;
+    private InternalAuditAdapter internalAuditAdapter = null;
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
     private AppCompatTextView empty;
 
@@ -105,7 +105,9 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshView.setRefreshing(false);
+                //refreshView.setRefreshing(false);
+                internalAuditAdapter = null;
+                endlessRecyclerViewScrollListener.resetState();
                 getAuditList("0");
             }
         });
@@ -113,7 +115,10 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(verticalLayoutmanager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("page_:" , "pg : "+page);
 
+                int offSet = page*15;
+                getAuditList(String.valueOf(offSet));
             }
         };
 
@@ -203,7 +208,8 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                                     if (response.body().getStatus()) {
                                         Snackbar.make(refreshView, R.string.new_audit_created, Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
-                                        getAuditList("0");
+                                        refreshListForNewAudit();
+
                                     } else {
                                         /*Snackbar.make(refreshView, "Something Went Wrong", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();*/
@@ -239,6 +245,12 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                     .setAction("Action", null).show();
         }
 
+    }
+
+    private void refreshListForNewAudit() {
+        internalAuditAdapter = null;
+        endlessRecyclerViewScrollListener.resetState();
+        getAuditList("0");
     }
 
     private void getDate(final AppCompatTextView txtDate) {
@@ -335,19 +347,29 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                         @Override
                         public void onResponse(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Response<SmallholderAuditListResponse> response) {
                             Log.e("tst_:", "response ");
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             if (response.isSuccessful()) {
                                 Log.e("tst_:", "succcdess ");
                                 if (response.body() != null) {
 
                                     if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
-                                        refreshView.setVisibility(View.VISIBLE);
                                         empty.setVisibility(View.GONE);
+
+                                        if(internalAuditAdapter == null) {
+                                            internalAuditAdapter = new InternalAuditAdapter(getContext(), response.body().getAudits());
+                                            recyclerViewAuditList.setAdapter(internalAuditAdapter);
+
+                                        }else {
+                                            internalAuditAdapter.addAuditList(response.body().getAudits());
+                                        }
                                     } else {
-                                        refreshView.setVisibility(View.GONE);
-                                        empty.setVisibility(View.VISIBLE);
+                                        if(internalAuditAdapter == null) {
+                                            empty.setVisibility(View.VISIBLE);
+                                        }
                                     }
-                                    internalAuditAdapter = new InternalAuditAdapter(getContext(), response.body().getAudits());
-                                    recyclerViewAuditList.setAdapter(internalAuditAdapter);
+
 
                                 }
 
@@ -367,6 +389,9 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
                         @Override
                         public void onFailure(@NonNull Call<SmallholderAuditListResponse> call, @NonNull Throwable t) {
                             Log.e("tst_:", "response fail : " + t.getMessage());
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             progressBar.setVisibility(View.GONE);
                             /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();*/
@@ -387,6 +412,8 @@ public class SmallholderInternalFragment extends Fragment implements FilterInter
     public void filter() {
         PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
         Log.e("Filter_:", "internal fragment " + managerFilter.getFilterStatus());
+        internalAuditAdapter = null;
+        endlessRecyclerViewScrollListener.resetState();
         getAuditList("0");
     }
 }

@@ -72,6 +72,11 @@ public class InternalAuditAdapter extends RecyclerView.Adapter<InternalAuditAdap
 
     }
 
+    public void addAuditList(List<Audit> audits) {
+        auditList.addAll(audits);
+        notifyDataSetChanged();
+    }
+
     class AuditItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private AppCompatTextView audit_id,audit_year,audit_status;

@@ -60,6 +60,11 @@ public class AuditorAuditsAdapter extends RecyclerView.Adapter<AuditorAuditsAdap
 
     }
 
+    public void addAuditList(List<Audit> audits) {
+        auditList.addAll(audits);
+        notifyDataSetChanged();
+    }
+
     class AuditItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private AppCompatTextView audit_id,audit_firm,audit_year,audit_status,audit_category;

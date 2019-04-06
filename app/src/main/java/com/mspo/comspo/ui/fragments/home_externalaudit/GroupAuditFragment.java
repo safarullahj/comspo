@@ -73,14 +73,19 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
         refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshView.setRefreshing(false);
+                auditorAuditsAdapter = null;
+                endlessRecyclerViewScrollListener.resetState();
+                getAuditList("0");
             }
         });
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(verticalLayoutmanager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.e("page_adtrG:" , "pg : "+page);
 
+                int offSet = page*15;
+                getAuditList(String.valueOf(offSet));
             }
         };
 
@@ -133,6 +138,9 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
                         @Override
                         public void onResponse(@NonNull Call<AuditorAuditListResponse> call, @NonNull Response<AuditorAuditListResponse> response) {
 
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             if (response.isSuccessful()) {
                                // Log.e("empty_:", "ext success ");
                                 if (response.body() != null) {
@@ -140,15 +148,21 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
                                    // Log.e("empty_:", "size " + response.body().getAudits().size());
 
                                     if (response.body().getAudits() != null && response.body().getAudits().size() > 0) {
-                                        refreshView.setVisibility(View.VISIBLE);
                                         empty.setVisibility(View.GONE);
+
+                                        if(auditorAuditsAdapter == null) {
+                                            auditorAuditsAdapter = new AuditorAuditsAdapter(getContext(), response.body().getAudits());
+                                            recyclerViewAuditList.setAdapter(auditorAuditsAdapter);
+                                        }else {
+                                            auditorAuditsAdapter.addAuditList( response.body().getAudits());
+                                        }
                                     } else {
-                                        refreshView.setVisibility(View.GONE);
-                                        empty.setVisibility(View.VISIBLE);
+                                        if(auditorAuditsAdapter == null) {
+                                            empty.setVisibility(View.VISIBLE);
+                                        }
                                     }
 
-                                    auditorAuditsAdapter = new AuditorAuditsAdapter(getContext(), response.body().getAudits());
-                                    recyclerViewAuditList.setAdapter(auditorAuditsAdapter);
+
 
 
                                 } else {
@@ -171,6 +185,9 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
                         @Override
                         public void onFailure(Call<AuditorAuditListResponse> call, Throwable t) {
                            // Log.e("chk_adtr:", "err msg : " + t.getMessage());
+                            if(refreshView.isRefreshing()) {
+                                refreshView.setRefreshing(false);
+                            }
                             progressBar.setVisibility(View.GONE);
                             /*Snackbar.make(refreshView, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();*/
@@ -190,6 +207,8 @@ public class GroupAuditFragment extends Fragment implements FilterInterface {
     public void filter() {
         PrefManagerFilter managerFilter = new PrefManagerFilter(getActivity());
         Log.e("Filter_:", "External Fragment " + managerFilter.getFilterStatus());
+        auditorAuditsAdapter = null;
+        endlessRecyclerViewScrollListener.resetState();
         getAuditList("0");
     }
 }
