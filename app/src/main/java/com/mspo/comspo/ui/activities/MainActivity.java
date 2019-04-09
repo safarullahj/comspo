@@ -79,6 +79,7 @@ import com.mspo.comspo.ui.fragments.home_externalaudit.HomeFragmentExternalAudit
 import com.mspo.comspo.ui.fragments.home_smallholder.HomeFragmentSmallholder;
 import com.mspo.comspo.ui.fragments.home_smallholder.external.SmallholderExternalFragment;
 import com.mspo.comspo.ui.widgets.CircleImageView;
+import com.mspo.comspo.utils.LocaleManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -165,6 +166,11 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
     };*/
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

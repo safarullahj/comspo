@@ -46,6 +46,7 @@ import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.ui.adapters.AuditSheetAdapter;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
+import com.mspo.comspo.utils.LocaleManager;
 
 import org.modelmapper.ModelMapper;
 
@@ -148,6 +149,11 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                 mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
                 break;
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

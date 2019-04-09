@@ -25,6 +25,7 @@ import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.IndividualAuditDetailsService;
+import com.mspo.comspo.utils.LocaleManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +64,11 @@ public class GroupAuditDetailsActivity extends AppCompatActivity implements View
         intent.putExtra(KEY_FARM_NAME, farmName);
         intent.putExtra(KEY_AUDIT_CATEGORY, category);
         return intent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

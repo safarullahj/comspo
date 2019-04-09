@@ -14,6 +14,7 @@ import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.responses.result_sheet.Chapter;
 import com.mspo.comspo.data.remote.model.responses.result_sheet.ResultSheetResponse;
 import com.mspo.comspo.ui.adapters.MyTableViewAdapter;
+import com.mspo.comspo.utils.LocaleManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +49,11 @@ public class ResultSheetActivity extends AppCompatActivity{
         Intent intent = new Intent(context, ResultSheetActivity.class);
         intent.putExtra(KEY_DETAILS, resultSheetResponse);
         return intent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

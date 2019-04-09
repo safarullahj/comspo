@@ -1,6 +1,7 @@
 package com.mspo.comspo.ui.activities.login;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LoginService;
 import com.mspo.comspo.ui.activities.MainActivity;
+import com.mspo.comspo.utils.LocaleManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -248,6 +250,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .setAction("Action", null).show();
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 }
 

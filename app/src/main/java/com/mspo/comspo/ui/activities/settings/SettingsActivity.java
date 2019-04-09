@@ -31,6 +31,9 @@ import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.LanguageService;
+import com.mspo.comspo.ui.activities.MainActivity;
+import com.mspo.comspo.ui.activities.login.LoginActivity;
+import com.mspo.comspo.utils.LocaleManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +50,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     public static Intent getIntent(Context context) {
         return new Intent(context, SettingsActivity.class);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override
@@ -112,6 +120,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                             if (response.isSuccessful()) {
                                 if (response.body().getStatus()) {
                                     PrefManager.setUserLanguage(SettingsActivity.this, language);
+                                    setLocale(language);
+
                                     setRadioButton();
                                 }
 
@@ -147,6 +157,20 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     .setAction("Action", null).show();
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void setLocale(String language) {
+        if (language.equals("malay")) {
+            LocaleManager.setNewLocale(SettingsActivity.this, "ms");
+        } else {
+            LocaleManager.setNewLocale(SettingsActivity.this, "en");
+        }
+
+        Intent restartIntent = new Intent(SettingsActivity.this, LoginActivity.class);
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(restartIntent);
+        finish();
     }
 
     @Override

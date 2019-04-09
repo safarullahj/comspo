@@ -48,6 +48,7 @@ import com.mspo.comspo.data.remote.webservice.AuditSheetService;
 import com.mspo.comspo.data.remote.webservice.IndividualAuditDetailsService;
 import com.mspo.comspo.ui.activities.audit_sheet.AuditSheetActivity;
 import com.mspo.comspo.ui.activities.result_sheet.ResultSheetActivity;
+import com.mspo.comspo.utils.LocaleManager;
 
 import org.modelmapper.ModelMapper;
 
@@ -117,6 +118,11 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra(KEY_FARM_NAME, farmName);
         intent.putExtra(KEY_AUDIT_CATEGORY, category);
         return intent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mspo.comspo.ui.activities.login;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.SignupService;
 import com.mspo.comspo.data.remote.webservice.UsernameAvailabilityService;
+import com.mspo.comspo.utils.LocaleManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +46,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private MaterialButton sign_up;
 
     private Boolean isAvailable = false;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

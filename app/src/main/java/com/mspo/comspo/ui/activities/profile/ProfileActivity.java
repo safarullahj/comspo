@@ -22,6 +22,7 @@ import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.webservice.APIClient;
 import com.mspo.comspo.data.remote.webservice.ProfileService;
 import com.mspo.comspo.ui.widgets.CircleImageView;
+import com.mspo.comspo.utils.LocaleManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,6 +61,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     public static Intent getIntent(Context context) {
         return new Intent(context, ProfileActivity.class);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.setLocale(newBase));
     }
 
     @Override

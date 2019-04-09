@@ -21,7 +21,7 @@ public class APIClient {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(/*new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
@@ -42,7 +42,7 @@ public class APIClient {
 
                 return chain.proceed(request);
             }
-        }).build();
+        }*/interceptor).build();
 
         return new Retrofit.Builder()
                 .baseUrl(ApiConstants.BASE_URL)
