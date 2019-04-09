@@ -361,7 +361,7 @@ public class MainActivity extends AppCompatActivity
             yearList.add("" + i);
         }
 
-        adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, yearList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, yearList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(adapter);
 

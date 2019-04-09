@@ -11,14 +11,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.mspo.comspo.R;
+import com.mspo.comspo.data.remote.model.requests.ChangeLanguageRequest;
 import com.mspo.comspo.data.remote.model.requests.ForgotPasswordRequest;
 import com.mspo.comspo.data.remote.model.requests.LoginRequest;
+import com.mspo.comspo.data.remote.model.responses.ChangeLanguageResponse;
 import com.mspo.comspo.data.remote.model.responses.CommonResponse;
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.LoginResponse;
@@ -27,6 +31,7 @@ import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
 import com.mspo.comspo.data.remote.utils.PrefManagerFilter;
 import com.mspo.comspo.data.remote.webservice.APIClient;
+import com.mspo.comspo.data.remote.webservice.LanguageService;
 import com.mspo.comspo.data.remote.webservice.LoginService;
 import com.mspo.comspo.ui.activities.MainActivity;
 import com.mspo.comspo.utils.LocaleManager;
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private MaterialButton log_in;
     private MaterialButton sign_up,forgot_password;
     private ProgressBar progressBar;
+
+    private AppCompatRadioButton malay, english;
+    private RadioGroup languageRadio;
 
     private AlertDialog fDialog;
 
@@ -69,14 +77,58 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         log_in = findViewById(R.id.btnLogin);
         progressBar = findViewById(R.id.signin_progress);
         sign_up = findViewById(R.id.btnLinkToRegisterScreen);
+
+        languageRadio = findViewById(R.id.languageRadio);
+        malay = findViewById(R.id.lan_malay);
+        english = findViewById(R.id.lan_english);
+
+        setRadioButton();
+
         log_in.setOnClickListener(this);
         sign_up.setOnClickListener(this);
 
         forgot_password = findViewById(R.id.btnlinktoforgotpassword);
         forgot_password.setOnClickListener(this);
 
+        languageRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.lan_malay:
+                        setLocale("malay");
+                        break;
+                    case R.id.lan_english:
+                        setLocale("english");
+                        break;
+                }
+            }
+        });
+
         progressBar.setVisibility(View.GONE);
     }
+
+    private void setRadioButton() {
+        if (PrefManager.getUserLanguage(LoginActivity.this).equals("malay")) {
+            malay.setChecked(true);
+        } else {
+            english.setChecked(true);
+        }
+    }
+
+    private void setLocale(String language) {
+        if (language.equals("malay")) {
+            LocaleManager.setNewLocale(LoginActivity.this, "ms");
+        } else {
+            LocaleManager.setNewLocale(LoginActivity.this, "en");
+        }
+
+        Intent restartIntent = new Intent(LoginActivity.this, LoginActivity.class);
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        restartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(restartIntent);
+        finish();
+    }
+
 
     @Override
     public void onClick(final View view) {
@@ -121,6 +173,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                     response.body().getProfilePic());
 
                                             PrefManager.setUserLanguage(LoginActivity.this , response.body().getLanguageChosen());
+                                            if (PrefManager.getUserLanguage(LoginActivity.this).equals("malay")) {
+                                                LocaleManager.setNewLocale(LoginActivity.this, "ms");
+                                            } else {
+                                                LocaleManager.setNewLocale(LoginActivity.this, "en");
+                                            }
+
+
                                             if (PrefManager.getLoginStatus(LoginActivity.this)) {
                                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                                 finish();

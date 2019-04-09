@@ -28,13 +28,13 @@
     <string name="action_settings">Tetapan</string>
     <string name="text_edit">EDIT</string>
     <string name="submit">SUBMIT</string>
-    <string name="text_create">CREATE</string>
-    <string name="text_change">CHANGE</string>
+    <string name="text_create">BUAT</string>
+    <string name="text_change">BUAT</string>
     <string name="text_ok">OK</string>
-    <string name="text_update">UPDATE</string>
+    <string name="text_update">kemas kini</string>
     <string name="title_activity_audit_sheet">Audit Sheet</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="action_save">SAVE</string>
+    <string name="action_save">SIMPAN</string>
     <string name="address">Alamat</string>
     <string name="email">E-mel</string>
     <string name="mobile_number">Mobile number</string>
@@ -42,7 +42,7 @@
     <string name="name">Nama</string>
     <string name="_0">0</string>
     <string name="newly_assigned">Baru ditugaskan :</string>
-    <string name="ongoing">Ongoing :</string>
+    <string name="ongoing">Semasa :</string>
     <string name="pending">Pending :</string>
     <string name="completed">Selesai :</string>
     <string name="approved">Diluluskan :</string>
@@ -61,17 +61,17 @@
     <string name="english">English</string>
     <string name="show_all">Tunjukkan semua</string>
     <string name="hint_pending">Pending</string>
-    <string name="hint_ongoing">Ongoing</string>
+    <string name="hint_ongoing">Semasa</string>
     <string name="not_approved">Tidak diterima</string>
     <string name="hint_approved">Diluluskan</string>
     <string name="search_audit">Cari Audit</string>
     <string name="search">Carian</string>
     <string name="apply">Sapukan</string>
     <string name="reset">Tetapkan semula</string>
-    <string name="complies">Complies</string>
-    <string name="major_non_complience">Major Non Complience</string>
-    <string name="minor_non_complience">Minor Non Complience</string>
-    <string name="not_applicable">Not Applicable</string>
+    <string name="complies">Patuh</string>
+    <string name="major_non_complience">Tidak Patuh Major</string>
+    <string name="minor_non_complience">Minor Non Pematuhan</string>
+    <string name="not_applicable">Tidak Berkaitan</string>
     <string name="audit_observation">Pemerhatian Audit</string>
     <string name="indicators">INDIKATOR</string>
     <string name="audit_id">Id Audit</string>
@@ -153,7 +153,7 @@
     <string name="new_audit">Audit baru</string>
     <string name="dd_mm_yyyy">DD/MM/YYYY</string>
     <string name="status_">Status :</string>
-    <string name="principal_summary">Principal Summary</string>
+    <string name="principal_summary">Pengetua Ringkasan</string>
     <string name="username_somedomain_com">username@somedomain.com</string>
     <string name="audit_id_">Id Audit :</string>
     <string name="year_">Tahun :</string>
@@ -224,7 +224,7 @@
     <string name="retype_New_Password">Taip semula Kata Laluan Baru</string>
     <string name="miss_match_Retype_Password">Kata Laluan Missmatch</string>
     <string name="change_Password_Successfully">Kata Laluan berjaya ditukar</string>
-    <string name="single">Single</string>
+    <string name="single">Perseorangan</string>
     <string name="group">Kumpulan</string>
     <string name="offline">Luar talian</string>
     <string name="select_Start_Date">Pilih Tarikh Mula</string>
@@ -233,8 +233,8 @@
     <string name="new_audit_created">Audit Baru Dibuat</string>
     <string name="fail_to_creat_audit">Gagal Buat Audit</string>
     <string name="farm_Not_Registered_yet">Farm Not Registered yet</string>
-    <string name="external">External</string>
-    <string name="internal">Internal</string>
+    <string name="external">Dalaman</string>
+    <string name="internal">Luaran</string>
 
 
 </resources>
