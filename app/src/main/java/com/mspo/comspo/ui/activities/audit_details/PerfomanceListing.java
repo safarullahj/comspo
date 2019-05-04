@@ -55,8 +55,10 @@ public class PerfomanceListing {
 
         if(chapters.get(position).getGraphColor().equals("success") ) {
             roundCornerProgressBar.setProgressColor(Color.parseColor("#a6ed8e"));
-        } else {
+        } else if(chapters.get(position).getGraphColor().equals("info")) {
             roundCornerProgressBar.setProgressColor(Color.parseColor("#FAFF10"));
+        }else {
+            roundCornerProgressBar.setProgressColor(Color.parseColor("#F71515"));
         }
 
         String f = String.format("%.2f", chapters.get(position).getCompliancePercentage());

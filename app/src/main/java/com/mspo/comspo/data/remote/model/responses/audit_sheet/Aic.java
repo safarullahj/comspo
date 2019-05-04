@@ -42,7 +42,7 @@ public class Aic implements Serializable{
     private Integer position;
     @SerializedName("files")
     @Expose
-    private List<String> files ;
+    private List<File> files ;
     @SerializedName("audit_indicator_id")
     @Expose
     private Integer auditIndicatorId;
@@ -135,11 +135,11 @@ public class Aic implements Serializable{
         this.position = position;
     }
 
-    public List<String> getFiles() {
+    public List<File> getFiles() {
         return files;
     }
 
-    public void setFiles(List<String> files) {
+    public void setFiles(List<File> files) {
         this.files = files;
     }
 

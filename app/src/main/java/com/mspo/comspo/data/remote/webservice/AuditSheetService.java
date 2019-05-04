@@ -38,6 +38,11 @@ public interface AuditSheetService {
                                                  @Header("access-token") String access_token,
                                                  @Query(value = "farm_id", encoded = true) Integer farm_id);
 
+    @GET(ApiConstants.ENDPOINT_RESULT_SHEET)
+    Call<ResultSheetResponse> getAuditorResultSheetData(@Path("auditId") Integer auditId,
+                                                 @Header("access-token") String access_token,
+                                                 @Query(value = "auditor_id", encoded = true) Integer farm_id);
+
 
 
 }

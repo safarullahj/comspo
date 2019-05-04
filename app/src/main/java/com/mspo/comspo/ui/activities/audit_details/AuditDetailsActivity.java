@@ -488,7 +488,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                             break;
                                     }
 
-                                   // getAuditorAuditSheet();
+                                    // getAuditorAuditSheet();
                                     callAuditsheet();
 
                                 }
@@ -563,10 +563,10 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                         AuditSheetResponse auditResponse = modelMapper.map(sheetResponse, AuditSheetResponse.class);
                         auditSheetResponse = auditResponse;
                     }*/
-                    if(subAuditId != null) {
+                    if (subAuditId != null) {
                         startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus, subAuditId, Integer.valueOf(subAuditId)));
-                    }else {
-                        startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus, subAuditId,auditId));
+                    } else {
+                        startActivity(AuditSheetActivity.getIntent(AuditDetailsActivity.this, auditSheetResponse, auditDetailsResponse, auditStatus, subAuditId, auditId));
                     }
                 } else {
                     /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
@@ -579,7 +579,7 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                 if (auditSheetResponse != null && auditDetailsResponse != null) {
                     if (!status) {
 
-                            //btn_Submit.setClickable(true);
+                        //btn_Submit.setClickable(true);
                         submitAudit("false", true);
 
                     } else {
@@ -595,20 +595,20 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             case R.id.btn_Submit:
 
                 OfflineAuditSheetResponse sheetResponse = null;
-                if(subAuditId != null){
+                if (subAuditId != null) {
                     sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                             .equalTo("auditId", Integer.valueOf(subAuditId))
                             .findFirst();
-                }else {
+                } else {
                     sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                             .equalTo("auditId", auditId)
                             .findFirst();
                 }
 
-                if(sheetResponse != null){
+                if (sheetResponse != null) {
                     Snackbar.make(btn_Submit, R.string.sync_first, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }else {
+                } else {
 
 
                     if (auditSheetResponse != null && auditDetailsResponse != null) {
@@ -616,11 +616,29 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
                             boolean f = true;
                             for (int i = 0; i < auditSheetResponse.getChapters().size(); i++) {
-                                if (auditSheetResponse.getChapters().get(i).getGraphColor().equals("info") ||
-                                        auditSheetResponse.getChapters().get(i).getGraphColor().equals("primary")) {
-                                    f = false;
+                                Log.e("sub_chk", "color : " + auditSheetResponse.getChapters().get(i).getGraphColor());
+
+                                for (int j = 0; j < auditSheetResponse.getChapters().get(i).getAccs().size(); j++) {
+                                    for (int k = 0; k < auditSheetResponse.getChapters().get(i).getAccs().get(j).getAics().size(); k++) {
+
+                                        if (auditSheetResponse.getChapters().get(i).getAccs().get(j).getAics().get(k).getComplianceValue() == -2.0) {
+                                            f = false;
+                                            break;
+                                        }
+                                    }
+                                    if(!f){
+                                        break;
+                                    }
+                                }
+
+                                if(!f){
                                     break;
                                 }
+
+                                /*if (auditSheetResponse.getChapters().get(i).getGraphColor().equals("primary")) {
+                                    f = false;
+                                    break;
+                                }*/
                             }
                             if (f) {
                                 //btn_Submit.setClickable(true);
@@ -646,12 +664,16 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.btn_Result:
 
-                if (status) {
+                //if (status) {
+                if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
                     getResultSheet();
                 } else {
+                    getAuditorResultSheet();
+                }
+               /* } else {
                     Snackbar.make(btn_Submit, R.string.audit_not_complete, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                }
+                }*/
 
                 break;
 
@@ -690,9 +712,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                     if (!status) {
 
                         OfflineAuditSheetResponse offlineAuditSheetResponse = modelMapper.map(auditSheetResponse, OfflineAuditSheetResponse.class);
-                        if(subAuditId != null){
+                        if (subAuditId != null) {
                             offlineAuditSheetResponse.setAuditId(Integer.valueOf(subAuditId));
-                        }else {
+                        } else {
                             offlineAuditSheetResponse.setAuditId(auditDetailsResponse.getAuditId());
                         }
 
@@ -719,12 +741,12 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                 error.printStackTrace();
                             }
                         });
-                    }else {
+                    } else {
                         Snackbar.make(btn_Submit, R.string.already_submit, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
 
-                }else {
+                } else {
                     Snackbar.make(btn_Submit, R.string.something_wrong, Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -1008,6 +1030,64 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    private void getAuditorResultSheet() {
+
+        if (Connectivity.checkInternetIsActive(AuditDetailsActivity.this)) {
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            APIClient.getClient()
+                    .create(AuditSheetService.class)
+                    .getAuditorResultSheetData(auditId,
+                            PrefManager.getAccessToken(AuditDetailsActivity.this),
+                            PrefManager.getFarmId(AuditDetailsActivity.this))
+                    .enqueue(new Callback<ResultSheetResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ResultSheetResponse> call, @NonNull Response<ResultSheetResponse> response) {
+
+                            if (response.isSuccessful()) {
+
+                                if (response.body() != null) {
+                                    Log.e("rSheet_:", "" + response.body().getChapters().size());
+                                    startActivity(ResultSheetActivity.getIntent(AuditDetailsActivity.this, response.body()));
+
+                                }
+
+
+                            } else {
+
+                                /*Snackbar.make(record_inspection, "Something Went Wrong", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();*/
+                                Snackbar.make(record_inspection, R.string.response_fail, Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
+
+
+                            }
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<ResultSheetResponse> call, @NonNull Throwable t) {
+
+                            Log.e("RetrofitErr", t.getMessage());
+                            progressBar.setVisibility(View.GONE);
+                            /*Snackbar.make(record_inspection, "Something went wrong. Try again...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+                            Snackbar.make(record_inspection, "" + t.getMessage(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+
+        } else {
+            perfomance_container.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            Snackbar.make(record_inspection, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Action", null).show();
+        }
+
+
+    }
+
     private void submitAudit(String save_submit, boolean loadDetail) {
 
         if (Connectivity.checkInternetIsActive(AuditDetailsActivity.this)) {
@@ -1099,9 +1179,9 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
                                         }
                                     }
 
-                                    if(save_submit.equals("false")){
+                                    if (save_submit.equals("false")) {
                                         deleteOffline();
-                                    }else {
+                                    } else {
                                         if (PrefManager.getUserType(AuditDetailsActivity.this).equals("operator")) {
                                             getDetails();
                                         } else {
@@ -1148,18 +1228,18 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
     private void deleteOffline() {
 
         OfflineAuditSheetResponse sheetResponse = null;
-        if(subAuditId != null){
+        if (subAuditId != null) {
             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                     .equalTo("auditId", Integer.valueOf(subAuditId))
                     .findFirst();
-        }else {
+        } else {
             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                     .equalTo("auditId", auditId)
                     .findFirst();
         }
 
         OfflineAuditSheetResponse finalSheetResponse = sheetResponse;
-        if(finalSheetResponse != null) {
+        if (finalSheetResponse != null) {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -1176,19 +1256,19 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    private void callAuditsheet(){
+    private void callAuditsheet() {
         OfflineAuditSheetResponse sheetResponse = null;
-        if(subAuditId != null){
-             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+        if (subAuditId != null) {
+            sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                     .equalTo("auditId", Integer.valueOf(subAuditId))
                     .findFirst();
-        }else {
-             sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+        } else {
+            sheetResponse = realm.where(OfflineAuditSheetResponse.class)
                     .equalTo("auditId", auditId)
                     .findFirst();
         }
 
-        if(sheetResponse != null){
+        if (sheetResponse != null) {
             btn_offline.setVisibility(View.GONE);
             txt_offline.setVisibility(View.VISIBLE);
             auditSheetResponse = new AuditSheetResponse();
@@ -1203,16 +1283,16 @@ public class AuditDetailsActivity extends AppCompatActivity implements View.OnCl
             }*/
             record_inspection.setClickable(true);
             progressBar.setVisibility(View.GONE);
-        }else {
+        } else {
 
             if ((PrefManager.getUserType(AuditDetailsActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) || PrefManager.getUserType(AuditDetailsActivity.this).equals("auditor")) {
                 btn_offline.setVisibility(View.VISIBLE);
                 txt_offline.setVisibility(View.GONE);
-            }else {
+            } else {
                 btn_offline.setVisibility(View.GONE);
                 txt_offline.setVisibility(View.GONE);
             }
-            if(auditDetailsResponse.getStatus().equals("Not Approved Audit") || auditDetailsResponse.getStatus().equals("Approved Audit")){
+            if (auditDetailsResponse.getStatus().equals("Not Approved Audit") || auditDetailsResponse.getStatus().equals("Approved Audit")) {
                 btn_offline.setVisibility(View.GONE);
                 txt_offline.setVisibility(View.GONE);
             }

@@ -65,6 +65,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static final String KEY_CRITERIA = "key.criteria";
     private static final String KEY_AUDIT_STATUS = "key.auditStatus";
     private static final String KEY_AUDIT_STATUS_FLAG = "key.auditStatus";
+    private static final String KEY_AUDIT_OFFLINE_FLAG = "key.offlineStatus";
     private static final String KEY_SUBAUDIT_ID = "key.subauditid";
     private static final String KEY_OFFAUDIT_ID = "key.offauditid";
 
@@ -86,7 +87,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private IndividualAuditDetailsResponse auditDetailsResponse;
     private String auditStatus,subAuditId;
     private Integer offAuditId;
-    private boolean status = false;
+    private boolean status = false, isOffline = false;
 
     private static CustomSpinnerAdapter customAdapter;
     private Realm realm;
@@ -195,6 +196,16 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             }
             offAuditId = getIntent().getExtras().getInt(KEY_OFFAUDIT_ID);
 
+            OfflineAuditSheetResponse sheetResponse = realm.where(OfflineAuditSheetResponse.class)
+                    .equalTo("auditId", offAuditId)
+                    .findFirst();
+
+            if(sheetResponse != null){
+                isOffline = true;
+            }else {
+                isOffline = false;
+            }
+
             if(auditDetailsResponse != null) {
                 if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
                     switch (auditStatus) {
@@ -300,12 +311,13 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         }
 
 
-        public static PlaceholderFragment newInstance(Acc acc, boolean statusFlag) {
+        public static PlaceholderFragment newInstance(Acc acc, boolean statusFlag, boolean isOffline) {
             Log.e("chk", "instance+" + acc.getCriterionDescription());
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putSerializable(KEY_CRITERIA, acc);
             args.putBoolean(KEY_AUDIT_STATUS_FLAG , statusFlag);
+            args.putBoolean(KEY_AUDIT_OFFLINE_FLAG , isOffline);
             fragment.setArguments(args);
             return fragment;
         }
@@ -317,6 +329,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
             acc = (Acc) getArguments().getSerializable(KEY_CRITERIA);
             boolean statusFlag = getArguments().getBoolean(KEY_AUDIT_STATUS_FLAG , false);
+            boolean offlineFlag = getArguments().getBoolean(KEY_AUDIT_OFFLINE_FLAG , false);
 
             Log.e("chk", "fragment oncreate");
             Log.e("chk", "description : " + acc.getCriterionDescription());
@@ -333,7 +346,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             criteria_list.setLayoutManager(verticalLayoutmanager);
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version,statusFlag);
+
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version,statusFlag,offlineFlag);
             criteria_list.setAdapter(auditSheetAdapter);
 
 
@@ -369,7 +383,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(criterias.get(position),status);
+            return PlaceholderFragment.newInstance(criterias.get(position),status,isOffline);
         }
 
         @Override

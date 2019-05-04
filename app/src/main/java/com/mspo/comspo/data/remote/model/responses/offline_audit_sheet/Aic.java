@@ -43,7 +43,7 @@ public class Aic extends RealmObject {
     private Integer position;
     @SerializedName("files")
     @Expose
-    private RealmList<String> files ;
+    private RealmList<File> files ;
     @SerializedName("audit_indicator_id")
     @Expose
     private Integer auditIndicatorId;
@@ -136,11 +136,11 @@ public class Aic extends RealmObject {
         this.position = position;
     }
 
-    public RealmList<String> getFiles() {
+    public RealmList<File> getFiles() {
         return files;
     }
 
-    public void setFiles(RealmList<String> files) {
+    public void setFiles(RealmList<File> files) {
         this.files = files;
     }
 

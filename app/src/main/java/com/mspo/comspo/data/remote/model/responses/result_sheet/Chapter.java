@@ -21,7 +21,7 @@ public class Chapter implements Serializable {
     private Integer complianceCount;
     @SerializedName("total_score")
     @Expose
-    private Integer totalScore;
+    private Double totalScore;
     @SerializedName("na_count")
     @Expose
     private Integer naCount;
@@ -30,13 +30,13 @@ public class Chapter implements Serializable {
     private Integer nonMandatoryCount;
     @SerializedName("major_criteria_score")
     @Expose
-    private Integer majorCriteriaScore;
+    private Double majorCriteriaScore;
     @SerializedName("chapter_name")
     @Expose
     private String chapterName;
     @SerializedName("minor_criteria_score")
     @Expose
-    private Integer minorCriteriaScore;
+    private Double minorCriteriaScore;
     @SerializedName("compliance_percentage")
     @Expose
     private Double compliancePercentage;
@@ -51,7 +51,7 @@ public class Chapter implements Serializable {
     private Integer majorNcCount;
     @SerializedName("minor_criteria_score_percentage")
     @Expose
-    private Integer minorCriteriaScorePercentage;
+    private Double minorCriteriaScorePercentage;
 
     public Double getMajorCriteriaScorePercentage() {
         return majorCriteriaScorePercentage;
@@ -85,11 +85,11 @@ public class Chapter implements Serializable {
         this.complianceCount = complianceCount;
     }
 
-    public Integer getTotalScore() {
+    public Double getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(Integer totalScore) {
+    public void setTotalScore(Double totalScore) {
         this.totalScore = totalScore;
     }
 
@@ -109,11 +109,11 @@ public class Chapter implements Serializable {
         this.nonMandatoryCount = nonMandatoryCount;
     }
 
-    public Integer getMajorCriteriaScore() {
+    public Double getMajorCriteriaScore() {
         return majorCriteriaScore;
     }
 
-    public void setMajorCriteriaScore(Integer majorCriteriaScore) {
+    public void setMajorCriteriaScore(Double majorCriteriaScore) {
         this.majorCriteriaScore = majorCriteriaScore;
     }
 
@@ -125,11 +125,11 @@ public class Chapter implements Serializable {
         this.chapterName = chapterName;
     }
 
-    public Integer getMinorCriteriaScore() {
+    public Double getMinorCriteriaScore() {
         return minorCriteriaScore;
     }
 
-    public void setMinorCriteriaScore(Integer minorCriteriaScore) {
+    public void setMinorCriteriaScore(Double minorCriteriaScore) {
         this.minorCriteriaScore = minorCriteriaScore;
     }
 
@@ -165,11 +165,11 @@ public class Chapter implements Serializable {
         this.majorNcCount = majorNcCount;
     }
 
-    public Integer getMinorCriteriaScorePercentage() {
+    public Double getMinorCriteriaScorePercentage() {
         return minorCriteriaScorePercentage;
     }
 
-    public void setMinorCriteriaScorePercentage(Integer minorCriteriaScorePercentage) {
+    public void setMinorCriteriaScorePercentage(Double minorCriteriaScorePercentage) {
         this.minorCriteriaScorePercentage = minorCriteriaScorePercentage;
     }
 

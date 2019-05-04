@@ -100,8 +100,8 @@ public class ResultSheetActivity extends AppCompatActivity{
             resultSheetResponse = (ResultSheetResponse) getIntent().getSerializableExtra(KEY_DETAILS);
            // Log.e("rSheet_:" , ""+resultSheetResponse);
 
-            btn_Control_Points.setText(getString(R.string.total_applicable_control_points)+resultSheetResponse.getTotalApplicablePointsCount());
-            btn_Total_Score.setText(getString(R.string.total_score)+resultSheetResponse.getTotalScore());
+            btn_Control_Points.setText(getString(R.string.total_applicable_control_points)+String.format("%.2f", resultSheetResponse.getTotalApplicablePointsCount()));
+            btn_Total_Score.setText(getString(R.string.total_score)+String.format("%.2f", resultSheetResponse.getTotalScore()));
             btn_Compliance.setText(getString(R.string.compliance_percentage)+String.format("%.2f", resultSheetResponse.getCompliancePercentage()) + "%");
 
             for(Chapter chapter :resultSheetResponse.getChapters()){
@@ -110,19 +110,23 @@ public class ResultSheetActivity extends AppCompatActivity{
 
                 List<String> data = new ArrayList<>();
                 data.add(chapter.getChapterName());
-                data.add(String.valueOf(chapter.getMajorCriteriaScore()));
-                data.add(String.valueOf(chapter.getMinorCriteriaScore()));
+                String MJCScore = String.format("%.2f", chapter.getMajorCriteriaScore());
+                data.add(String.valueOf(MJCScore));
+                String MNCScore = String.format("%.2f", chapter.getMinorCriteriaScore());
+                data.add(String.valueOf(MNCScore));
                 data.add(String.valueOf(chapter.getApplicablePointsCount()));
-                data.add(String.valueOf(chapter.getTotalScore()));
+                String tScore = String.format("%.2f", chapter.getTotalScore());
+                data.add(String.valueOf(tScore));
                 String prCmpl = String.format("%.2f", chapter.getCompliancePercentage()) + "%";
                 data.add(String.valueOf(prCmpl));
                 data.add(String.valueOf(chapter.getMinorNcCount()));
                 data.add(String.valueOf(chapter.getMajorNcCount()));
-                data.add(String.valueOf(chapter.getMajorCriteriaScore()));
+                data.add(String.valueOf(MJCScore));
                 String prMjr = String.format("%.2f", chapter.getMajorCriteriaScorePercentage()) + "%";
                 data.add(String.valueOf(prMjr));
-                data.add(String.valueOf(chapter.getMinorCriteriaScore()));
-                data.add(String.valueOf(chapter.getMinorCriteriaScorePercentage()));
+                data.add(String.valueOf(MNCScore));
+                String mncp = String.format("%.2f", chapter.getMinorCriteriaScorePercentage()) + "%";
+                data.add(String.valueOf(mncp));
 
                 mCellList.add(data);
 

@@ -12,10 +12,10 @@ public class ResultSheetResponse implements Serializable {
     private Double compliancePercentage;
     @SerializedName("total_score")
     @Expose
-    private Integer totalScore;
+    private Double totalScore;
     @SerializedName("total_applicable_points_count")
     @Expose
-    private Integer totalApplicablePointsCount;
+    private Double totalApplicablePointsCount;
     @SerializedName("chapters")
     @Expose
     private List<Chapter> chapters = null;
@@ -28,19 +28,19 @@ public class ResultSheetResponse implements Serializable {
         this.compliancePercentage = compliancePercentage;
     }
 
-    public Integer getTotalScore() {
+    public Double getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(Integer totalScore) {
+    public void setTotalScore(Double totalScore) {
         this.totalScore = totalScore;
     }
 
-    public Integer getTotalApplicablePointsCount() {
+    public Double getTotalApplicablePointsCount() {
         return totalApplicablePointsCount;
     }
 
-    public void setTotalApplicablePointsCount(Integer totalApplicablePointsCount) {
+    public void setTotalApplicablePointsCount(Double totalApplicablePointsCount) {
         this.totalApplicablePointsCount = totalApplicablePointsCount;
     }
 
