@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ResultSheetActivity extends AppCompatActivity{
+public class ResultSheetActivity extends AppCompatActivity {
 
     private static final String KEY_DETAILS = "key.details";
 

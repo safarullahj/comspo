@@ -1,10 +1,12 @@
 package com.mspo.comspo.ui.activities.audit_sheet;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +32,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaiselrahman.filepicker.activity.FilePickerActivity;
+import com.jaiselrahman.filepicker.model.MediaFile;
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.AuditDetail;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.SmallHolderAuditSheetSaveRequest;
@@ -39,6 +43,7 @@ import com.mspo.comspo.data.remote.model.responses.audit_sheet.Acc;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
 import com.mspo.comspo.data.remote.model.responses.offline_audit_sheet.OfflineAuditSheetResponse;
+import com.mspo.comspo.data.remote.model.responses.upload.FileUploadResponse;
 import com.mspo.comspo.data.remote.utils.Connectivity;
 import com.mspo.comspo.data.remote.utils.ErrorUtils;
 import com.mspo.comspo.data.remote.utils.PrefManager;
@@ -50,10 +55,14 @@ import com.mspo.comspo.utils.LocaleManager;
 
 import org.modelmapper.ModelMapper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,12 +94,18 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     private AuditSheetResponse auditSheetResponse;
     private IndividualAuditDetailsResponse auditDetailsResponse;
-    private String auditStatus,subAuditId;
+    private String auditStatus, subAuditId;
     private Integer offAuditId;
     private boolean status = false, isOffline = false;
 
     private static CustomSpinnerAdapter customAdapter;
     private Realm realm;
+
+    private PlaceholderFragment placeholderFragment;
+
+    ArrayList<MediaFile> files;
+    public int i = 0;
+    private ProgressDialog progressDialog;
 
 
     //  viewpager change listener
@@ -127,13 +142,13 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private Button btnPrevious, btnNext;
 
 
-    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus, String subAuditId,Integer offAuditId) {
+    public static Intent getIntent(Context context, AuditSheetResponse auditSheetResponse, IndividualAuditDetailsResponse auditDetailsResponse, String auditStatus, String subAuditId, Integer offAuditId) {
         Intent intent = new Intent(context, AuditSheetActivity.class);
         intent.putExtra(KEY_AUDIT_SHEET, auditSheetResponse);
         intent.putExtra(KEY_DETAILS, auditDetailsResponse);
         intent.putExtra(KEY_AUDIT_STATUS, auditStatus);
         intent.putExtra(KEY_SUBAUDIT_ID, subAuditId);
-        intent.putExtra(KEY_OFFAUDIT_ID , offAuditId);
+        intent.putExtra(KEY_OFFAUDIT_ID, offAuditId);
         return intent;
     }
 
@@ -189,9 +204,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         if (getIntent().getExtras() != null) {
             auditSheetResponse = (AuditSheetResponse) getIntent().getSerializableExtra(KEY_AUDIT_SHEET);
             auditDetailsResponse = (IndividualAuditDetailsResponse) getIntent().getSerializableExtra(KEY_DETAILS);
-            auditStatus = getIntent().getExtras().getString(KEY_AUDIT_STATUS,"");
-            subAuditId = getIntent().getExtras().getString(KEY_SUBAUDIT_ID,"");
-            if(subAuditId.equals("")){
+            auditStatus = getIntent().getExtras().getString(KEY_AUDIT_STATUS, "");
+            subAuditId = getIntent().getExtras().getString(KEY_SUBAUDIT_ID, "");
+            if (subAuditId.equals("")) {
                 subAuditId = null;
             }
             offAuditId = getIntent().getExtras().getInt(KEY_OFFAUDIT_ID);
@@ -200,13 +215,13 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                     .equalTo("auditId", offAuditId)
                     .findFirst();
 
-            if(sheetResponse != null){
+            if (sheetResponse != null) {
                 isOffline = true;
-            }else {
+            } else {
                 isOffline = false;
             }
 
-            if(auditDetailsResponse != null) {
+            if (auditDetailsResponse != null) {
                 if (PrefManager.getUserType(AuditSheetActivity.this).equals("operator") && auditDetailsResponse.getAuditType().equals("Internal Audit")) {
                     switch (auditStatus) {
                         case "Newly Assigned Audit":
@@ -246,7 +261,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     status = false;
                 }
-            }else {
+            } else {
                 status = true;
             }
 
@@ -257,7 +272,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             category.setAdapter(adapter);*/
 
-            customAdapter=new CustomSpinnerAdapter(getApplicationContext(),auditSheetResponse.getChapters());
+            customAdapter = new CustomSpinnerAdapter(getApplicationContext(), auditSheetResponse.getChapters());
             category.setAdapter(customAdapter);
 
             //initializeViewPager(0);
@@ -316,8 +331,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putSerializable(KEY_CRITERIA, acc);
-            args.putBoolean(KEY_AUDIT_STATUS_FLAG , statusFlag);
-            args.putBoolean(KEY_AUDIT_OFFLINE_FLAG , isOffline);
+            args.putBoolean(KEY_AUDIT_STATUS_FLAG, statusFlag);
+            args.putBoolean(KEY_AUDIT_OFFLINE_FLAG, isOffline);
             fragment.setArguments(args);
             return fragment;
         }
@@ -328,16 +343,16 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             View rootView = inflater.inflate(R.layout.fragment_audit_sheet, container, false);
 
             acc = (Acc) getArguments().getSerializable(KEY_CRITERIA);
-            boolean statusFlag = getArguments().getBoolean(KEY_AUDIT_STATUS_FLAG , false);
-            boolean offlineFlag = getArguments().getBoolean(KEY_AUDIT_OFFLINE_FLAG , false);
+            boolean statusFlag = getArguments().getBoolean(KEY_AUDIT_STATUS_FLAG, false);
+            boolean offlineFlag = getArguments().getBoolean(KEY_AUDIT_OFFLINE_FLAG, false);
 
             Log.e("chk", "fragment oncreate");
             Log.e("chk", "description : " + acc.getCriterionDescription());
 
 
             AppCompatTextView textView = rootView.findViewById(R.id.txt_criterion_description);
-            String version = "4."+acc.getChapterPosition()+"."+acc.getCriterionPosition();
-            textView.setText(version+" "+acc.getCriterionDescription());
+            String version = "4." + acc.getChapterPosition() + "." + acc.getCriterionPosition();
+            textView.setText(version + " " + acc.getCriterionDescription());
 
             RecyclerView criteria_list = rootView.findViewById(R.id.criteria_list);
 
@@ -347,12 +362,13 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(),customAdapter,version,statusFlag,offlineFlag);
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(), customAdapter, version, statusFlag, offlineFlag);
             criteria_list.setAdapter(auditSheetAdapter);
 
 
             return rootView;
         }
+
     }
 
     /**
@@ -383,7 +399,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(criterias.get(position),status,isOffline);
+            placeholderFragment = PlaceholderFragment.newInstance(criterias.get(position), status, isOffline);
+            return placeholderFragment;
         }
 
         @Override
@@ -415,7 +432,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(status) {
+        if (status) {
             getMenuInflater().inflate(R.menu.menu_audit_sheet, menu);
         }
         return true;
@@ -425,9 +442,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            if(status) {
+            if (status) {
                 showExitDialog();
-            }else {
+            } else {
                 finish();
             }
         } else if (item.getItemId() == R.id.action_save) {
@@ -436,9 +453,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                     .equalTo("auditId", offAuditId)
                     .findFirst();
 
-            if(sheetResponse != null){
-                 String userType = sheetResponse.getUserType();
-                 String year = sheetResponse.getYear();
+            if (sheetResponse != null) {
+                String userType = sheetResponse.getUserType();
+                String year = sheetResponse.getYear();
 
                 ModelMapper modelMapper = new ModelMapper();
                 sheetResponse = modelMapper.map(auditSheetResponse, OfflineAuditSheetResponse.class);
@@ -466,7 +483,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
                         Toast.makeText(AuditSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }else {
+            } else {
 
                 if (Connectivity.checkInternetIsActive(AuditSheetActivity.this)) {
 
@@ -597,6 +614,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         return super.onOptionsItemSelected(item);
     }
 
+
     private void showExitDialog() {
         new AlertDialog.Builder(AuditSheetActivity.this)
                 .setTitle(getString(R.string.warning_exit_without_save))
@@ -614,10 +632,154 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
-        if(status) {
+        if (status) {
             showExitDialog();
-        }else {
+        } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("File_: ", "onActivityResult");
+
+        if (data != null) {
+            Log.e("File_: ", "requestCode_: " + requestCode);
+
+            files = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
+
+            /*for (MediaFile mediaFile : files) {
+                Log.e("File_: ", "path : " + mediaFile.getMimeType().toString());
+                Log.e("File_: ", "path : " + mediaFile.getName().toString());
+                Log.e("File_: ", "path : " + mediaFile.getPath().toString());
+
+                *//*if (placeholderFragment != null)
+                    placeholderFragment.addFile(requestCode, data);*//*
+
+                uploadFile(requestCode, mediaFile);
+
+            }*/
+            if (Connectivity.checkInternetIsActive(this) ) {
+                uploadFile(requestCode, files.get(i));
+            }else {
+                Toast.makeText(this,
+                        R.string.check_internet_connection, Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+    }
+
+    private void showProgressDialog(String title){
+        progressDialog.setTitle(title);
+        progressDialog.setMessage("Uploading..., \n Please wait");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+
+    private void uploadFile(int aicId, MediaFile mediaFile) {
+
+        if(progressDialog == null){
+            progressDialog = new ProgressDialog(this);
+        }
+        //progressBar.setVisibility(View.VISIBLE);
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+        showProgressDialog(mediaFile.getName());
+        // create upload service client
+        AuditSheetService service =
+                APIClient.getClient().create(AuditSheetService.class);
+
+        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+        // use the FileUtils to get the actual file by uri
+        File file = new File(mediaFile.getPath());
+
+
+        RequestBody requestFile;
+        requestFile = RequestBody.create(
+                MediaType.parse(mediaFile.getMimeType()),
+                file
+        );
+
+        // MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("audit_file", file.getName(), requestFile);
+
+        Log.e("Upload", "auditid : " + auditDetailsResponse.getAuditId());
+        Log.e("Upload", "offId : " + offAuditId);
+        // finally, execute the request
+        Call<FileUploadResponse> call = service.uploadFile(aicId,
+                auditDetailsResponse.getAuditId(),
+                offAuditId,
+                PrefManager.getAccessToken(AuditSheetActivity.this),
+                body);
+        call.enqueue(new Callback<FileUploadResponse>() {
+            @Override
+            public void onResponse(Call<FileUploadResponse> call,
+                                   Response<FileUploadResponse> response) {
+                Log.e("Upload", "success");
+                if (response != null && response.isSuccessful() && response.body().getFileData().size() != 0) {
+
+                    Log.e("Upload", "success file id : " + response.body().getFileData().get(0).getId());
+                    Log.e("Upload", "success file path : " + response.body().getFileData().get(0).getFile());
+
+                    com.mspo.comspo.data.remote.model.responses.audit_sheet.File newFile = new com.mspo.comspo.data.remote.model.responses.audit_sheet.File(response.body().getFileData().get(0).getId(),
+                            response.body().getFileData().get(0).getFile(),
+                            response.body().getFileData().get(0).getFile().substring(response.body().getFileData().get(0).getFile().lastIndexOf('/')+1));
+
+                    /*if (placeholderFragment != null)
+                        placeholderFragment.addFile(aicId, newFile);*/
+
+                    for(int x=0 ; x < auditSheetResponse.getChapters().size() ; x++){
+
+                        for(int y=0 ; y < auditSheetResponse.getChapters().get(x).getAccs().size() ; y++){
+
+                            for(int z=0 ; z < auditSheetResponse.getChapters().get(x).getAccs().get(y).getAics().size() ; z++){
+
+                                if(auditSheetResponse.getChapters().get(x).getAccs().get(y).getAics().get(z).getAuditIndicatorId() == aicId){
+                                    Log.e("dataChange:", "file add");
+                                    auditSheetResponse.getChapters().get(x).getAccs().get(y).getAics().get(z).getFiles().add(newFile);
+                                    mSectionsPagerAdapter.notifyDataSetChanged();
+                                }
+
+                            }
+                        }
+                    }
+
+                    i = i + 1;
+                    if (i < files.size()) {
+                        if (Connectivity.checkInternetIsActive(AuditSheetActivity.this) ) {
+                            uploadFile(aicId, files.get(i));
+                        }else {
+                            i = 0;
+                            progressDialog.dismiss();
+                            Toast.makeText(AuditSheetActivity.this,
+                                    R.string.check_internet_connection, Toast.LENGTH_LONG).show();
+                        }
+
+                    } else {
+                        //progressBar.setVisibility(View.GONE);
+                        i = 0;
+                        progressDialog.dismiss();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+                i=0;
+                //progressBar.setVisibility(View.GONE);
+                progressDialog.dismiss();
+            }
+        });
+
     }
 }

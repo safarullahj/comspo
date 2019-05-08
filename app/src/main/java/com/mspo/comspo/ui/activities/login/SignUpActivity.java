@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -29,6 +30,10 @@ import com.mspo.comspo.utils.LocaleManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import ru.dimorinny.showcasecard.ShowCaseView;
+import ru.dimorinny.showcasecard.position.ViewPosition;
+import ru.dimorinny.showcasecard.radius.Radius;
+import ru.dimorinny.showcasecard.radius.ViewRadius;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -72,6 +77,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         username_search.setOnClickListener(this);
         sign_up.setOnClickListener(this);
+
 
         username.addTextChangedListener(new TextWatcher() {
             @Override
@@ -171,6 +177,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btnRegister:
 
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
                 if (Connectivity.checkInternetIsActive(SignUpActivity.this)) {
                     if (name.getText() == null || name.getText().toString().equals("")) {
                         Snackbar.make(view, R.string.enter_name, Snackbar.LENGTH_LONG)
@@ -253,8 +264,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     });
 
                         } else {
-                            Snackbar.make(view, R.string.check_availability, Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
+                            /*Snackbar.make(view, R.string.check_availability, Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();*/
+
+                            new ShowCaseView.Builder(this)
+                                    .withTypedPosition(new ViewPosition(username_search))
+                                    .withTypedRadius(new ViewRadius(username_search))
+                                    .withContent(getString(R.string.check_availability))
+                                    .build()
+                                    .show(this);
+
                             username.requestFocus();
                         }
                     }

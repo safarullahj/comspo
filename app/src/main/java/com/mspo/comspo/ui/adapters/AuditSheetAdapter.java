@@ -2,7 +2,9 @@ package com.mspo.comspo.ui.adapters;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.v7.app.AlertDialog;
@@ -19,21 +21,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.Switch;
 
+import com.jaiselrahman.filepicker.activity.FilePickerActivity;
+import com.jaiselrahman.filepicker.config.Configurations;
 import com.mspo.comspo.R;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.Aic;
 import com.mspo.comspo.ui.activities.audit_sheet.CustomSpinnerAdapter;
 import com.mspo.comspo.ui.activities.audit_sheet.IssuesEvidenceListing;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.SheetItemViewHolder> {
 
+    private static final int FILE_REQUEST_CODE = 101;
     private Context context;
     private List<Aic> sheetList;
     private CustomSpinnerAdapter customAdapter;
@@ -105,13 +109,53 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         holder.recyclerView.setLayoutManager(verticalLayoutmanager);
 
-        List<String> list = Arrays.asList("1.jbvbbsd.png", "2.hbsafbahba.jpg" , "3.gvgskacv.doc" , "4.jbkbkvbdku.ppt" ,"5.jbvbbsd.png", "6.hbsafbahba.jpg" , "7.gvgskacv.doc" , "8.jbkbkvbdku.ppt","9.jbvbbsd.png", "10.hbsafbahba.jpg" , "11.gvgskacv.doc" , "12.jbkbkvbdku.ppt");
-        holder.fileAdapter = new FileAdapter(context,list,statusFlag,offlineFlag);
+        //List<String> list = Arrays.asList("1.jbvbbsd.png", "2.hbsafbahba.jpg" , "3.gvgskacv.doc" , "4.jbkbkvbdku.ppt" ,"5.jbvbbsd.png", "6.hbsafbahba.jpg" , "7.gvgskacv.doc" , "8.jbkbkvbdku.ppt","9.jbvbbsd.png", "10.hbsafbahba.jpg" , "11.gvgskacv.doc" , "12.jbkbkvbdku.ppt");
+        holder.fileAdapter = new FileAdapter(context,sheetList.get(position).getFiles(),statusFlag,offlineFlag);
 
         holder.recyclerView.setAdapter(holder.fileAdapter);
 
 
     }
+
+
+/*
+    private void uploadFile(MediaFile mediaFile) {
+        // create upload service client
+        FileUploadService service =
+                APIClient.getClient().create(FileUploadService.class);
+
+        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+        // use the FileUtils to get the actual file by uri
+        File file = new File(mediaFile.getPath());
+
+
+            RequestBody requestFile;
+            requestFile = RequestBody.create(
+                    MediaType.parse(mediaFile.getMimeType()),
+                    file
+            );
+
+            // MultipartBody.Part is used to send also the actual file name
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("audit_file", file.getName(), requestFile);
+
+            // finally, execute the request
+            Call<FileUploadResponse> call = service.upload("e5a66d6a2c42491ab0f2ced675f56551", body);
+            call.enqueue(new Callback<FileUploadResponse>() {
+                @Override
+                public void onResponse(Call<FileUploadResponse> call,
+                                       Response<FileUploadResponse> response) {
+                    Log.v("Upload", "success");
+                }
+
+                @Override
+                public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                    Log.e("Upload error:", t.getMessage());
+                }
+            });
+
+    }
+*/
 
     class SheetItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -131,6 +175,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
             txtIndicator = itemView.findViewById(R.id.txt_indicator);
             edtObservation = itemView.findViewById(R.id.editText_observation);
             btn_Upload = itemView.findViewById(R.id.btn_Upload);
+            btn_Upload.setOnClickListener(this);
             recyclerView = itemView.findViewById(R.id.recycler_view);
             recyclerView.addItemDecoration(new SpacesItemDecoration(context, R.dimen.spacing_normal));
             fileAdapter = null;
@@ -321,12 +366,81 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                             "EVIDENCE TO CHECK");
 
                     break;
+
+                case R.id.btn_Upload:
+                    Log.e("File_:" , "upload");
+
+                    showDialog(sheetList.get(getAdapterPosition()).getAuditIndicatorId());
+
+                    /*Intent intent = new Intent(context, FilePickerActivity.class);
+                    intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                            .setCheckPermission(true)
+                            .setShowImages(true)
+                            .enableImageCapture(true)
+                            .setShowFiles(true)
+                            .setMaxSelection(10)
+                            .setSkipZeroSizeFiles(true)
+                            .build());
+                    ((Activity) context).startActivityForResult(intent, sheetList.get(getAdapterPosition()).getAuditIndicatorId());*/
+
+                    break;
             }
             Log.e("date_:", "D : " + TimeUnit.MILLISECONDS.toSeconds(Calendar.getInstance().getTimeInMillis()));
             sheetList.get(getAdapterPosition()).setLastEditedTime(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(Calendar.getInstance().getTimeInMillis())));
             Log.e("date_:", "getD : " + sheetList.get(getAdapterPosition()).getLastEditedTime());
             customAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void showDialog(Integer auditIndicatorId) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        @SuppressLint("InflateParams") final View dialog = LayoutInflater.from(context).inflate(R.layout.dialog_file, null);
+        dialogBuilder.setView(dialog);
+
+        AlertDialog bDialog = dialogBuilder.create();
+        bDialog.show();
+
+        MaterialButton btn_Image = dialog.findViewById(R.id.btn_Image);
+        MaterialButton btn_Files = dialog.findViewById(R.id.btn_Files);
+
+
+        btn_Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FilePickerActivity.class);
+                intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                        .setCheckPermission(true)
+                        .setShowImages(true)
+                        .enableImageCapture(true)
+                        .setShowVideos(false)
+                        .setShowFiles(false)
+                        .setMaxSelection(10)
+                        .setSkipZeroSizeFiles(true)
+                        .build());
+                ((Activity) context).startActivityForResult(intent, auditIndicatorId);
+                bDialog.dismiss();
+            }
+        });
+
+        btn_Files.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FilePickerActivity.class);
+                intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                        .setCheckPermission(true)
+                        .setShowImages(false)
+                        .enableImageCapture(false)
+                        .setShowVideos(false)
+                        .setShowFiles(true)
+                        .setMaxSelection(10)
+                        .setSkipZeroSizeFiles(true)
+                        .build());
+                ((Activity) context).startActivityForResult(intent, auditIndicatorId);
+                bDialog.dismiss();
+            }
+        });
+
+
     }
 }
 

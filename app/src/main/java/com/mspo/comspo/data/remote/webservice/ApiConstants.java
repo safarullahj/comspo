@@ -24,4 +24,5 @@ public class ApiConstants {
     public static final String ENDPOINT_RESULT_SHEET = "scoringtool/audit/result/{auditId}/get/";
     public static final String ENDPOINT_EDIT_AUDIT_DURATION = "scoringtool/audit/{auditId}/edit/";
     public static final String ENDPOINT_AUDITOR_AUDIT_STATUS = "scoringtool/audit/{auditId}/auditor/update/";
+    public static final String ENDPOINT_FILE_UPLOAD = "scoringtool/aic/{aic_id}/{audit_id}/{sub_audit_id}/create/";
 }
