@@ -44,6 +44,9 @@
     <color name="productGridBackgroundColor">#FFFBFA</color>
     <color name="colorControlActivated">@color/colorOnPrimary</color>
 
+    <color name="transparent_background">#80000000</color>
+    <color name="open_camera_bg">#1c1c1c</color>
+
     <color name="black_overlay">#66000000</color>
 
 </resources>
