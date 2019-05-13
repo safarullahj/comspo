@@ -15,7 +15,7 @@
         android:text="assassbsdfndfn" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/file_close"
+        android:id="@+id/file_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_close_24dp"

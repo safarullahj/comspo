@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="IMAGE"
+        android:text="@string/image"
         android:layout_margin="@dimen/spacing_small"/>
     <android.support.design.button.MaterialButton
         android:id="@+id/btn_Files"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="FILE"
+        android:text="@string/file"
         android:layout_margin="@dimen/spacing_small"/>
 
 </LinearLayout>

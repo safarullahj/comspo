@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
-                android:text="ISSUES TO \n CHECK" />
+                android:text="@string/issues_to_n_check" />
 
             <android.support.design.button.MaterialButton
                 android:id="@+id/btn_Evidence"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/spacing_small"
                 android:layout_weight="1"
-                android:text="EVIDENCE TO \n CHECK" />
+                android:text="@string/evidence_to_n_check" />
 
         </LinearLayout>
 
@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="UPLOAD" />
+        android:text="@string/upload" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

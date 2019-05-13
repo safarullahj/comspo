@@ -75,6 +75,8 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private static final String KEY_AUDIT_STATUS = "key.auditStatus";
     private static final String KEY_AUDIT_STATUS_FLAG = "key.auditStatus";
     private static final String KEY_AUDIT_OFFLINE_FLAG = "key.offlineStatus";
+    private static final String KEY_CHAPTER_AUDIT_ID = "key.chapterauditid";
+    private static final String KEY_AUDIT_ID = "key.auditid";
     private static final String KEY_SUBAUDIT_ID = "key.subauditid";
     private static final String KEY_OFFAUDIT_ID = "key.offauditid";
 
@@ -307,7 +309,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private void initializeViewPager(int i) {
         Log.e("chk", "Accs (" + i + "): " + auditSheetResponse.getChapters().get(i).getChapterName());
         mSectionsPagerAdapter = null;
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), auditSheetResponse.getChapters().get(i).getAccs());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), auditSheetResponse.getChapters().get(i).getAccs(),auditSheetResponse.getChapters().get(i).getAuditId());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -326,13 +328,15 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         }
 
 
-        public static PlaceholderFragment newInstance(Acc acc, boolean statusFlag, boolean isOffline) {
+        public static PlaceholderFragment newInstance(Acc acc, boolean statusFlag, boolean isOffline, int chapter_audit_id, int audit_id) {
             Log.e("chk", "instance+" + acc.getCriterionDescription());
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putSerializable(KEY_CRITERIA, acc);
             args.putBoolean(KEY_AUDIT_STATUS_FLAG, statusFlag);
             args.putBoolean(KEY_AUDIT_OFFLINE_FLAG, isOffline);
+            args.putInt(KEY_CHAPTER_AUDIT_ID,chapter_audit_id);
+            args.putInt(KEY_AUDIT_ID,audit_id);
             fragment.setArguments(args);
             return fragment;
         }
@@ -345,6 +349,9 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             acc = (Acc) getArguments().getSerializable(KEY_CRITERIA);
             boolean statusFlag = getArguments().getBoolean(KEY_AUDIT_STATUS_FLAG, false);
             boolean offlineFlag = getArguments().getBoolean(KEY_AUDIT_OFFLINE_FLAG, false);
+            int chapter_audit_id = getArguments().getInt(KEY_CHAPTER_AUDIT_ID,0);
+            int audit_id = getArguments().getInt(KEY_AUDIT_ID,0);
+
 
             Log.e("chk", "fragment oncreate");
             Log.e("chk", "description : " + acc.getCriterionDescription());
@@ -362,7 +369,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(), customAdapter, version, statusFlag, offlineFlag);
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(), customAdapter, version, statusFlag, offlineFlag,chapter_audit_id,audit_id);
             criteria_list.setAdapter(auditSheetAdapter);
 
 
@@ -378,10 +385,12 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         List<Acc> criterias;
+        int chapter_audit_id;
 
-        public SectionsPagerAdapter(FragmentManager fm, List<Acc> criterias) {
+        public SectionsPagerAdapter(FragmentManager fm, List<Acc> criterias,int chapter_audit_id) {
             super(fm);
             this.criterias = criterias;
+            this.chapter_audit_id = chapter_audit_id;
             Log.e("chk", "pager Adapter");
             size = criterias.size();
             //addBottomDots(0);
@@ -399,7 +408,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            placeholderFragment = PlaceholderFragment.newInstance(criterias.get(position), status, isOffline);
+            placeholderFragment = PlaceholderFragment.newInstance(criterias.get(position), status, isOffline ,chapter_audit_id,auditDetailsResponse.getAuditId());
             return placeholderFragment;
         }
 
@@ -673,7 +682,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
 
     private void showProgressDialog(String title){
         progressDialog.setTitle(title);
-        progressDialog.setMessage("Uploading..., \n Please wait");
+        progressDialog.setMessage(getString(R.string.wait_to_upload));
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);

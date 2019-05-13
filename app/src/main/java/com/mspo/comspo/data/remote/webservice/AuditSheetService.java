@@ -1,6 +1,9 @@
 package com.mspo.comspo.data.remote.webservice;
 
+import com.mspo.comspo.data.remote.model.requests.AuditorFileDeleteRequest;
+import com.mspo.comspo.data.remote.model.requests.FileDeleteRequest;
 import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.SmallHolderAuditSheetSaveRequest;
+import com.mspo.comspo.data.remote.model.responses.CommonResponse;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.result_sheet.ResultSheetResponse;
@@ -53,6 +56,21 @@ public interface AuditSheetService {
                                         @Path("sub_audit_id") Integer sub_audit_id,
                                         @Header("access-token") String access_token,
                                         @Part MultipartBody.Part file);
+
+
+    @POST(ApiConstants.ENDPOINT_FILE_DELETE)
+    Call<CommonResponse> deleteFile(@Path("aic_file_id") Integer aic_file_id,
+                                    @Path("audit_id") Integer audit_id,
+                                    @Path("chapter_audit_id") Integer chapter_audit_id,
+                                    @Header("access-token") String access_token,
+                                    @Body FileDeleteRequest FileDeleteRequest);
+
+    @POST(ApiConstants.ENDPOINT_FILE_DELETE)
+    Call<CommonResponse> deleteAuditorFile(@Path("aic_file_id") Integer aic_file_id,
+                                    @Path("audit_id") Integer audit_id,
+                                    @Path("chapter_audit_id") Integer chapter_audit_id,
+                                    @Header("access-token") String access_token,
+                                    @Body AuditorFileDeleteRequest auditorFileDeleteRequest);
 
 
 }

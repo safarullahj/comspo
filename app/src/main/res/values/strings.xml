@@ -239,11 +239,26 @@
     <string name="external">External</string>
     <string name="internal">Internal</string>
 
+    <string name="downloadRequest">Download The File...?</string>
+    <string name="storageRequest">This app needs access to your file storage so that it can write files.</string>
+    <string name="SdNotFound">SD Card not found</string>
+    <string name="permission_denied">Permission has been denied</string>
+    <string name="download_at">Downloaded at:</string>
+    <string name="upload">UPLOAD</string>
+    <string name="issues_to_n_check">ISSUES TO \nCHECK</string>
+    <string name="evidence_to_n_check">EVIDENCE TO \nCHECK</string>
+    <string name="issueHead">ISSUES TO CHECK</string>
+    <string name="evidenceHead">ISSUES TO CHECK</string>
+    <string name="wait_to_upload">Uploading..., \nPlease wait</string>
+    <string name="image">IMAGE</string>
+    <string name="file">FILE</string>
+    <string name="delete_file">Delete File...?</string>
+    <string name="wait_delete">Deleting...,  \\nPlease wait</string>
+
     <string name="file_thumbnail">File Thumbnail</string>
     <string name="open_camera">Open Camera</string>
     <string name="done">Done</string>
     <string name="selection_count">%1$d/%2$d</string>
     <string name="permission_not_given">Permission not given</string>
-
 
 </resources>

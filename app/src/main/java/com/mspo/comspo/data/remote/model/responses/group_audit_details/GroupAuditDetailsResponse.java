@@ -14,7 +14,7 @@ public class GroupAuditDetailsResponse {
     private String groupName;
     @SerializedName("avg_overall_score")
     @Expose
-    private Integer avgOverallScore;
+    private Double avgOverallScore;
     @SerializedName("year")
     @Expose
     private String year;
@@ -23,7 +23,7 @@ public class GroupAuditDetailsResponse {
     private String auditStatus;
     @SerializedName("overall_score")
     @Expose
-    private Integer overallScore;
+    private Double overallScore;
     @SerializedName("category")
     @Expose
     private String category;
@@ -92,11 +92,11 @@ public class GroupAuditDetailsResponse {
         this.groupName = groupName;
     }
 
-    public Integer getAvgOverallScore() {
+    public Double getAvgOverallScore() {
         return avgOverallScore;
     }
 
-    public void setAvgOverallScore(Integer avgOverallScore) {
+    public void setAvgOverallScore(Double avgOverallScore) {
         this.avgOverallScore = avgOverallScore;
     }
 
@@ -116,11 +116,11 @@ public class GroupAuditDetailsResponse {
         this.auditStatus = auditStatus;
     }
 
-    public Integer getOverallScore() {
+    public Double getOverallScore() {
         return overallScore;
     }
 
-    public void setOverallScore(Integer overallScore) {
+    public void setOverallScore(Double overallScore) {
         this.overallScore = overallScore;
     }
 

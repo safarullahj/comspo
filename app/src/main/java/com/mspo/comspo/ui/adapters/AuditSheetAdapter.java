@@ -44,15 +44,20 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     private String version;
     private boolean statusFlag;
     private boolean offlineFlag;
+    private int chapter_audit_id;
+    private int audit_id;
 
 
-    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter, String version, boolean statusFlag, boolean offlineFlag) {
+    public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter,
+                             String version, boolean statusFlag, boolean offlineFlag, int chapter_audit_id,int audit_id) {
         this.context = context;
         this.sheetList = sheetList;
         this.customAdapter = customAdapter;
         this.version = version;
         this.statusFlag = statusFlag;
         this.offlineFlag = offlineFlag;
+        this.chapter_audit_id = chapter_audit_id;
+        this.audit_id = audit_id;
     }
 
 
@@ -110,7 +115,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
         holder.recyclerView.setLayoutManager(verticalLayoutmanager);
 
         //List<String> list = Arrays.asList("1.jbvbbsd.png", "2.hbsafbahba.jpg" , "3.gvgskacv.doc" , "4.jbkbkvbdku.ppt" ,"5.jbvbbsd.png", "6.hbsafbahba.jpg" , "7.gvgskacv.doc" , "8.jbkbkvbdku.ppt","9.jbvbbsd.png", "10.hbsafbahba.jpg" , "11.gvgskacv.doc" , "12.jbkbkvbdku.ppt");
-        holder.fileAdapter = new FileAdapter(context,sheetList.get(position).getFiles(),statusFlag,offlineFlag);
+        holder.fileAdapter = new FileAdapter(context,sheetList.get(position).getFiles(),statusFlag,offlineFlag,chapter_audit_id,audit_id);
 
         holder.recyclerView.setAdapter(holder.fileAdapter);
 
@@ -118,44 +123,6 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     }
 
 
-/*
-    private void uploadFile(MediaFile mediaFile) {
-        // create upload service client
-        FileUploadService service =
-                APIClient.getClient().create(FileUploadService.class);
-
-        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
-        // use the FileUtils to get the actual file by uri
-        File file = new File(mediaFile.getPath());
-
-
-            RequestBody requestFile;
-            requestFile = RequestBody.create(
-                    MediaType.parse(mediaFile.getMimeType()),
-                    file
-            );
-
-            // MultipartBody.Part is used to send also the actual file name
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("audit_file", file.getName(), requestFile);
-
-            // finally, execute the request
-            Call<FileUploadResponse> call = service.upload("e5a66d6a2c42491ab0f2ced675f56551", body);
-            call.enqueue(new Callback<FileUploadResponse>() {
-                @Override
-                public void onResponse(Call<FileUploadResponse> call,
-                                       Response<FileUploadResponse> response) {
-                    Log.v("Upload", "success");
-                }
-
-                @Override
-                public void onFailure(Call<FileUploadResponse> call, Throwable t) {
-                    Log.e("Upload error:", t.getMessage());
-                }
-            });
-
-    }
-*/
 
     class SheetItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -343,7 +310,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                             sheetList.get(getAdapterPosition()).getIssuesToCheck(),
                             null,
                             list_container,
-                            "ISSUES TO CHECK ");
+                            context.getString(R.string.issueHead));
 
 
 
@@ -363,7 +330,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                             null,
                             sheetList.get(getAdapterPosition()).getEvidenceToCheck(),
                             list_container2,
-                            "EVIDENCE TO CHECK");
+                            context.getString(R.string.evidenceHead));
 
                     break;
 
@@ -412,7 +379,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
                         .setCheckPermission(true)
                         .setShowImages(true)
                         .enableImageCapture(true)
-                        .setShowVideos(false)
+                        .setShowVideos(true)
                         .setShowFiles(false)
                         .setMaxSelection(10)
                         .setSkipZeroSizeFiles(true)

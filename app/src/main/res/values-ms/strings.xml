@@ -235,6 +235,21 @@
     <string name="farm_Not_Registered_yet">Farm Not Registered yet</string>
     <string name="external">Dalaman</string>
     <string name="internal">Luaran</string>
+    <string name="downloadRequest">Muat turun fail...?</string>
+    <string name="storageRequest">Aplikasi ini memerlukan akses kepada storan fail anda supaya ia boleh menulis fail.</string>
+    <string name="SdNotFound">Kad SD tidak dijumpai</string>
+    <string name="permission_denied">Kebenaran telah dinafikan</string>
+    <string name="download_at">Dimuat turun di: </string>
+    <string name="upload">muat naik</string>
+    <string name="issues_to_n_check">SEMAKAN</string>
+    <string name="evidence_to_n_check">PANDUAN</string>
+    <string name="issueHead">SEMAKAN</string>
+    <string name="evidenceHead">PANDUAN</string>
+    <string name="wait_to_upload">Memuat naik..., \nSila tunggu</string>
+    <string name="image">gambar</string>
+    <string name="file">fail</string>
+    <string name="delete_file">Delete File...?</string>
+    <string name="wait_delete">Deleting...,  \\nPlease wait</string>
 
     <string name="file_thumbnail">Thumbnail file</string>
     <string name="open_camera">Kamera terbuka</string>
