@@ -37,6 +37,7 @@
     <!--<color name="colorPrimaryDark">#E0E0E0</color>-->
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#a6ed8e</color>
+    <color name="selectedItemColor">#ffa000</color>
     <color name="colorOnPrimary">#456173</color>
     <color name="textColorPrimary">#456173</color>
     <color name="iconColorEnabled">#456173</color>

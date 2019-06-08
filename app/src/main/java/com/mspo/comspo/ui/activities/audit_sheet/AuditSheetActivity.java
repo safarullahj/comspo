@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ import com.mspo.comspo.data.remote.model.requests.smallholder_audit_sheet_save.S
 import com.mspo.comspo.data.remote.model.responses.ErrorResponse;
 import com.mspo.comspo.data.remote.model.responses.SmallHolderAuditSheetSaveResponse;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.Acc;
+import com.mspo.comspo.data.remote.model.responses.audit_sheet.Aic;
 import com.mspo.comspo.data.remote.model.responses.audit_sheet.AuditSheetResponse;
 import com.mspo.comspo.data.remote.model.responses.internal_audit_details.IndividualAuditDetailsResponse;
 import com.mspo.comspo.data.remote.model.responses.offline_audit_sheet.OfflineAuditSheetResponse;
@@ -95,7 +98,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     private ProgressBar progressBar;
 
     private AuditSheetResponse auditSheetResponse;
-    private IndividualAuditDetailsResponse auditDetailsResponse;
+    private IndividualAuditDetailsResponse auditDetailsResponse = null;
     private String auditStatus, subAuditId;
     private Integer offAuditId;
     private boolean status = false, isOffline = false;
@@ -319,10 +322,15 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements TaskStatusInterface {
 
         private Acc acc;
+        private RecyclerView criteria_list;
+        private LinearLayoutManager verticalLayoutmanager;
         private AuditSheetAdapter auditSheetAdapter;
+        private LinearLayout task_container;
+        private TaskStatusListing taskStatusListing;
+        private int xPOsition = -1;
 
         public PlaceholderFragment() {
         }
@@ -361,22 +369,58 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
             String version = "4." + acc.getChapterPosition() + "." + acc.getCriterionPosition();
             textView.setText(version + " " + acc.getCriterionDescription());
 
-            RecyclerView criteria_list = rootView.findViewById(R.id.criteria_list);
+            task_container = rootView.findViewById(R.id.task_container);
+            taskStatusListing =  new TaskStatusListing(getActivity(),
+                    acc.getAics(),
+                    task_container,
+                    acc.getCriterionPosition(),
+                    this);
 
-            LinearLayoutManager verticalLayoutmanager
-                    = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+            criteria_list = rootView.findViewById(R.id.criteria_list);
+
+             verticalLayoutmanager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             criteria_list.setLayoutManager(verticalLayoutmanager);
             criteria_list.addItemDecoration(new SpacesItemDecoration(getContext(), R.dimen.spacing_normal));
 
 
-            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(), customAdapter, version, statusFlag, offlineFlag,chapter_audit_id,audit_id);
+            auditSheetAdapter = new AuditSheetAdapter(getContext(), acc.getAics(), customAdapter, version, statusFlag, offlineFlag,chapter_audit_id,audit_id,taskStatusListing);
             criteria_list.setAdapter(auditSheetAdapter);
+
+            //criteria_list.scrollToPosition(acc.getAics().size()-1);
+
+            criteria_list.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    int firstVisiblePosition = verticalLayoutmanager.findFirstVisibleItemPosition();
+
+                    if(xPOsition != firstVisiblePosition) {
+
+                        Log.e("recycler_position_:", "RV position : " + firstVisiblePosition);
+                        if(taskStatusListing != null){
+                            taskStatusListing.init(acc.getAics() , firstVisiblePosition);
+                        }
+                    }
+
+                    xPOsition = firstVisiblePosition;
+                }
+            });
 
 
             return rootView;
         }
 
+        @Override
+        public void taskSelectedPosition(int position) {
+
+            Log.e("ststusInterface_:" , "position_: "+position + "chapter_position_: "+acc.getCriterionPosition());
+            criteria_list.scrollToPosition(position);
+        }
     }
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -408,7 +452,7 @@ public class AuditSheetActivity extends AppCompatActivity implements View.OnClic
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            placeholderFragment = PlaceholderFragment.newInstance(criterias.get(position), status, isOffline ,chapter_audit_id,auditDetailsResponse.getAuditId());
+            placeholderFragment = PlaceholderFragment.newInstance(criterias.get(position), status, isOffline ,chapter_audit_id, (auditDetailsResponse != null) ? auditDetailsResponse.getAuditId() : 0);
             return placeholderFragment;
         }
 

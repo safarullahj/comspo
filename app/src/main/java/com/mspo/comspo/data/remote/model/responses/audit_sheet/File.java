@@ -17,6 +17,9 @@ public class File implements Serializable {
     @Expose
     private String fileName;
 
+    public File() {
+    }
+
     public File(Integer aicFileId, String aicFile, String fileName) {
         this.aicFileId = aicFileId;
         this.aicFile = aicFile;

@@ -28,6 +28,7 @@ import com.mspo.comspo.filepicker.activity.FilePickerActivity;
 import com.mspo.comspo.filepicker.config.Configurations;
 import com.mspo.comspo.ui.activities.audit_sheet.CustomSpinnerAdapter;
 import com.mspo.comspo.ui.activities.audit_sheet.IssuesEvidenceListing;
+import com.mspo.comspo.ui.activities.audit_sheet.TaskStatusListing;
 import com.mspo.comspo.ui.decorators.SpacesItemDecoration;
 
 import java.util.Calendar;
@@ -46,10 +47,12 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
     private boolean offlineFlag;
     private int chapter_audit_id;
     private int audit_id;
+    private TaskStatusListing taskStatusListing;
 
 
     public AuditSheetAdapter(Context context, List<Aic> sheetList, CustomSpinnerAdapter customAdapter,
-                             String version, boolean statusFlag, boolean offlineFlag, int chapter_audit_id,int audit_id) {
+                             String version, boolean statusFlag, boolean offlineFlag, int chapter_audit_id,
+                             int audit_id, TaskStatusListing taskStatusListing) {
         this.context = context;
         this.sheetList = sheetList;
         this.customAdapter = customAdapter;
@@ -58,6 +61,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
         this.offlineFlag = offlineFlag;
         this.chapter_audit_id = chapter_audit_id;
         this.audit_id = audit_id;
+        this.taskStatusListing = taskStatusListing;
     }
 
 
@@ -356,6 +360,7 @@ public class AuditSheetAdapter extends RecyclerView.Adapter<AuditSheetAdapter.Sh
             sheetList.get(getAdapterPosition()).setLastEditedTime(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(Calendar.getInstance().getTimeInMillis())));
             Log.e("date_:", "getD : " + sheetList.get(getAdapterPosition()).getLastEditedTime());
             customAdapter.notifyDataSetChanged();
+            taskStatusListing.init(sheetList,getAdapterPosition());
         }
     }
 

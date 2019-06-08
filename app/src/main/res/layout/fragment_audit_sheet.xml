@@ -15,6 +15,21 @@
         android:padding="@dimen/spacing_normal"
         tools:text="Ch : Production area identification" />
 
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal">
+
+        <LinearLayout
+            android:id="@+id/task_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:orientation="horizontal"/>
+
+    </HorizontalScrollView>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/criteria_list"
         android:layout_width="match_parent"
